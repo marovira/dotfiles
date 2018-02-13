@@ -1,16 +1,36 @@
 " Vundle setup.
 "=======================
+" Set the path of the editor.
+if has('win32')
+    let s:editorRoot=$VIM . '\vimfiles'
+elseif has('nvim')
+    let s:editorRoot=expand('~/.config/nvim')
+else
+    let s:editorRoot=expand('~/.vim')
+endif
+
+let vundleInstalled=1
+let vundleReadme=s:editorRoot . '/bundle/vundle/README.md'
+
+if !filereadable(vundleReadme)
+    echo 'Installing Vundle'
+    echo ''
+    silent call mkdir(s:editorRoot . '\bundle\', 'p')
+    silent execute '!git clone https://github.com/VundleVim/Vundle.vim ' . s:editorRoot . '/bundle/vundle'
+    let vundleInstalled=0
+endif
+
 set nocompatible " be iMproved, required.
 filetype off 
 
-" Select the path for vundle depending on the OS
 if has('win32')
-    set rtp+=$VIM/vimfiles/bundle/Vundle.vim/
+    set rtp+=$VIM/vimfiles/bundle/vundle/
 elseif has('nvim')
-    set rtp+=$HOME/nvim/bundle/Vundle.vim/
+    set rtp+=$HOME/nvim/bundle/vundle/
 else
-    set rtp+=$HOME/.vim/bundle/Vundle.vim/
+    set rtp+=$HOME/.vim/bundle/vundle/
 endif
+
 
 " Vundle plugins.
 "=======================
@@ -52,6 +72,12 @@ Plugin 'dracula/vim'
 Plugin 'lifepillar/vim-mucomplete'
 
 call vundle#end()
+
+if vundleInstalled == 0
+    echo 'Installing plugins'
+    echo ''
+    :BundleInstall
+endif
 
 " Functions
 "=======================
