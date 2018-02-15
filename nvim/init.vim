@@ -15,8 +15,8 @@ let vundleReadme=s:editorRoot . '/bundle/vundle/README.md'
 if !filereadable(vundleReadme)
     echo 'Installing Vundle'
     echo ''
-    silent call mkdir(s:editorRoot . '\bundle\', 'p')
-    silent execute '!git clone https://github.com/VundleVim/Vundle.vim ' . s:editorRoot . '/bundle/vundle'
+    call mkdir(s:editorRoot . '/bundle/', 'p')
+    execute '!git clone https://github.com/VundleVim/Vundle.vim ' . s:editorRoot . '/bundle/vundle'
     let vundleInstalled=0
 endif
 
