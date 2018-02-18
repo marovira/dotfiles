@@ -69,7 +69,11 @@ Plugin 'nathanaelkane/vim-indent-guides'
 " Dark theme
 Plugin 'dracula/vim'
 
+" Autocomplete
 Plugin 'lifepillar/vim-mucomplete'
+
+" Python.
+Plugin 'davidhalter/jedi-vim'
 
 call vundle#end()
 
