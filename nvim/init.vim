@@ -75,6 +75,15 @@ Plugin 'lifepillar/vim-mucomplete'
 " Python.
 Plugin 'davidhalter/jedi-vim'
 
+" Java
+Plugin 'artur-shaik/vim-javacomplete2'
+
+" C/C++
+Plugin 'Rip-Rip/clang_complete'
+
+" Autocomplete pairs.
+Plugin 'Raimondi/delimitMate'
+
 call vundle#end()
 
 if vundleInstalled == 0
@@ -154,12 +163,17 @@ if has("persistent_undo")
 endif
 
 let g:mucomplete#enable_auto_at_startup=1
+let g:clang_c_options='-std=gnu11'
+let g:clang_cpp_options='-std=c++11'
 
 " Autocommands
 "=======================
 autocmd bufread,bufnewfile *.tex set ft=tex
 autocmd InsertEnter * silent! :set nornu number
 autocmd InsertLeave,BufNewFile,VimEnter * silent! :set rnu nonumber
+
+" Filetypes
+autocmd FileTYpe java setlocal omnifunc=javacomplete#Complete
 
 " Key remaps
 "=======================
