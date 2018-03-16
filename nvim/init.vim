@@ -173,7 +173,7 @@ autocmd InsertEnter * silent! :set nornu number
 autocmd InsertLeave,BufNewFile,VimEnter * silent! :set rnu nonumber
 
 " Filetypes
-autocmd FileTYpe java setlocal omnifunc=javacomplete#Complete
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 " Key remaps
 "=======================
