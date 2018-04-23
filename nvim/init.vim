@@ -163,8 +163,8 @@ if has("persistent_undo")
 endif
 
 let g:mucomplete#enable_auto_at_startup=1
-let g:clang_c_options='-std=gnu11'
-let g:clang_cpp_options='-std=c++11'
+let g:delimitMate_expand_cr=2
+let g:delimitMate_expand_space=1
 
 " Autocommands
 "=======================
