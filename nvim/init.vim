@@ -10,13 +10,13 @@ else
 endif
 
 let vundleInstalled=1
-let vundleReadme=s:editorRoot . '/bundle/vundle/README.md'
+let vundleReadme=s:editorRoot . '/bundle/Vundle.vim/README.md'
 
 if !filereadable(vundleReadme)
     echo 'Installing Vundle'
     echo ''
     call mkdir(s:editorRoot . '/bundle/', 'p')
-    execute '!git clone https://github.com/VundleVim/Vundle.vim ' . s:editorRoot . '/bundle/vundle'
+    execute '!git clone https://github.com/VundleVim/Vundle.vim ' . s:editorRoot . '/bundle/Vundle.vim'
     let vundleInstalled=0
 endif
 
@@ -24,11 +24,11 @@ set nocompatible " be iMproved, required.
 filetype off 
 
 if has('win32')
-    set rtp+=$VIM/vimfiles/bundle/vundle/
+    set rtp+=$VIM/vimfiles/bundle/Vundle.vim/
 elseif has('nvim')
-    set rtp+=$HOME/nvim/bundle/vundle/
+    set rtp+=$HOME/nvim/bundle/Vundle.vim/
 else
-    set rtp+=$HOME/.vim/bundle/vundle/
+    set rtp+=$HOME/.vim/bundle/Vundle.vim/
 endif
 
 
@@ -83,6 +83,10 @@ Plugin 'Rip-Rip/clang_complete'
 
 " Autocomplete pairs.
 Plugin 'Raimondi/delimitMate'
+
+" Pandoc
+Plugin 'vim-pandoc/vim-pandoc'
+Plugin 'vim-pandoc/vim-pandoc-syntax'
 
 call vundle#end()
 
@@ -165,6 +169,10 @@ endif
 let g:mucomplete#enable_auto_at_startup=1
 let g:delimitMate_expand_cr=2
 let g:delimitMate_expand_space=1
+
+let g:pandoc#command#autoexec_on_writes = 1 
+let g:pandoc#command#autoexec_command = "Pandoc! pdf"
+let g:pandoc#command#latex_engine = "pdflatex"
 
 " Autocommands
 "=======================
