@@ -38,6 +38,7 @@
 [alias]
 	a = add --all
 	ai = add -i
+    af = add -f
 	#############
 	ap = apply
 	as = apply --stat
