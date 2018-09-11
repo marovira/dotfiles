@@ -16,7 +16,8 @@ if !filereadable(vundleReadme)
     echo 'Installing Vundle'
     echo ''
     call mkdir(s:editorRoot . '/bundle/', 'p')
-    execute '!git clone https://github.com/VundleVim/Vundle.vim ' . s:editorRoot . '/bundle/Vundle.vim'
+    execute '!git clone https://github.com/VundleVim/Vundle.vim ' . \
+    s:editorRoot . '/bundle/Vundle.vim'
     let vundleInstalled=0
 endif
 
@@ -88,6 +89,11 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
 
+Plugin 'xuhdev/SingleCompile'
+
+" Alternate colorscheme for presentation.
+Plugin 'NLKNguyen/papercolor-theme'
+
 call vundle#end()
 
 if vundleInstalled == 0
@@ -104,6 +110,12 @@ function ToggleNumbers()
     else
         set number nornu
     endif
+endfunction
+
+function TogglePresentationMode()
+    set background=light
+    colorscheme PaperColor
+    set guifont=Consolas:h18:cANSI:qDRAFT
 endfunction
 
 " Options
@@ -131,8 +143,23 @@ set spell 	                    " Spelling
 set tw=80 	                    " Text Width
 set wildmenu                    " Auto completion in commandline
 set completeopt+=menuone,noselect
-set shortmess+=c                " Turn off completion messages.
+set shortmess+=ac                " Turn off completion messages.
 set belloff+=ctrlg              " If Vim beeps during completion.
+set guioptions-=m               " Remove menu bar
+set guioptions-=T               " Remove toolbar
+set guioptions-=r               " Remove right scroll bar
+set guioptions-=L               " Remove left scroll bar
+
+" Select font based on the OS.
+if has('gui_running')
+    if has('gui_gtk2')
+        set guifont=Inconsolata\12
+    elseif has('gui_macvim')
+        set guifont=Menlo\ Regular:h14
+    elseif has('gui_win32')
+        set guifont=Consolas:h11:cANSI
+    endif
+endif
 
 colorscheme dracula
 
@@ -166,13 +193,27 @@ if has("persistent_undo")
     set undofile
 endif
 
-let g:mucomplete#enable_auto_at_startup=1
-let g:delimitMate_expand_cr=2
-let g:delimitMate_expand_space=1
+let g:mucomplete#enable_auto_at_startup = 1
+let g:delimitMate_expand_cr = 2
+let g:delimitMate_expand_space = 1
+
+let g:clang_use_library = 1
 
 let g:pandoc#command#autoexec_on_writes = 1 
-let g:pandoc#command#autoexec_command = "Pandoc! pdf"
+let g:pandoc#command#autoexec_command = "Pandoc! html"
 let g:pandoc#command#latex_engine = "pdflatex"
+let g:pandoc#formatting#mode = "h"
+let g:pandoc#formatting#textwidth = 80
+
+if has('win32') || has('win64')
+    call SingleCompile#SetCompilerTemplate('cpp', 'clang-cl', 'Windows Clang', 'clang-cl', '/std:c++17 /W3 -o $(FILE_TITLE)$', '$(FILE_TITLE)$')
+    call SingleCompile#SetOutfile('cpp', 'clang-cl', '$(FILE_TITE)$.exe')
+endif
+
+let g:SingleCompile_alwayscompile = 0
+let g:SingleCompile_showquickfixiferror = 1
+let g:SingleCompile_showquickfixifwarning = 1
+let g:SingleCompile_showresultafterrun = 1
 
 " Autocommands
 "=======================
@@ -218,6 +259,13 @@ nnoremap <C-j> <C-w>j
 
 " Play macro stored in buffer q with the space bar
 nnoremap <Space> @q
+
+" Call presentation mode
+nnoremap <Leader>pm :call TogglePresentationMode()<CR>
+
+" Compile with clang
+nmap <F9> :SCCompile<CR>
+nmap <F10> :SCCompileRun<CR>
 
 " Switch buffers with alt-tab.
 map <C-Tab> :bnext<cr>
