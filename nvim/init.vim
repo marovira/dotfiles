@@ -206,8 +206,8 @@ let g:pandoc#formatting#mode = "h"
 let g:pandoc#formatting#textwidth = 80
 
 if has('win32') || has('win64')
-    call SingleCompile#SetCompilerTemplate('cpp', 'clang-cl', 'Windows Clang', 'clang-cl', '/std:c++17 /W3 -o $(FILE_TITLE)$', '$(FILE_TITLE)$')
-    call SingleCompile#SetOutfile('cpp', 'clang-cl', '$(FILE_TITE)$.exe')
+    call SingleCompile#SetCompilerTemplate('cpp', 'clang-cl', 'Windows Clang', 'clang-cl', '/std:c++17 /EHsc /Od /W3 -o $(FILE_TITLE)$', '$(FILE_TITLE)$')
+    call SingleCompile#SetOutfile('cpp', 'clang-cl', '$(FILE_TITLE)$.exe')
 endif
 
 let g:SingleCompile_alwayscompile = 0
