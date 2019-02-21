@@ -31,8 +31,11 @@ to connect everything. Make sure that all git files (and the bashrc) go into
 `C:\Users\<username>` while the vim files go in the Vim directory `C:\Vim`
 
 ### Vim Plugins
-Once Vim is opened, everything should work as expected. The language support
-plugins may need some extra work. 
+Once Vim is opened, everything should work as expected. If for some reason
+there's an error on the command to download Vundle, simply remove the '\'
+character on line 19 of 'init.vim' and everything should work. Also, make sure
+that Vim is first run as **admin** so permissions aren't an issue. The language
+support plugins may need some extra work. 
 
 * For Java, make sure that the JDK is installed and added to the path.
 * Python will work as is.
@@ -40,6 +43,8 @@ plugins may need some extra work.
   [here](https://clang.llvm.org/get_started.html) to compile Clang with Visual
 Studio. Make sure that the build is **32-bit**. Once everything is compiled,
 just add the directory to the path and everything will work correctly.
+* Pandoc will require downloading it from [here](https://github.com/jgm/pandoc)
+  and adding to path.
 
 ## Linux Make sure that the following are installed:
 
@@ -49,8 +54,7 @@ just add the directory to the path and everything will work correctly.
 4. python 3
 5. clang
 6. ctags
+7. pandoc
 
 Once everything is installed, just clone the repo and run `install.sh`.
 Everything will be placed where it needs to be and things will just work.
-
-## Apple No idea yet... need to test this out.
