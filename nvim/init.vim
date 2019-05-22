@@ -16,8 +16,7 @@ if !filereadable(vundleReadme)
     echo 'Installing Vundle'
     echo ''
     call mkdir(s:editorRoot . '/bundle/', 'p')
-    execute '!git clone https://github.com/VundleVim/Vundle.vim ' . \
-    s:editorRoot . '/bundle/Vundle.vim'
+    execute '!git clone https://github.com/VundleVim/Vundle.vim ' . s:editorRoot . '/bundle/Vundle.vim'
     let vundleInstalled=0
 endif
 
@@ -85,11 +84,15 @@ Plugin 'Rip-Rip/clang_complete'
 " Autocomplete pairs.
 Plugin 'Raimondi/delimitMate'
 
-" Pandoc
+" Pandoc plugins.
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
 
+" Simple compile for C++.
 Plugin 'xuhdev/SingleCompile'
+
+" Auto-align.
+Plugin 'junegunn/vim-easy-align'
 
 " Alternate colorscheme for presentation.
 Plugin 'NLKNguyen/papercolor-theme'
@@ -223,6 +226,8 @@ autocmd InsertLeave,BufNewFile,VimEnter * silent! :set rnu nonumber
 
 " Filetypes
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
+autocmd FileType latex setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+autocmd FileType tex setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
 " Key remaps
 "=======================
@@ -275,6 +280,10 @@ map <C-S-Tab> :bprevious<cr>
 nmap <F5> :UndotreeToggle<CR>
 nmap <F7> :NERDTree<CR>
 nmap <F8> :TagbarToggle<CR>
+
+" Auto-align settings.
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
 " Highlight TODO, FIXME, and NOTE in all files.
 if has("autocmd")
