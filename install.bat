@@ -20,6 +20,7 @@ setx -m VIM "C:\Vim"
 :: First setup the vim shortcuts.
 mklink %VIM%\_vimrc %CURDIR%nvim\init.vim
 mklink %VIM%\_gvimrc %CURDIR%nvim\gvim.vim
+mklink %VIM%\_vsvimrc %CURDIR%nvim\vsvim.vim
 mklink /D %VIM%\autoload %CURDIR%nvim\autoload
 mklink /D %VIM%\colors %CURDIR%nvim\colors
 mklink /D %VIM%\ftplugin %CURDIR%nvim\ftplugin
