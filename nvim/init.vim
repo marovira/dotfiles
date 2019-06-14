@@ -26,7 +26,7 @@ filetype off
 if has('win32')
     set rtp+=$VIM/vimfiles/bundle/Vundle.vim/
 elseif has('nvim')
-    set rtp+=$HOME/nvim/bundle/Vundle.vim/
+    set rtp+=$HOME/.config/nvim/bundle/Vundle.vim/
 else
     set rtp+=$HOME/.vim/bundle/Vundle.vim/
 endif
