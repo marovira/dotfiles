@@ -177,8 +177,8 @@ set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 let &colorcolumn=join(range(&tw,&tw), ",")
 
 " Syntax and file detection.
-syntax on
 filetype plugin indent on
+syntax on
 
 " Copy to system clipboard (this only works on windows and mac)
 if has("win32") || has("mac")
