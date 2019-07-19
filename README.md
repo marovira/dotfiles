@@ -17,34 +17,27 @@ directory.
 5. Clone ctags from [here](https://github.com/universal-ctags/ctags) and add to
    path.
 4. Clone the repository.
-
-### Links
-To make life easier, we are going to make links for all git and vim files. This
-is accomplished with a command line (in **admin** mode) and using
-
-```bat
-mklink link target
-mklink /D linkDir targetDir
-```
-
-to connect everything. Make sure that all git files (and the bashrc) go into
-`C:\Users\<username>` while the vim files go in the Vim directory `C:\Vim`
+5. Run `install.bat`. Make sure that it's run as **admin**.
 
 ### Vim Plugins
 Once Vim is opened, everything should work as expected. If for some reason
 there's an error on the command to download Vundle, simply remove the '\'
-character on line 19 of 'init.vim' and everything should work. Also, make sure
+character on line 19 of `init.vim` and everything should work. Also, make sure
 that Vim is first run as **admin** so permissions aren't an issue. The language
 support plugins may need some extra work. 
 
 * For Java, make sure that the JDK is installed and added to the path.
 * Python will work as is.
-* C/C++ will need clang. Follow the instructions
-  [here](https://clang.llvm.org/get_started.html) to compile Clang with Visual
-Studio. Make sure that the build is **32-bit**. Once everything is compiled,
-just add the directory to the path and everything will work correctly.
+* C/C++ will need clang. Download the binaries from
+  [here](https://releases.llvm.org/download.html) and add to path. Make sure
+  that the binaries are 32-bit.
 * Pandoc will require downloading it from [here](https://github.com/jgm/pandoc)
   and adding to path.
+
+### Note on 64-bit vs 32-bit
+
+It's plausible that these things actually work on 64-bit executables, so long as
+everything is consistent. This requires further investigation.
 
 ## Linux Make sure that the following are installed:
 
