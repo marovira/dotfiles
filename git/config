@@ -28,9 +28,14 @@
     changed = yellow bold
     untracked = red bold
 [diff]
-    tool = winmerge
-[difftool "winmerge"]
-    cmd = "'C:/Program Files (x86)/WinMerge/WinMergeU.exe'" -e "$LOCAL" "$REMOTE"
+    tool = bc
+[difftool "bc"]
+    path = "C:/Program Files/Beyond Compare 4/BComp.exe"
+    prompt = false
+[merge]
+    tool = bc
+[mergetool "bc"]
+    path = "C:/Program Files/Beyond Compare 4/BComp.exe"
 [mergetool]
     prompt = false
     keepBackup = false
