@@ -131,6 +131,7 @@ set cursorline	                " Show current cursor line
 set foldmethod=syntax           " Use syntax definitions for folding
 set hidden 	                    " Don't have to save when changing buffers
 set hlsearch	                " Highlights search
+set incsearch                   " Incremental search
 set infercase	                " Adjust case of match for keyword completion
 set laststatus=2                " Always show status bar
 set lazyredraw	                " Only redraws what is necessary, when necessary :redraw to force

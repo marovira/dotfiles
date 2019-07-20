@@ -3,6 +3,7 @@
 set backspace=start,indent,eol  " Backspace works on everything
 set cursorline	                " Show current cursor line
 set hlsearch	                " Highlights search
+set incsearch                   " Incremental search
 set laststatus=2                " Always show status bar
 set modeline	                " Enable top-of-file modelines NOTE: security concerns with these
 set nostartofline               " Don't move cusor on line jumps
