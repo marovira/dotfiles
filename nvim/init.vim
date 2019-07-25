@@ -203,7 +203,6 @@ let g:delimitMate_expand_space = 1
 
 let g:clang_use_library = 1
 
-let g:pandoc#command#autoexec_on_writes = 1 
 let g:pandoc#command#autoexec_command = "Pandoc! html"
 let g:pandoc#command#latex_engine = "pdflatex"
 let g:pandoc#formatting#mode = "h"
@@ -229,6 +228,8 @@ autocmd InsertLeave,BufNewFile,VimEnter * silent! :set rnu nonumber
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 autocmd FileType latex setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 autocmd FileType tex setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+
+autocmd FileType markdown nnoremap <F10> :Pandoc! html<CR>
 
 " Key remaps
 "=======================
