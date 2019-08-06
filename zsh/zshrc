@@ -26,7 +26,7 @@ antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-history-substring-search
 
 # Load theme
-antigen theme robbyrussell
+antigen theme dracula/zsh dracula
 
 # Finish up.
 antigen apply
@@ -39,6 +39,7 @@ bindkey -v
 # Vim aliases.
 alias vi='nvim'
 alias vim='nvim'
+alias gvim='nvim'
 
 # Grep aliases
 alias grep='grep --color'
