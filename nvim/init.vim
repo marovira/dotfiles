@@ -97,6 +97,9 @@ Plugin 'junegunn/vim-easy-align'
 " Alternate colorscheme for presentation.
 Plugin 'NLKNguyen/papercolor-theme'
 
+" Checkbox toggle for markdown.
+Plugin 'jkramer/vim-checkbox'
+
 call vundle#end()
 
 if vundleInstalled == 0
@@ -217,6 +220,10 @@ let g:SingleCompile_alwayscompile = 0
 let g:SingleCompile_showquickfixiferror = 1
 let g:SingleCompile_showquickfixifwarning = 1
 let g:SingleCompile_showresultafterrun = 1
+
+let g:insert_checkbox = '\<'
+let g:insert_checkbox_prefix = ''
+let g:insert_checkbox_suffix = ' '
 
 " Autocommands
 "=======================
