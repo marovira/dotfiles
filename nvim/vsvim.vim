@@ -40,3 +40,11 @@ nnoremap <C-j> <C-w>j
 
 " Play macro stored in buffer q with the space bar
 nnoremap <Space> @q
+
+" Tell vim to use the system register.
+set clipboard=unnamed
+
+nnoremap <Leader>cc :vsc Edit.CommentSelection<CR>
+nnoremap <Leader>cu :vsc Edit.UncommentSelection<CR>
+vnoremap <Leader>cc :vsc Edit.CommentSelection<CR>
+vnoremap <Leader>cu :vsc Edit.UncommentSelection<CR>
