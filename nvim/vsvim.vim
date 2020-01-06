@@ -46,5 +46,8 @@ set clipboard=unnamed
 
 nnoremap <Leader>cc :vsc Edit.CommentSelection<CR>
 nnoremap <Leader>cu :vsc Edit.UncommentSelection<CR>
+nnoremap <Leader>f :vsc Edit.FormatSelection<CR>
+
 vnoremap <Leader>cc :vsc Edit.CommentSelection<CR>
 vnoremap <Leader>cu :vsc Edit.UncommentSelection<CR>
+vnoremap <Leader>f :vsc Edit.FormatSelection<CR>
