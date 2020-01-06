@@ -117,10 +117,19 @@ function ToggleNumbers()
     endif
 endfunction
 
+let s:presentationMode = 0
 function TogglePresentationMode()
-    set background=light
-    colorscheme PaperColor
-    set guifont=Consolas:h18:cANSI:qDRAFT
+    if has('gui_win32')
+        if s:presentationMode
+            colorscheme dracula
+            set guifont=Consolas:h11:cANSI
+        else
+            set background=light
+            colorscheme PaperColor
+            set guifont=Consolas:h18:cANSI:qDRAFT
+            let s:presentationMode = 1
+        endif
+    endif
 endfunction
 
 " Options
