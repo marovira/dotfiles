@@ -8,8 +8,8 @@ set laststatus=2                " Always show status bar
 set modeline	                " Enable top-of-file modelines NOTE: security concerns with these
 set nostartofline               " Don't move cusor on line jumps
 set number	                    " Enable Line numbers
-set number	                    " Show line numbers
 set tw=80 	                    " Text Width
+set number relativenumber
 
 " Tab settings
 set tabstop=4 softtabstop=4 shiftwidth=4 expandtab

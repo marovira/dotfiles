@@ -109,11 +109,14 @@ endif
 
 " Functions
 "=======================
+let s:numberMode = 0
 function ToggleNumbers()
-    if &number == 1
-        set nonumber rnu
+    if s:numberMode
+        set nu rnu
+        let s:numberMode = 0
     else
-        set number nornu
+        set nu nornu
+        let s:numberMode = 1
     endif
 endfunction
 
@@ -123,6 +126,7 @@ function TogglePresentationMode()
         if s:presentationMode
             colorscheme dracula
             set guifont=Consolas:h11:cANSI
+            let s:presentationMode = 0
         else
             set background=light
             colorscheme PaperColor
@@ -151,8 +155,6 @@ set mouse=a	                    " Enable Mouse Clicks
 set mousefocus	                " Focus follows mouse
 set mousehide	                " Hides pointer while typing
 set nostartofline               " Don't move cusor on line jumps
-set number	                    " Enable Line numbers
-set number	                    " Show line numbers
 set ruler	                    " Show column and character in file
 set spell 	                    " Spelling
 set tw=80 	                    " Text Width
@@ -164,6 +166,7 @@ set guioptions-=m               " Remove menu bar
 set guioptions-=T               " Remove toolbar
 set guioptions-=r               " Remove right scroll bar
 set guioptions-=L               " Remove left scroll bar
+set number relativenumber       " Set hybrid line numbers
 
 " Select font based on the OS.
 if has('gui_running')
@@ -250,7 +253,7 @@ let g:insert_checkbox_suffix = ' '
 "=======================
 autocmd bufread,bufnewfile *.tex set ft=tex
 autocmd InsertEnter * silent! :set nornu number
-autocmd InsertLeave,BufNewFile,VimEnter * silent! :set rnu nonumber
+autocmd InsertLeave,BufNewFile,VimEnter * silent! :set rnu number
 
 " Filetypes
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
