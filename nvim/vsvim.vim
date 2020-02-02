@@ -24,7 +24,7 @@ imap <F4> <C-O>:setlocal spell! spelllang-en<CR>
 nnoremap <C-n> :call ToggleNumbers()<CR>
 
 " Clear search highlight.
-nnoremap <silent> <ESC> :noh<CR><ESC>
+nnoremap <ESC> :noh<CR><ESC>
 
 " Remap esc to jk.
 inoremap jk <ESC>
