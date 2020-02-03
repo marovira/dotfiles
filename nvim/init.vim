@@ -235,6 +235,7 @@ let g:pandoc#command#autoexec_command = "Pandoc! html"
 let g:pandoc#command#latex_engine = "pdflatex"
 let g:pandoc#formatting#mode = "h"
 let g:pandoc#formatting#textwidth = 80
+let g:pandoc#modules#disabled = ['folding']
 
 if has('win32') || has('win64')
     call SingleCompile#SetCompilerTemplate('cpp', 'clang-cl', 'Windows Clang', 'clang-cl', '/std:c++17 /EHsc /Od /W3 -o $(FILE_TITLE)$', '$(FILE_TITLE)$')
