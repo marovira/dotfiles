@@ -217,26 +217,35 @@ endif
 
 " Plugins
 "=======================
+" Vimtex
 let g:vimtex_view_enabled=0
 let g:vimtex_indent_ignored_envs=[]
+let g:vimtex_fold_enabled = 0
 
+" Undotree
 if has("persistent_undo")
     set undodir=~/.undodir/
     set undofile
 endif
 
+" Mucomplete
 let g:mucomplete#enable_auto_at_startup = 1
+
+" delimitMate
 let g:delimitMate_expand_cr = 2
 let g:delimitMate_expand_space = 1
 
+" Clang complete
 let g:clang_use_library = 1
 
+" Pandoc
 let g:pandoc#command#autoexec_command = "Pandoc! html"
 let g:pandoc#command#latex_engine = "pdflatex"
 let g:pandoc#formatting#mode = "h"
 let g:pandoc#formatting#textwidth = 80
 let g:pandoc#modules#disabled = ['folding']
 
+" Single compile
 if has('win32') || has('win64')
     call SingleCompile#SetCompilerTemplate('cpp', 'clang-cl', 'Windows Clang', 'clang-cl', '/std:c++17 /EHsc /Od /W3 -o $(FILE_TITLE)$', '$(FILE_TITLE)$')
     call SingleCompile#SetOutfile('cpp', 'clang-cl', '$(FILE_TITLE)$.exe')
@@ -247,10 +256,12 @@ let g:SingleCompile_showquickfixiferror = 1
 let g:SingleCompile_showquickfixifwarning = 1
 let g:SingleCompile_showresultafterrun = 1
 
+" Checkbox 
 let g:insert_checkbox = '\<'
 let g:insert_checkbox_prefix = ''
 let g:insert_checkbox_suffix = ' '
 
+" FastFold
 let g:fastfold_savehook = 1
 let g:markdown_folding = 1
 let g:tex_fold_enabled = 1
