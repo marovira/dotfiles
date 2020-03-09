@@ -74,9 +74,6 @@ Plugin 'lifepillar/vim-mucomplete'
 " Python.
 Plugin 'davidhalter/jedi-vim'
 
-" Java
-Plugin 'artur-shaik/vim-javacomplete2'
-
 " C/C++
 Plugin 'Rip-Rip/clang_complete'
 
@@ -171,6 +168,10 @@ set guioptions-=r               " Remove right scroll bar
 set guioptions-=L               " Remove left scroll bar
 set number relativenumber       " Set hybrid line numbers
 
+" Map leader and localleader to ,
+let mapleader = ","
+let maplocalleader = ","
+
 " Select font based on the OS.
 if has('gui_running')
     if has('gui_gtk2')
@@ -218,9 +219,12 @@ endif
 " Plugins
 "=======================
 " Vimtex
-let g:vimtex_view_enabled = 0
 let g:vimtex_indent_ignored_envs = []
 let g:vimtex_fold_enabled = 0
+let g:vimtex_view_method = 'general'
+let g:vimtex_view_general_viewer = 'SumatraPDF'
+let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
+let g:vimtex_view_general_options_latexmk = '-reuse-instance'
 
 " Undotree
 if has("persistent_undo")
@@ -303,9 +307,6 @@ nnoremap <silent> <ESC> :noh<CR><ESC>
 " Remap esc to jk.
 inoremap jk <ESC>
 
-" Map leader to space bar.
-let mapleader = ","
-let maplocalleader = ","
 
 " Buffer navigation.
 nnoremap <C-h> <C-w>h
@@ -339,6 +340,8 @@ nnoremap <localleader>lc :VimtexStop<cr>:VimtexClean<cr>
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
+" Autocommands
+"=======================
 " Highlight TODO, FIXME, and NOTE in all files.
 if has("autocmd")
     if v:version > 701
@@ -347,8 +350,9 @@ if has("autocmd")
     endif
 endif
 
-" Make vimtex clean everything when we close the file.
+" Make Vimtex clean everything when we close the file.
 augroup vimtex_config
     au!
     au User VimtexEventQuit call vimtex#compiler#clean(0)
 augroup END
+
