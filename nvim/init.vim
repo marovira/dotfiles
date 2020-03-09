@@ -218,8 +218,8 @@ endif
 " Plugins
 "=======================
 " Vimtex
-let g:vimtex_view_enabled=0
-let g:vimtex_indent_ignored_envs=[]
+let g:vimtex_view_enabled = 0
+let g:vimtex_indent_ignored_envs = []
 let g:vimtex_fold_enabled = 0
 
 " Undotree
@@ -305,6 +305,7 @@ inoremap jk <ESC>
 
 " Map leader to space bar.
 let mapleader = ","
+let maplocalleader = ","
 
 " Buffer navigation.
 nnoremap <C-h> <C-w>h
@@ -331,6 +332,9 @@ nmap <F5> :UndotreeToggle<CR>
 nmap <F7> :NERDTree<CR>
 nmap <F8> :TagbarToggle<CR>
 
+" Make vimtex stop continuous compile before cleaning
+nnoremap <localleader>lc :VimtexStop<cr>:VimtexClean<cr>
+
 " Auto-align settings.
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
@@ -342,3 +346,9 @@ if has("autocmd")
         autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\)')
     endif
 endif
+
+" Make vimtex clean everything when we close the file.
+augroup vimtex_config
+    au!
+    au User VimtexEventQuit call vimtex#compiler#clean(0)
+augroup END
