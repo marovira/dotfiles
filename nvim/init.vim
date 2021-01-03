@@ -38,8 +38,38 @@ if has('win32')
 else
     call vundle#begin()
 endif
+" General plugins
+"=======================
 " Let Vundle handle itself.
 Plugin 'VundleVim/Vundle.vim'
+
+" Autocomplete
+Plugin 'lifepillar/vim-mucomplete'
+
+" Undo tree.
+Plugin 'mbbill/undotree'
+
+" Fuzzy file search
+Plugin 'junegunn/fzf'
+
+" Easy motion.
+Plugin 'easymotion/vim-easymotion'
+
+" Colour schemes
+"=======================
+" Dark theme
+Plugin 'dracula/vim'
+
+" Light theme
+Plugin 'NLKNguyen/papercolor-theme'
+
+" IDE-like plugins
+"=======================
+" Tree explorer for Vim.
+Plugin 'scrooloose/nerdtree'
+
+" Bar with tags.
+Plugin 'majutsushi/tagbar'
 
 " GLSL syntax highlighting.
 Plugin 'tikhomirov/vim-glsl'
@@ -47,29 +77,28 @@ Plugin 'tikhomirov/vim-glsl'
 " Commenter for all code!
 Plugin 'scrooloose/nerdcommenter'
 
-" Tree explorer for Vim.
-Plugin 'scrooloose/nerdtree'
+" Fast folding
+Plugin 'Konfekt/FastFold'
 
-" Bar with tags.
-Plugin 'majutsushi/tagbar'
+" Better statusline
+Plugin 'itchyny/lightline.vim'
 
-" LaTeX support.
-Plugin 'lervag/vimtex'
-
-" Undo tree.
-Plugin 'mbbill/undotree'
-
-" Easy motion.
-Plugin 'easymotion/vim-easymotion'
+" Git plugin for NerdTree
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 
 " Indentation guides.
 Plugin 'nathanaelkane/vim-indent-guides'
 
-" Dark theme
-Plugin 'dracula/vim'
+" Autocomplete pairs.
+Plugin 'Raimondi/delimitMate'
 
-" Autocomplete
-Plugin 'lifepillar/vim-mucomplete'
+" Auto-align.
+Plugin 'junegunn/vim-easy-align'
+
+" Language support
+"=======================
+" LaTeX support.
+Plugin 'lervag/vimtex'
 
 " Python.
 Plugin 'davidhalter/jedi-vim'
@@ -77,27 +106,20 @@ Plugin 'davidhalter/jedi-vim'
 " C/C++
 Plugin 'Rip-Rip/clang_complete'
 
-" Autocomplete pairs.
-Plugin 'Raimondi/delimitMate'
-
 " Pandoc plugins.
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
 
-" Simple compile for C++.
-Plugin 'xuhdev/SingleCompile'
-
-" Auto-align.
-Plugin 'junegunn/vim-easy-align'
-
-" Alternate colorscheme for presentation.
-Plugin 'NLKNguyen/papercolor-theme'
-
 " Checkbox toggle for markdown.
 Plugin 'jkramer/vim-checkbox'
 
-" Fast folding
-Plugin 'Konfekt/FastFold'
+" Simple compile for C++.
+Plugin 'xuhdev/SingleCompile'
+
+" Miscellaneous
+"=======================
+" Better startup screen
+Plugin 'mhinz/vim-startify'
 
 call vundle#end()
 
@@ -270,6 +292,9 @@ let g:fastfold_savehook = 1
 let g:markdown_folding = 1
 let g:tex_fold_enabled = 1
 
+" Lightline
+let g:lightline = { 'colorscheme': 'darcula' }
+
 " Autocommands
 "=======================
 autocmd bufread,bufnewfile *.tex set ft=tex
@@ -277,7 +302,6 @@ autocmd InsertEnter * silent! :set nornu number
 autocmd InsertLeave,BufNewFile,VimEnter * silent! :set rnu number
 
 " Filetypes
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
 autocmd FileType latex setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 autocmd FileType tex setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
