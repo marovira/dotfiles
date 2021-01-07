@@ -104,7 +104,7 @@ Plugin 'lervag/vimtex'
 Plugin 'davidhalter/jedi-vim'
 
 " C/C++
-Plugin 'Rip-Rip/clang_complete'
+Plugin 'xavierd/clang_complete'
 
 " Pandoc plugins.
 Plugin 'vim-pandoc/vim-pandoc'
@@ -263,6 +263,7 @@ let g:delimitMate_expand_space = 1
 
 " Clang complete
 let g:clang_use_library = 1
+let g:clang_library_path = 'C:\Program Files\LLVM\bin'
 
 " Pandoc
 let g:pandoc#command#autoexec_command = "Pandoc! html"
