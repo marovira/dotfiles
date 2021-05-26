@@ -208,13 +208,6 @@ endif
 " Set the window size if we're running a UI or console.
 if has('gui_running')
     set lines=50 columns=90
-else
-    if exists('+lines')
-        set lines=50
-    endif
-    if exists('+columns')
-        set columns=90
-    endif
 endif
 
 colorscheme dracula
