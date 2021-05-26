@@ -39,7 +39,7 @@ bindkey -v
 # Vim aliases.
 alias vi='nvim'
 alias vim='nvim'
-alias gvim='nvim'
+alias gvim='nvim-qt'
 
 # Grep aliases
 alias grep='grep --color'
