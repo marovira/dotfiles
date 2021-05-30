@@ -2,7 +2,7 @@
 	name = Mauricio Andres Rovira Galvez
 	email = marovira@uvic.ca
 [core]
-	editor ="gvim -f"
+	editor ="vim -f"
 	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
 	excludesfile = ~/.gitignore
 [commit]
@@ -11,6 +11,8 @@
 	browser = google-chrome
 [push]
 	default = matching
+[pull]
+    rebase = true
 [color]
 	ui = auto
 [color "branch"]
