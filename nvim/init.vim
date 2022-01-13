@@ -60,9 +60,6 @@ Plugin 'easymotion/vim-easymotion'
 " Dark theme
 Plugin 'dracula/vim'
 
-" Light theme
-Plugin 'NLKNguyen/papercolor-theme'
-
 " IDE-like plugins
 "=======================
 " Tree explorer for Vim.
@@ -142,22 +139,6 @@ function ToggleNumbers()
     endif
 endfunction
 
-let s:presentationMode = 0
-function TogglePresentationMode()
-    if has('gui_win32')
-        if s:presentationMode
-            colorscheme dracula
-            set guifont=Consolas:h11:cANSI
-            let s:presentationMode = 0
-        else
-            set background=light
-            colorscheme PaperColor
-            set guifont=Consolas:h18:cANSI:qDRAFT
-            let s:presentationMode = 1
-        endif
-    endif
-endfunction
-
 " Options
 "=======================
 set autoread                    " Automatically re-read file
@@ -179,6 +160,7 @@ set mousehide	                " Hides pointer while typing
 set nostartofline               " Don't move cusor on line jumps
 set ruler	                    " Show column and character in file
 set spell 	                    " Spelling
+set spelllang=en_gb             " Use GB English
 set tw=80 	                    " Text Width
 set wildmenu                    " Auto completion in commandline
 set completeopt+=menuone,noselect
@@ -205,16 +187,9 @@ if has('gui_running')
     endif
 endif
 
-" Set the window size if we're running a UI or console.
+" Set the window size only if we're running UI.
 if has('gui_running')
     set lines=50 columns=90
-else
-    if exists('+lines')
-        set lines=50
-    endif
-    if exists('+columns')
-        set columns=90
-    endif
 endif
 
 colorscheme dracula
@@ -263,10 +238,10 @@ let g:delimitMate_expand_space = 1
 
 " Clang complete
 let g:clang_use_library = 1
-let g:clang_library_path='C:\Program Files\LLVM\bin'
+let g:clang_library_path = 'C:\Program Files\LLVM\bin'
 
 " Pandoc
-let g:pandoc#command#autoexec_command = "Pandoc! html"
+let g:pandoc#command#autoexec_command = "Pandoc! pdf"
 let g:pandoc#command#latex_engine = "pdflatex"
 let g:pandoc#formatting#mode = "h"
 let g:pandoc#formatting#textwidth = 80
@@ -315,14 +290,6 @@ nnoremap <F2> :set invpaste paste?<CR>
 imap <F2> <C-O>:set invpaste paste?<CR>
 set pastetoggle=<F2>
 
-" Strip whitespace.
-nnoremap <F3> :StripWhitespace<CR>
-imap <F3> <C-O>:StripWhitespace<CR>
-
-" Language settings.
-nnoremap <F4> :setlocal spell! spelllang=en<CR>
-imap <F4> <C-O>:setlocal spell! spelllang-en<CR>
-
 " Toggle numbers.
 nnoremap <C-n> :call ToggleNumbers()<CR>
 
@@ -331,7 +298,6 @@ nnoremap <silent> <ESC> :noh<CR><ESC>
 
 " Remap esc to jk.
 inoremap jk <ESC>
-
 
 " Buffer navigation.
 nnoremap <C-h> <C-w>h

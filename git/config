@@ -11,6 +11,8 @@
 	browser = google-chrome
 [push]
 	default = matching
+[pull]
+    rebase = true
 [color]
 	ui = auto
 [color "branch"]
