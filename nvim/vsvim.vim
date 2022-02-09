@@ -8,6 +8,7 @@ set laststatus=2                " Always show status bar
 set modeline	                " Enable top-of-file modelines NOTE: security concerns with these
 set nostartofline               " Don't move cusor on line jumps
 set tw=80 	                    " Text Width
+set number relativenumber       " Set hybrid line numbers
 
 " Tab settings
 set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
@@ -63,3 +64,6 @@ nnoremap <Leader>b :vsc Debug.ToggleBreakpoint<CR>
 
 " Enable/disable breakpoint in current line.
 nnoremap <Leader>bt :vsc Debug.EnableBreakpoint<CR>
+
+nnoremap <Leader>n :set nornu<CR>
+nnoremap <Leader>r :set rnu<CR>

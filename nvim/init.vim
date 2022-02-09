@@ -192,6 +192,7 @@ if has('gui_running')
     set lines=50 columns=90
 endif
 
+let g:dracula_colorterm = 0
 colorscheme dracula
 
 " File format settings.
@@ -221,7 +222,7 @@ let g:vimtex_fold_enabled = 0
 let g:vimtex_view_method = 'general'
 let g:vimtex_view_general_viewer = 'SumatraPDF'
 let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
-let g:vimtex_view_general_options_latexmk = '-reuse-instance'
+let g:vimtex_include_search_enabled = 0
 
 " Undotree
 if has("persistent_undo")
