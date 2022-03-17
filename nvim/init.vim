@@ -92,6 +92,9 @@ Plugin 'Raimondi/delimitMate'
 " Auto-align.
 Plugin 'junegunn/vim-easy-align'
 
+" Clang format.
+Plugin 'rhysd/vim-clang-format'
+
 " Language support
 "=======================
 " LaTeX support.
@@ -239,7 +242,14 @@ let g:delimitMate_expand_space = 1
 
 " Clang complete
 let g:clang_use_library = 1
-let g:clang_library_path = 'C:\Program Files\LLVM\bin'
+if has('win32') || has('win64')
+    let g:clang_library_path = 'C:\Program Files\LLVM\bin'
+else
+    let g:clang_library_path = '/usr/lib/llvm-12/lib'
+endif
+
+" Clang format
+let g:clang_format#auto_format = 1
 
 " Pandoc
 let g:pandoc#command#autoexec_command = "Pandoc! pdf"
@@ -283,6 +293,8 @@ autocmd FileType latex setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 autocmd FileType tex setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
 autocmd FileType markdown nnoremap <F10> :Pandoc! html<CR>
+
+autocmd FileType c,cpp,objc nnoremap <buffer><Leader>f :<C-u>ClangFormat<CR>
 
 " Key remaps
 "=======================
