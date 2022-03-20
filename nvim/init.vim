@@ -5,8 +5,6 @@ if has('win32')
     let s:editorRoot=$VIM . '\vimfiles'
 elseif has('nvim')
     let s:editorRoot=expand('~/.config/nvim')
-else
-    let s:editorRoot=expand('~/.vim')
 endif
 
 let vundleInstalled=1
@@ -26,8 +24,6 @@ if has('win32')
     set rtp+=$VIM/vimfiles/bundle/Vundle.vim/
 elseif has('nvim')
     set rtp+=$HOME/.config/nvim/bundle/Vundle.vim/
-else
-    set rtp+=$HOME/.vim/bundle/Vundle.vim/
 endif
 
 
@@ -244,12 +240,15 @@ let g:delimitMate_expand_space = 1
 let g:clang_use_library = 1
 if has('win32') || has('win64')
     let g:clang_library_path = 'C:\Program Files\LLVM\bin'
-else
-    let g:clang_library_path = '/usr/lib/llvm-12/lib'
+elseif has('unix')
+    let g:clang_library_path = '/usr/lib/llvm-12/lib/libclang-12.so.1'
 endif
 
 " Clang format
 let g:clang_format#auto_format = 1
+if has('unix')
+    let g:clang_format#command = 'clang-format-12'
+endif
 
 " Pandoc
 let g:pandoc#command#autoexec_command = "Pandoc! pdf"
