@@ -259,7 +259,7 @@ let g:pandoc#modules#disabled = ['folding']
 
 " Single compile
 if has('win32') || has('win64')
-    call SingleCompile#SetCompilerTemplate('cpp', 'clang-cl', 'Windows Clang', 'clang-cl', '/std:c++17 /EHsc /Od /W3 -o $(FILE_TITLE)$', '$(FILE_TITLE)$')
+    call SingleCompile#SetCompilerTemplate('cpp', 'clang-cl', 'Windows Clang', 'clang-cl', '/std:c++20 /EHsc /Od /W3 -o $(FILE_TITLE)$', '$(FILE_TITLE)$')
     call SingleCompile#SetOutfile('cpp', 'clang-cl', '$(FILE_TITLE)$.exe')
 endif
 
