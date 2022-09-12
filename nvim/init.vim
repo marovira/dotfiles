@@ -91,6 +91,9 @@ Plugin 'junegunn/vim-easy-align'
 " Clang format.
 Plugin 'rhysd/vim-clang-format'
 
+" Black (formatter for Python)
+Plugin 'psf/black'
+
 " Language support
 "=======================
 " LaTeX support.
@@ -160,7 +163,7 @@ set nostartofline               " Don't move cusor on line jumps
 set ruler	                    " Show column and character in file
 set spell 	                    " Spelling
 set spelllang=en_gb             " Use GB English
-set tw=80 	                    " Text Width
+set tw=90 	                    " Text Width
 set wildmenu                    " Auto completion in commandline
 set completeopt+=menuone,noselect
 set shortmess+=ac                " Turn off completion messages.
@@ -188,7 +191,7 @@ endif
 
 " Set the window size only if we're running UI.
 if has('gui_running')
-    set lines=50 columns=90
+    set lines=50 columns=100
 endif
 
 let g:dracula_colorterm = 0
@@ -343,6 +346,12 @@ nnoremap <localleader>lc :VimtexStop<cr>:VimtexClean<cr>
 " Auto-align settings.
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
+
+" Black: format on save.
+augroup black_on_save:
+    autocmd!
+    autocmd BufWritePre *.py Black
+augroup end
 
 " Autocommands
 "=======================
