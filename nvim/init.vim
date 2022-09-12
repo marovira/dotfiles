@@ -258,7 +258,7 @@ endif
 let g:pandoc#command#autoexec_command = "Pandoc! pdf"
 let g:pandoc#command#latex_engine = "pdflatex"
 let g:pandoc#formatting#mode = "h"
-let g:pandoc#formatting#textwidth = 80
+let g:pandoc#formatting#textwidth = &tw
 let g:pandoc#modules#disabled = ['folding']
 
 " Single compile
