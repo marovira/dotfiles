@@ -94,6 +94,9 @@ Plugin 'rhysd/vim-clang-format'
 " Black (formatter for Python)
 Plugin 'psf/black'
 
+" ALE linter.
+Plugin 'dense-analysis/ale'
+
 " Language support
 "=======================
 " LaTeX support.
