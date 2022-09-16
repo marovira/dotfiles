@@ -28,6 +28,10 @@ mklink %USERPROFILE%\.gitconfig %CURDIR%git\config
 mklink %USERPROFILE%\.gitignore %CURDIR%git\ignore
 mklink %USERPROFILE%\.gittemplate.txt %CURDIR%git\template
 
+:: Setup language support.
+mklink %USERPROFILE%\.clang-format %CURDIR%cpp\.clang-format
+mklink %USERPROFILE%\pylintrc %CURDIR%python\pylintrc
+
 :: Finally, setup the bashrc.
 mklink %USERPROFILE%\.bashrc %CURDIR%bash\bashrc
 
