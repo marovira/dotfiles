@@ -1,65 +1,84 @@
 # Dotfiles
 
-The source of all my config files. Below is a (partial) set of instructions for
-installing depending on the OS.
+The source of all my config files.
 
-## Windows
+## Initial Setup
 
-### Setup
+### Windows
 
-1. Download [Vim](https://github.com/vim/vim-win32-installer/releases) and
-   install it to the root of C. **DO NOT** install to the default location! The
-   spaces cause problems later on, so just install to `C:\Vim`. Also make sure
-   that there is no default vimrc or vimfiles directory.
-2. Download and install [Git](https://git-scm.com/downloads). Make sure that
-   everything is added to the path.
-3. Download and install [ConsoleZ](https://github.com/cbucher/console/releases).
-   Add git bash by creating a new tab and setting it to `C:\Program
-   Files\Git\bin\bash.exe` and set the startup directory to D.
-4. Download and install [Python](https://www.python.org/downloads/) **64-bit**.
-   Make sure that the python version **matches** the one Vim expects. To find
-   out the version, open Vim and run `:version` and look for
-   `-DDYNAMIC_PYTHON3_DLL`. The number that appears on the name of the DLL is
-   the python version required.
-5. Clone [ctags](https://github.com/universal-ctags/ctags) and add to path.
+1. Download **64-bit** [Vim](https://github.com/vim/vim-win32-installer/releases) and
+   install it to the root of C. **DO NOT** install to the default location! It generally
+   contains spaces and will cause problems later on, so just install to C:\Vim. Also make
+   sure that there are no default vimrc or vimfiles directory. **Note:** When installing
+   Vim, take note of the Python version that it was built with, you'll need this later on.
+2. Download and install [Git](https://git-scm.com/downloads). Make sure that everything is
+   added to the path.
+3. Download Windows Terminal from the Windows app store.
+4. Download and install [Python](https://www.python.org/downloads/) **64-bit** ensuring
+   that the major and minor version match the one Vim was built with.
 5. Clone this repository.
-6. Run `install.bat`. Make sure that it's run as **admin**.
+6. Run `install.bat` as admin.
 
-### Vim Plugins
-Once Vim is opened, everything should work as expected. If for some reason
-there's an error on the command to download Vundle, simply remove the '\'
-character on line 19 of `init.vim` and everything should work. Also, make sure
-that Vim is first run as **admin** so permissions aren't an issue. The language
-support plugins may need some extra work. 
+### Linux
 
-* Python will work as is.
-* C/C++ will need clang. Download the binaries from
-  [here](https://releases.llvm.org/download.html) and add to path. Make sure
-  that the binaries are 64-bit.
-* Pandoc will require downloading it from [here](https://github.com/jgm/pandoc)
-  and adding to path.
+1. Using the package manager, install:
+    * zsh
+    * neovim
+    * git
+    * Python 3
+2. Clone this repository.
+3. Run `install.sh`
 
-### Updating
+## Vim Plug-in Dependencies
 
-To successfully update VIM, do the following:
+Once the base installation of Vim is up and running, we can focus on the dependencies
+needed for each plug-in. Most of them will work as is, but a few will need a bit more
+work.
 
-1. Install the latest version of VIM.
-2. Double-check the version of Python by running `:version` and looking for the
-   DLL name. If the version matches the currently installed version then
-   everything is fine. Otherwise, download and install the corresponding
-   version.
+### CTags
 
-## Linux 
+* For Windows, go [here](https://github.com/universal-ctags/ctags-win32/releases) and
+  download the latest version. Make sure it gets added to the path.
+* For Linux, install `ctags`.
 
-Make sure that the following are installed:
+### C/C++
 
-1. zsh
-2. neovim
-3. git
-4. python 3
-5. clang
-6. ctags
-7. pandoc
+This needs two things: `clang` and `clang-format`. Both of these will be installed by
+default upon installation of Clang itself:
 
-Once everything is installed, just clone the repo and run `install.sh`.
-Everything will be placed where it needs to be and things will just work.
+* For Windows, go [here](https://github.com/llvm/llvm-project/releases) and download the
+  required version. Make sure it gets added to the path.
+* For Linux, install `clang`. If this doesn't install `clang-format`, install it as well.
+
+### Python
+
+Python should mostly work by default as it was installed along with Vim. The only extra
+thing that is needed is to install `pylint`, which can be installed in both OSes as 
+
+```sh
+pip install pylint
+```
+
+### Markdown
+
+This will require Pandoc.
+
+* For Windows, go [here](https://github.com/jgm/pandoc/releases/tag/2.19.2) and download
+  the latest version. Make sure it gets added to the path.
+* For Linux, install `pandoc`.
+
+### LaTeX
+
+This is going to need a LaTeX engine and a PDF viewer.
+
+* For Windows, first install MiKTeX from [here](https://miktex.org/download). Once that is
+  done, download SumatraPDF from
+  [here](https://www.sumatrapdfreader.org/download-free-pdf-viewer). Make sure that
+  SumatraPDF is added to the path. Once that is done, things will just work.
+* For Linux... unknown. Update if/when we need it.
+
+## Clang-format
+
+This repo also contains the main clang-format used by all my projects. Whenever an update
+occurs, make sure it makes its way here so we can keep track of changes at a more global
+scale.
