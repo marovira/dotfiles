@@ -171,34 +171,7 @@ set wildmenu                    " Auto completion in commandline
 set completeopt+=menuone,noselect
 set shortmess+=ac                " Turn off completion messages.
 set belloff+=ctrlg              " If Vim beeps during completion.
-set guioptions-=m               " Remove menu bar
-set guioptions-=T               " Remove toolbar
-set guioptions-=r               " Remove right scroll bar
-set guioptions-=L               " Remove left scroll bar
 set number relativenumber       " Set hybrid line numbers
-
-" Map leader and localleader to ,
-let mapleader = ","
-let maplocalleader = ","
-
-" Select font based on the OS.
-if has('gui_running')
-    if has('gui_gtk2')
-        set guifont=Inconsolata\12
-    elseif has('gui_macvim')
-        set guifont=Menlo\ Regular:h14
-    elseif has('gui_win32')
-        set guifont=Consolas:h11:cANSI
-    endif
-endif
-
-" Set the window size only if we're running UI.
-if has('gui_running')
-    set lines=50 columns=100
-endif
-
-let g:dracula_colorterm = 0
-colorscheme dracula
 
 " File format settings.
 set encoding=utf-8
@@ -208,11 +181,17 @@ set fileformats=unix,dos
 " Tab settings
 set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 
-let &colorcolumn=join(range(&tw,&tw), ",")
-
 " Syntax and file detection.
 filetype plugin indent on
 syntax on
+
+" Map leader and localleader to ,
+let mapleader = ","
+let maplocalleader = ","
+
+let g:dracula_colorterm = 0
+colorscheme dracula
+let &colorcolumn=join(range(&tw,&tw), ",")
 
 " Copy to system clipboard (this only works on windows and mac)
 if has("win32") || has("mac")
@@ -221,14 +200,6 @@ endif
 
 " Plugins
 "=======================
-" Vimtex
-let g:vimtex_indent_ignored_envs = []
-let g:vimtex_fold_enabled = 0
-let g:vimtex_view_method = 'general'
-let g:vimtex_view_general_viewer = 'SumatraPDF'
-let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
-let g:vimtex_include_search_enabled = 0
-
 " Undotree
 if has("persistent_undo")
     set undodir=~/.undodir/
@@ -241,6 +212,13 @@ let g:mucomplete#enable_auto_at_startup = 1
 " delimitMate
 let g:delimitMate_expand_cr = 2
 let g:delimitMate_expand_space = 1
+
+" Pandoc
+let g:pandoc#command#autoexec_command = "Pandoc! pdf"
+let g:pandoc#command#latex_engine = "pdflatex"
+let g:pandoc#formatting#mode = "h"
+let g:pandoc#formatting#textwidth = &tw
+let g:pandoc#modules#disabled = ['folding']
 
 " Clang complete
 let g:clang_use_library = 1
@@ -256,13 +234,6 @@ let g:clang_format#enable_fallback_style = 0
 if has('unix')
     let g:clang_format#command = 'clang-format-12'
 endif
-
-" Pandoc
-let g:pandoc#command#autoexec_command = "Pandoc! pdf"
-let g:pandoc#command#latex_engine = "pdflatex"
-let g:pandoc#formatting#mode = "h"
-let g:pandoc#formatting#textwidth = &tw
-let g:pandoc#modules#disabled = ['folding']
 
 " Single compile
 if has('win32') || has('win64')
@@ -290,17 +261,13 @@ let g:lightline = { 'colorscheme': 'darcula' }
 
 " Autocommands
 "=======================
-autocmd bufread,bufnewfile *.tex set ft=tex
+" Ensure that .tex is mapped into LaTeX
 autocmd InsertEnter * silent! :set nornu number
 autocmd InsertLeave,BufNewFile,VimEnter * silent! :set rnu number
 
-" Filetypes
-autocmd FileType latex setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-autocmd FileType tex setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-
-autocmd FileType markdown nnoremap <F10> :Pandoc! html<CR>
-
-autocmd FileType c,cpp,objc nnoremap <buffer><Leader>f :<C-u>ClangFormat<CR>
+" Highlight TODO, FIXME, and NOTE in all files.
+autocmd Syntax * call matchadd('Todo', '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)')
+autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\)')
 
 " Key remaps
 "=======================
@@ -327,48 +294,24 @@ nnoremap <C-j> <C-w>j
 " Play macro stored in buffer q with the space bar
 nnoremap <Space> @q
 
-" Call presentation mode
-nnoremap <Leader>pm :call TogglePresentationMode()<CR>
-
-" Compile with clang
-nmap <F9> :SCCompile<CR>
-nmap <F10> :SCCompileRun<CR>
-
-" Switch buffers with alt-tab.
-map <C-Tab> :bnext<cr>
-map <C-S-Tab> :bprevious<cr>
-
 " IDE-like settings.
 nmap <F5> :UndotreeToggle<CR>
 nmap <F7> :NERDTree<CR>
 nmap <F8> :TagbarToggle<CR>
 
-" Make vimtex stop continuous compile before cleaning
-nnoremap <localleader>lc :VimtexStop<cr>:VimtexClean<cr>
-
-" Auto-align settings.
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
-
+" Autocommands
+"=======================
 " Black: format on save.
 augroup black_on_save:
     autocmd!
     autocmd BufWritePre *.py Black
 augroup end
 
-" Autocommands
-"=======================
-" Highlight TODO, FIXME, and NOTE in all files.
-if has("autocmd")
-    if v:version > 701
-        autocmd Syntax * call matchadd('Todo', '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)')
-        autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\)')
-    endif
-endif
+" Treat C as C++. This is mainly in the off-chance that I ever work with C again. If
+" something comes up, we can just make a new file in after/ftplugin
+augroup c_as_cpp:
+    autocmd!
+    autocmd BufRead,BufNewFile *.h,*.c set filetype=cpp
+augroup end
 
-" Make Vimtex clean everything when we close the file.
-augroup vimtex_config
-    au!
-    au User VimtexEventQuit call vimtex#compiler#clean(0)
-augroup END
 

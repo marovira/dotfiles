@@ -14,3 +14,8 @@ if has('gui_running')
         set guifont=Consolas:h11:cANSI
     endif
 endif
+
+" Set the window size only if we're running UI.
+if has('gui_running')
+    set lines=50 columns=100
+endif

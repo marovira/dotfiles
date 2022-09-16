@@ -21,11 +21,7 @@ setx -m VIM "C:\Vim"
 mklink %VIM%\_vimrc %CURDIR%nvim\init.vim
 mklink %VIM%\_gvimrc %CURDIR%nvim\gvim.vim
 mklink %VIM%\_vsvimrc %CURDIR%nvim\vsvim.vim
-mklink /D %VIM%\autoload %CURDIR%nvim\autoload
-mklink /D %VIM%\colors %CURDIR%nvim\colors
-mklink /D %VIM%\ftplugin %CURDIR%nvim\ftplugin
-mklink /D %VIM%\plugin %CURDIR%nvim\plugin
-mklink /D %VIM%\test-files %CURDIR%nvim\test-files
+mklink /D %VIM%\vimfiles\after %CURDIR%nvim\after
 
 :: Now setup the git stuff
 mklink %USERPROFILE%\.gitconfig %CURDIR%git\config
