@@ -198,7 +198,7 @@ if has("win32") || has("mac")
     set clipboard=unnamed
 endif
 
-" Plugins
+" Plug-in Settings
 "=======================
 " Undotree
 if has("persistent_undo")
@@ -219,6 +219,11 @@ let g:pandoc#command#latex_engine = "pdflatex"
 let g:pandoc#formatting#mode = "h"
 let g:pandoc#formatting#textwidth = &tw
 let g:pandoc#modules#disabled = ['folding']
+
+" ALE
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+let g:ale_open_list = 1
 
 " Clang complete
 let g:clang_use_library = 1
