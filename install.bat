@@ -33,6 +33,7 @@ mklink %USERPROFILE%\.clang-format %CURDIR%cpp\.clang-format
 mklink %USERPROFILE%\pylintrc %CURDIR%python\pylintrc
 
 :: Finally, setup the bashrc.
-mklink %USERPROFILE%\.bashrc %CURDIR%bash\bashrc
+mklink %USERPROFILE%\.bashrc %CURDIR%bash\bashrc_windows
+mklink %USERPROFILE%\.zshrc %CURDIR%zsh\zshrc_windows
 
 echo Install finished successfully
