@@ -52,6 +52,7 @@ nnoremap <Leader>p  :vsc Edit.GoToPreviousIssueinFile<CR>
 " Format selection for both normal and visual modes.
 nnoremap <Leader>f :vsc Edit.FormatSelection<CR>
 vnoremap <Leader>f :vsc Edit.FormatSelection<CR>
+nnoremap <Leader>d :vsc Edit.FormatDocument<CR>
 
 " Return to previous position.
 nnoremap <C-t> :vsc View.NavigateBackward<CR>
