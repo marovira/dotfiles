@@ -9,4 +9,4 @@ disable=
     invalid-name,
 
 [TYPECHECK]
-generated-members=numpy.*, torch.*
+generated-members=numpy.*, torch.*, cv2.*
