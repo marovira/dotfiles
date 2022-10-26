@@ -12,7 +12,7 @@ let b:vimtex_fold_enabled = 0
 let b:vimtex_view_method = 'general'
 let b:vimtex_view_general_viewer = 'SumatraPDF'
 let b:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
-let b:vimtex_include_search_enabled = 0
+let g:vimtex_include_search_enabled = 0
 
 " Make vimtex stop continuous compile before cleaning
 nnoremap <localleader>lc :VimtexStop<cr>:VimtexClean<cr>
