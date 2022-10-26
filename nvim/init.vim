@@ -76,6 +76,9 @@ Plugin 'Konfekt/FastFold'
 " Better statusline
 Plugin 'itchyny/lightline.vim'
 
+" Show git branch in statusline
+Plugin 'itchyny/vim-gitbranch'
+
 " Git plugin for NerdTree
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 
@@ -208,6 +211,9 @@ endif
 
 " Mucomplete
 let g:mucomplete#enable_auto_at_startup = 1
+let g:mucomplete#chains = {
+    \ 'python': {'default': ['path', 'keyn', 'keyp', 'dict', 'omni'] }
+\ }
 
 " delimitMate
 let g:delimitMate_expand_cr = 2
@@ -261,8 +267,29 @@ let g:fastfold_savehook = 1
 let g:markdown_folding = 1
 let g:tex_fold_enabled = 1
 
+fun! GetMUCompleteStatus()
+  return get(g:mucomplete#msg#short_methods,
+    \        get(g:, 'mucomplete_current_method', ''), '')
+endf
+
 " Lightline
-let g:lightline = { 'colorscheme': 'darcula' }
+let g:lightline = { 
+    \ 'colorscheme': 'darcula',
+    \ 'active': {
+        \ 'left': [ [ 'mode', 'paste' ],
+        \           [ 'readonly', 'gitbranch' ,'filename', 'modified' ] ],
+        \ 'right': [ ['lineinfo'],
+        \            [ 'percent' ],
+        \            [ 'mustatus', 'fileformat', 'fileencoding', 'filetype' ] ],
+    \ },
+    \ 'component_function': {
+        \ 'gitbranch': 'gitbranch#name',
+        \ 'mustatus': 'GetMUCompleteStatus',
+    \ },
+\ }
+
+" Jedi vim
+let g:jedi#popup_on_dot = 0
 
 " Autocommands
 "=======================
