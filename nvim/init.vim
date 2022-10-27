@@ -1,6 +1,7 @@
+set nocompatible " be iMproved, required.
+
 " vim-plug setup.
 "=======================
-" Set the path of the editor.
 if has('win32')
     let s:editorRoot=$VIM . '\vimfiles'
 elseif has('nvim')
@@ -17,13 +18,12 @@ if !filereadable(plugSrc)
     let plugInstalled = 0
 endif
 
-set nocompatible " be iMproved, required.
-
 if has('win32')
     call plug#begin('$VIM/vimfiles/plugged')
 else
     call plug#begin()
 endif
+
 " General plugins
 "=======================
 " Autocomplete
@@ -66,6 +66,9 @@ Plug 'itchyny/lightline.vim'
 " Show git branch in statusline
 Plug 'itchyny/vim-gitbranch'
 
+" Show ALE info in lightline.
+Plug 'maximbaz/lightline-ale'
+
 " Git plugin for NerdTree
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
@@ -93,13 +96,12 @@ Plug 'dense-analysis/ale'
 Plug 'lervag/vimtex'
 
 " Python.
-"Plug 'davidhalter/jedi-vim'
 Plug 'python-mode/python-mode', {'for': 'python', 'branch': 'develop'}
 
 " C/C++
 Plug 'xavierd/clang_complete'
 
-" Pandoc plugins.
+" Pandoc.
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 
@@ -114,7 +116,6 @@ Plug 'xuhdev/SingleCompile'
 " Better startup screen
 Plug 'mhinz/vim-startify'
 
-"call vundle#end()
 call plug#end()
 
 if plugInstalled == 0
@@ -134,6 +135,12 @@ function ToggleNumbers()
         set nu nornu
         let s:numberMode = 1
     endif
+endfunction
+
+function StripTrailingWhitespace()
+    let l:savepos = winsaveview()
+    %s/\s\+$//e
+    call winrestview(l:savepos)
 endfunction
 
 " Options
@@ -202,8 +209,8 @@ endif
 let g:mucomplete#enable_auto_at_startup = 1
 
 " Python-mode
-let g:pymode_lint = 0 " Disable linting, prefer ALE instead.
-let g:pymode_rope = 1 " Enable rope for completion.
+let g:pymode_lint = 0
+let g:pymode_rope = 1
 let g:pymode_rope_completion = 1
 let g:pymode_rope_complete_on_dot = 1
 let g:pymode_rope_regenerate_on_write = 1
@@ -270,23 +277,27 @@ let g:lightline = {
     \ 'colorscheme': 'darcula',
     \ 'active': {
         \ 'left': [ [ 'mode', 'paste' ],
-        \           [ 'readonly', 'gitbranch' ,'filename', 'modified' ] ],
-        \ 'right': [ ['lineinfo'],
+        \           [ 'readonly', 'git_branch' ,'filename', 'modified' ] ],
+        \ 'right': [ ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok'],
+        \            ['lineinfo'],
         \            [ 'percent' ],
-        \            [ 'mustatus', 'fileformat', 'fileencoding', 'filetype' ] ],
+        \            [ 'fileformat', 'fileencoding', 'filetype' ] ],
+    \ },
+    \ 'component_expand': {
+        \ 'linter_checking': 'lightline#ale#checking',
+        \ 'linter_infos': 'lightline#ale#infos',
+        \ 'linter_warnings': 'lightline#ale#warnings',
+        \ 'linter_errors': 'lightline#ale#errors',
+        \ 'linter-ok': 'lightline#ale#ok',
     \ },
     \ 'component_function': {
-        \ 'gitbranch': 'gitbranch#name',
-        \ 'mustatus': 'GetMUCompleteStatus',
+        \ 'git_branch': 'gitbranch#name',
+        \ 'mu_status': 'GetMUCompleteStatus',
     \ },
 \ }
 
-" Jedi vim
-let g:jedi#popup_on_dot = 0
-
 " Autocommands
 "=======================
-" Ensure that .tex is mapped into LaTeX
 autocmd InsertEnter * silent! :set nornu number
 autocmd InsertLeave,BufNewFile,VimEnter * silent! :set rnu number
 
