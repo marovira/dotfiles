@@ -1,4 +1,4 @@
-" Vundle setup.
+" vim-plug setup.
 "=======================
 " Set the path of the editor.
 if has('win32')
@@ -7,131 +7,120 @@ elseif has('nvim')
     let s:editorRoot=expand('~/.config/nvim')
 endif
 
-let vundleInstalled=1
-let vundleReadme=s:editorRoot . '/bundle/Vundle.vim/README.md'
-if !filereadable(vundleReadme)
-    echo 'Installing Vundle'
+let plugInstalled = 1
+let plugSrc = s:editorRoot . '/autoload/plug.vim'
+if !filereadable(plugSrc)
+    echo 'Installing vim-plug'
     echo ''
-    call mkdir(s:editorRoot . '/bundle/', 'p')
-    execute '!git clone https://github.com/VundleVim/Vundle.vim ' . s:editorRoot . '/bundle/Vundle.vim'
-    let vundleInstalled=0
+    call mkdir(s:editorRoot . '/autoload/', 'p')
+    execute '!curl -fLo ' . s:editorRoot . '/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    let plugInstalled = 0
 endif
 
 set nocompatible " be iMproved, required.
-filetype off 
 
 if has('win32')
-    set rtp+=$VIM/vimfiles/bundle/Vundle.vim/
-elseif has('nvim')
-    set rtp+=$HOME/.config/nvim/bundle/Vundle.vim/
-endif
-
-
-" Vundle plugins.
-"=======================
-if has('win32')
-    call vundle#begin('$VIM/vimfiles/bundle')
+    call plug#begin('$VIM/vimfiles/plugged')
 else
-    call vundle#begin()
+    call plug#begin()
 endif
 " General plugins
 "=======================
-" Let Vundle handle itself.
-Plugin 'VundleVim/Vundle.vim'
-
 " Autocomplete
-Plugin 'lifepillar/vim-mucomplete'
+Plug 'lifepillar/vim-mucomplete'
 
 " Undo tree.
-Plugin 'mbbill/undotree'
+Plug 'mbbill/undotree'
 
 " Fuzzy file search
-Plugin 'junegunn/fzf'
+Plug 'junegunn/fzf'
 
 " Easy motion.
-Plugin 'easymotion/vim-easymotion'
+Plug 'easymotion/vim-easymotion'
 
 " Colour schemes
 "=======================
 " Dark theme
-Plugin 'dracula/vim'
+Plug 'dracula/vim'
 
 " IDE-like plugins
 "=======================
 " Tree explorer for Vim.
-Plugin 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree'
 
 " Bar with tags.
-Plugin 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 
 " GLSL syntax highlighting.
-Plugin 'tikhomirov/vim-glsl'
+Plug 'tikhomirov/vim-glsl'
 
 " Commenter for all code!
-Plugin 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter'
 
 " Fast folding
-Plugin 'Konfekt/FastFold'
+Plug 'Konfekt/FastFold'
 
 " Better statusline
-Plugin 'itchyny/lightline.vim'
+Plug 'itchyny/lightline.vim'
 
 " Show git branch in statusline
-Plugin 'itchyny/vim-gitbranch'
+Plug 'itchyny/vim-gitbranch'
 
 " Git plugin for NerdTree
-Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " Indentation guides.
-Plugin 'nathanaelkane/vim-indent-guides'
+Plug 'nathanaelkane/vim-indent-guides'
 
 " Autocomplete pairs.
-Plugin 'Raimondi/delimitMate'
+Plug 'Raimondi/delimitMate'
 
 " Auto-align.
-Plugin 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-easy-align'
 
 " Clang format.
-Plugin 'rhysd/vim-clang-format'
+Plug 'rhysd/vim-clang-format'
 
 " Black (formatter for Python)
-Plugin 'psf/black'
+Plug 'psf/black'
 
 " ALE linter.
-Plugin 'dense-analysis/ale'
+Plug 'dense-analysis/ale'
 
 " Language support
 "=======================
 " LaTeX support.
-Plugin 'lervag/vimtex'
+Plug 'lervag/vimtex'
 
 " Python.
-Plugin 'davidhalter/jedi-vim'
+"Plug 'davidhalter/jedi-vim'
+Plug 'python-mode/python-mode'
 
 " C/C++
-Plugin 'xavierd/clang_complete'
+Plug 'xavierd/clang_complete'
 
 " Pandoc plugins.
-Plugin 'vim-pandoc/vim-pandoc'
-Plugin 'vim-pandoc/vim-pandoc-syntax'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 
 " Checkbox toggle for markdown.
-Plugin 'jkramer/vim-checkbox'
+Plug 'jkramer/vim-checkbox'
 
 " Simple compile for C++.
-Plugin 'xuhdev/SingleCompile'
+Plug 'xuhdev/SingleCompile'
 
 " Miscellaneous
 "=======================
 " Better startup screen
-Plugin 'mhinz/vim-startify'
+Plug 'mhinz/vim-startify'
 
-call vundle#end()
+"call vundle#end()
+call plug#end()
 
-if vundleInstalled == 0
+if plugInstalled == 0
     echo 'Installing plugins'
     echo ''
-    :BundleInstall
+    :PlugInstall
 endif
 
 " Functions
