@@ -32,6 +32,11 @@ mklink %USERPROFILE%\.gittemplate.txt %CURDIR%git\template
 mklink %USERPROFILE%\.clang-format %CURDIR%cpp\.clang-format
 mklink %USERPROFILE%\pylintrc %CURDIR%python\pylintrc
 
+:: Create an alias for python3 in the currently installed Python directory.
+set PYTHON_ROOT=
+for /F %%I in ('where python') do set "PYTHON_ROOT=%%~dpI"
+mklink %PYTHON_ROOT%\python3.exe %PYTHON_ROOT%\python.exe
+
 :: Finally, setup the bashrc.
 mklink %USERPROFILE%\.bashrc %CURDIR%bash\bashrc
 
