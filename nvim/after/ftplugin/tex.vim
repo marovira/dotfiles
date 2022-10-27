@@ -14,6 +14,9 @@ let b:vimtex_view_general_viewer = 'SumatraPDF'
 let b:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
 let g:vimtex_include_search_enabled = 0
 
+" ALE
+let b:ale_enabled = 0
+
 " Make vimtex stop continuous compile before cleaning
 nnoremap <localleader>lc :VimtexStop<cr>:VimtexClean<cr>
 
