@@ -31,6 +31,8 @@ antigen theme dracula/zsh dracula
 # Finish up.
 antigen apply
 
+plugins=(git ssh-agent)
+
 autoload -U compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 
