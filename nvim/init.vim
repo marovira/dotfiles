@@ -94,7 +94,7 @@ Plug 'lervag/vimtex'
 
 " Python.
 "Plug 'davidhalter/jedi-vim'
-Plug 'python-mode/python-mode'
+Plug 'python-mode/python-mode', {'for': 'python', 'branch': 'develop'}
 
 " C/C++
 Plug 'xavierd/clang_complete'
@@ -200,9 +200,13 @@ endif
 
 " Mucomplete
 let g:mucomplete#enable_auto_at_startup = 1
-let g:mucomplete#chains = {
-    \ 'python': {'default': ['path', 'keyn', 'keyp', 'dict', 'omni'] }
-\ }
+
+" Python-mode
+let g:pymode_lint = 0 " Disable linting, prefer ALE instead.
+let g:pymode_rope = 1 " Enable rope for completion.
+let g:pymode_rope_completion = 1
+let g:pymode_rope_complete_on_dot = 1
+let g:pymode_rope_regenerate_on_write = 1
 
 " delimitMate
 let g:delimitMate_expand_cr = 2
