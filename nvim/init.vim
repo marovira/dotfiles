@@ -29,6 +29,16 @@ endif
 " Autocomplete
 Plug 'lifepillar/vim-mucomplete'
 
+" NCM2 (used for Python)
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+if has('win32')
+    Plug 'roxma/vim-hug-neovim-rpc'
+endif
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-path'
+Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
+
 " Undo tree.
 Plug 'mbbill/undotree'
 
@@ -97,6 +107,9 @@ Plug 'lervag/vimtex'
 
 " C/C++
 Plug 'xavierd/clang_complete'
+
+" Python
+Plug 'ncm2/ncm2-jedi'
 
 " Pandoc.
 Plug 'vim-pandoc/vim-pandoc'

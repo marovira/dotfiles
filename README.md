@@ -52,8 +52,16 @@ default upon installation of Clang itself:
 
 ### Python
 
-Python should mostly work by default as it was installed along with Vim. The only extra
-thing that is needed is to install `pylint`, which can be installed in both OSes as 
+Python uses a separate plugin for autocompletion (ncm2), which is going to require Windows
+to install pynvim:
+
+```sh
+pip install pynvim
+```
+
+After this, Python should mostly work by default as it was installed along with Vim. The
+only extra thing that is needed is to install `pylint`, which can be installed in both
+OSes as 
 
 ```sh
 pip install pylint
