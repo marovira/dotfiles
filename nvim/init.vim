@@ -218,6 +218,13 @@ endif
 " Mucomplete
 let g:mucomplete#enable_auto_at_startup = 1
 
+" NCM2
+if has('win32')
+    " Windows doesn't use the python3 convention for the exe name, so just set it to
+    " python directly.
+    let g:python3_host_prog = 'python'
+endif
+
 " delimitMate
 let g:delimitMate_expand_cr = 2
 let g:delimitMate_expand_space = 1
