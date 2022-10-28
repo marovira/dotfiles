@@ -95,9 +95,6 @@ Plug 'dense-analysis/ale'
 " LaTeX support.
 Plug 'lervag/vimtex'
 
-" Python.
-Plug 'python-mode/python-mode', {'for': 'python', 'branch': 'develop'}
-
 " C/C++
 Plug 'xavierd/clang_complete'
 
@@ -167,7 +164,7 @@ set spell 	                    " Spelling
 set spelllang=en_gb             " Use GB English
 set tw=90 	                    " Text Width
 set wildmenu                    " Auto completion in commandline
-set completeopt+=menuone,noselect
+set completeopt=menuone,noselect,noinsert
 set shortmess+=ac                " Turn off completion messages.
 set belloff+=ctrlg              " If Vim beeps during completion.
 set number relativenumber       " Set hybrid line numbers
@@ -208,13 +205,6 @@ endif
 " Mucomplete
 let g:mucomplete#enable_auto_at_startup = 1
 
-" Python-mode
-let g:pymode_lint = 0
-let g:pymode_rope = 1
-let g:pymode_rope_completion = 1
-let g:pymode_rope_complete_on_dot = 1
-let g:pymode_rope_regenerate_on_write = 1
-
 " delimitMate
 let g:delimitMate_expand_cr = 2
 let g:delimitMate_expand_space = 1
@@ -230,6 +220,7 @@ let g:pandoc#modules#disabled = ['folding']
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 let g:ale_open_list = 1
+let g:ale_completion_enabled = 1
 
 " Clang complete
 let g:clang_use_library = 1
@@ -300,6 +291,7 @@ let g:lightline = {
 "=======================
 autocmd InsertEnter * silent! :set nornu number
 autocmd InsertLeave,BufNewFile,VimEnter * silent! :set rnu number
+
 
 " Highlight TODO, FIXME, and NOTE in all files.
 autocmd Syntax * call matchadd('Todo', '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)')
