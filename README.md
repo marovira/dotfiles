@@ -53,18 +53,17 @@ default upon installation of Clang itself:
 ### Python
 
 Python uses a separate plugin for autocompletion (ncm2), which is going to require Windows
-to install pynvim:
+to install pynvim (Linux gets this for free as part of neovim):
 
 ```sh
 pip install pynvim
 ```
 
-After this, Python should mostly work by default as it was installed along with Vim. The
-only extra thing that is needed is to install `pylint`, which can be installed in both
-OSes as 
+After this, we just need to install two extra packages, which can be installed in both
+OSes as
 
 ```sh
-pip install pylint
+pip install pylint jedi
 ```
 
 ### Markdown
