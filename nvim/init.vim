@@ -311,7 +311,6 @@ let g:lightline = {
 "=======================
 autocmd InsertEnter * silent! :set nornu number
 autocmd InsertLeave,BufNewFile,VimEnter * silent! :set rnu number
-autocmd BufRead,BufNewFile * silent! :MUcompleteAutoOn
 
 
 " Highlight TODO, FIXME, and NOTE in all files.
