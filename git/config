@@ -1,6 +1,6 @@
 [user]
-	name = Mauricio Andres Rovira Galvez
-	email = marovira@uvic.ca
+	name = Mauricio A. Rovira Galvez
+    email = 8482308+marovira@users.noreply.github.com
 [core]
 	editor ="gvim -f"
 	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
