@@ -153,6 +153,15 @@ function StripTrailingWhitespace()
     call winrestview(l:savepos)
 endfunction
 
+function SetStateForLargeFiles()
+    setlocal bufhidden=unload       " Save memory when other file is viewed
+    setlocal buftype=nowrite        " Is read-only
+    setlocal eventignore+=FileType  " Ignore autocommands with FileType as their triggers
+    setlocal undolevels=-1          " No undo
+    setlocal nofoldenable           " Disable folding
+    MUcompleteAutoOff               " Disable Mu-complete
+endfunction
+
 " Options
 "=======================
 set autoread                    " Automatically re-read file
@@ -311,6 +320,11 @@ let g:lightline = {
 "=======================
 autocmd InsertEnter * silent! :set nornu number
 autocmd InsertLeave,BufNewFile,VimEnter * silent! :set rnu number
+autocmd BufRead,BufNewFile *.json silent! :set nofoldenable
+
+" Better handling for large files.
+let g:large_file = 1024 * 1024 * 100 " Large is defined > 100 MB
+autocmd BufReadPre * let f=expand("<afile>") | if getfsize(f) > g:large_file | :call SetStateForLargeFiles() | endif
 
 
 " Highlight TODO, FIXME, and NOTE in all files.
