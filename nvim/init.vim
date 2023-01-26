@@ -262,6 +262,7 @@ endif
 " Clang format
 let g:clang_format#auto_format = 1
 let g:clang_format#enable_fallback_style = 0
+let g:clang_format#auto_filetypes = ["c", "cpp", "objc", "glsl"]
 if has('unix')
     let g:clang_format#command = 'clang-format-12'
 endif
