@@ -48,6 +48,9 @@ Plug 'junegunn/fzf'
 " Easy motion.
 Plug 'easymotion/vim-easymotion'
 
+" TMUX integration
+Plug 'christoomey/vim-tmux-navigator'
+
 " Colour schemes
 "=======================
 " Dark theme
