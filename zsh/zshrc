@@ -2,41 +2,24 @@
 export EDITOR='nvim'
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
-# Check if we have antigen installed, if not, then install it.
-ANTIGEN=~/antigen.zsh
-if [[ ! -f $ANTIGEN ]]; then
-	echo 'Downloading Antigen...'
-	curl -L git.io/antigen > $ANTIGEN
+# Install antidote if necessary
+ANTIDOTE=~/.antidote
+if [ ! -d $ANTIDOTE ]; then
+    echo "Downloading antidote"
+    git clone --depth=1 https://github.com/mattmc3/antidote.git $ANTIDOTE
 fi
 
-source ~/antigen.zsh
+source $ANTIDOTE/antidote.zsh
 
-# Oh-my-zsh
-antigen use oh-my-zsh
+antidote load
 
-# oh-my-zsh libs
-antigen bundle git
-antigen bundle pip
-antigen bundle command-not-found
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
-# syntax highlighting
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-completions
-antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle zsh-users/zsh-history-substring-search
-
-# Load theme
-antigen theme dracula/zsh dracula
-
-# Finish up.
-antigen apply
-
-plugins=(git ssh-agent)
-
-autoload -U compinit && compinit
-autoload -U +X bashcompinit && bashcompinit
-
-bindkey -v
 
 # Vim aliases.
 alias vi='nvim'
@@ -55,11 +38,5 @@ alias open='xdg-open'
 alias ls='ls -1 -hF --color=auto'
 alias la='ls -A'
 
-HISTFILE='$HOME/.zsh_history'
-HISTSIZE=1024
-
-setopt append_history
-setopt share_history
-setopt extended_history
-setopt histignorealldups
-setopt histignorespace
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
