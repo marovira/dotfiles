@@ -5,6 +5,7 @@ ohmyzsh/ohmyzsh path:plugins/pip
 ohmyzsh/ohmyzsh path:plugins/command-not-found
 ohmyzsh/ohmyzsh path:plugins/ssh-agent
 ohmyzsh/ohmyzsh path:plugins/vi-mode
+ohmyzsh/ohmyzsh path:plugins/tmux
 
 # ZSH users.
 zsh-users/zsh-syntax-highlighting
@@ -17,3 +18,5 @@ romkatv/powerlevel10k
 
 # Faster navigation
 agkozak/zsh-z
+unixorn/fzf-zsh-plugin
+Aloxaf/fzf-tab
