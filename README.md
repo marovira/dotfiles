@@ -26,8 +26,19 @@ The source of all my config files.
     * neovim
     * git
     * Python 3
+    * tmux
+    * bat
 2. Clone this repository.
 3. Run `install.sh`
+
+**Notes:**
+
+1. Make sure the installation script runs **before** the switch to ZSH is made. This
+   ensures files already exist prior to the first time ZSH is run. To switch shells, just
+   enter `chsh -s $(which zsh)`.
+2. If plugins aren't loaded (it becomes immediately apparent from the command line),
+   double-check whether `~/.zsh_plugins.zsh` is empty. If it is, delete it and restart the
+   shell. This will force antidote to install everything.
 
 ## Vim Plug-in Dependencies
 
