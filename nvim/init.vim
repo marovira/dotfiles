@@ -42,9 +42,6 @@ Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
 " Undo tree.
 Plug 'mbbill/undotree'
 
-" Fuzzy file search
-Plug 'junegunn/fzf'
-
 " Easy motion.
 Plug 'easymotion/vim-easymotion'
 
