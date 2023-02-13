@@ -39,6 +39,11 @@ The source of all my config files.
 2. If plugins aren't loaded (it becomes immediately apparent from the command line),
    double-check whether `~/.zsh_plugins.zsh` is empty. If it is, delete it and restart the
    shell. This will force antidote to install everything.
+3. The installation script will automatically clone TPM (plugin manager for TMUX) into the
+   corresponding directory. When opening TMUX for the first time, create a split `<prefix>
+   |` and see if Vim bindings for switching splits work. If not, then try:
+   * `tmux source ~/.tmux.conf`, or
+   * `tmux run ~/.tmux/plugins/tpm/tpm`
 
 ## Vim Plug-in Dependencies
 
