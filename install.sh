@@ -12,3 +12,5 @@ ln --backup -s "$PWD/nvim" "$HOME/.config/nvim"
 ln --backup -s "$PWD/cpp/.clang-format" "$HOME/.clang-format"
 ln --backup -s "$PWD/python/pylintrc" "$HOME/pylintrc"
 ln --backup -s "$PWD/tmux/tmux.conf" "$HOME/.tmux.conf"
+
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
