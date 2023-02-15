@@ -30,13 +30,13 @@
     changed = yellow bold
     untracked = red bold
 [diff]
-    tool = bc3
-[difftool "bc3"]
+    tool = vimdiff
+[difftool "vimdiff"]
     prompt = false
     trustExitCode = true
 [merge]
-    tool = bc3
-[mergetool "bc3"]
+    tool = vimdiff
+[mergetool "vimdiff"]
 [mergetool]
     prompt = false
     keepBackup = false
