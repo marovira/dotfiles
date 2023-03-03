@@ -17,3 +17,10 @@ nmap ga <Plug>(EasyAlign)
 let b:ale_enabled = 0
 "let b:ale_linters = ['clangtidy']
 "let b:ale_linters_explist = 1
+
+" Disable clang_complete's key mappings for jumping to/from declaration. They don't work
+" (I strongly suspect due to the lack of the .clang_complete file) and just break tag
+" navigation (which is way better for my use case).
+let g:clang_jumpto_declaration_key = ''
+let g:clang_jumpto_declaration_in_preview_key = ''
+let g:clang_jumpto_back_key = ''
