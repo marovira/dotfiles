@@ -153,6 +153,16 @@ function StripTrailingWhitespace()
     call winrestview(l:savepos)
 endfunction
 
+function EnterPythonBuffer(enter)
+   if a:enter
+      execute 'MUcompleteAutoOff' 
+      call ncm2#enable_for_buffer()
+   else 
+      execute 'MUcompleteAutoOn'
+      call ncm2#disable_for_buffer()
+   endif
+endfunction
+
 function SetStateForLargeFiles()
     setlocal bufhidden=unload       " Save memory when other file is viewed
     setlocal buftype=nowrite        " Is read-only
@@ -326,6 +336,10 @@ autocmd BufRead,BufNewFile *.json silent! :set nofoldenable
 " Better handling for large files.
 let g:large_file = 1024 * 1024 * 100 " Large is defined > 100 MB
 autocmd BufReadPre * let f=expand("<afile>") | if getfsize(f) > g:large_file | :call SetStateForLargeFiles() | endif
+
+" Disable MUComplete for python files
+autocmd BufEnter * if &ft == 'python' | call EnterPythonBuffer(1) | endif
+autocmd BufLeave * if &ft == 'python' | call EnterPythonBuffer(0) | endif
 
 
 " Highlight TODO, FIXME, and NOTE in all files.
