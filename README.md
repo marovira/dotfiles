@@ -28,8 +28,17 @@ The source of all my config files.
     * Python 3
     * tmux
     * bat
+    * python<ver>-venv (where <ver> is the version of Python installed. For example, for
+      Python 3.10.xx, the package is python3.10-venv)
 2. Clone this repository.
 3. Run `install.sh`
+
+Before running neovim, do the following:
+
+1. Switch to the home directory and run `python3 -m venv nvim`
+2. Activate the environment with `. nvim/bin/activate`
+3. Run `pip install pynvim`
+4. Deactivate the environment with `deactivate`
 
 **Notes:**
 
@@ -68,19 +77,29 @@ default upon installation of Clang itself:
 
 ### Python
 
-Python uses a separate plugin for autocompletion (ncm2), which is going to require Windows
-to install pynvim (Linux gets this for free as part of neovim):
+In order to make vim play nice with virtual environments, there's going to be some more
+setup involved depending on the OS. For Windows, run:
 
 ```sh
-pip install pynvim
+pip install pynvim pylint jedi black
 ```
 
-After this, we just need to install two extra packages, which can be installed in both
-OSes as
+This will install all required packages for development.
 
-```sh
-pip install pylint jedi
-```
+> **Note:**
+> When running gvim in Windows, it will use the system-wide Python (as far as I know
+> there's no way to change this) so you must ensure that any packages are installed
+> system-wide for pylint and jedi to work properly. Virtual environments should still be
+> used to run actual python code.
+
+For Linux, do the following:
+
+1. Go to the home directory and activate the `nvim` environment.
+2. Run `pip install pylint jedi black`
+3. Deactivate the environment.
+
+This allows us to have the plugin-required packages separate from the virtual environments
+used for development.
 
 ### Markdown
 
