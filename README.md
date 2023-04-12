@@ -95,11 +95,11 @@ This will install all required packages for development.
 For Linux, do the following:
 
 1. Go to the home directory and activate the `nvim` environment.
-2. Run `pip install pylint jedi black`
+2. Run `pip install jedi`
 3. Deactivate the environment.
 
-This allows us to have the plugin-required packages separate from the virtual environments
-used for development.
+This allows us to have auto-complete for Python. To enable linting and formatting, ensure
+that those are installed in the virtual environment for the specific project.
 
 ### Markdown
 
