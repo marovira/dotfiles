@@ -242,6 +242,10 @@ if has('win32')
     " Windows doesn't use the python3 convention for the exe name, so just set it to
     " python directly.
     let g:python3_host_prog = 'python'
+elseif has('nvim')
+    " Use a specific virtual environment for nvim so we don't have to install pynvim
+    " everywhere.
+    let g:python3_host_prog = '~/nvim/bin/python3'
 endif
 
 " delimitMate
