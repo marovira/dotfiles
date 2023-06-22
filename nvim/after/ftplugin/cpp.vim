@@ -20,7 +20,8 @@ let b:ale_enabled = 0
 
 " Disable clang_complete's key mappings for jumping to/from declaration. They don't work
 " (I strongly suspect due to the lack of the .clang_complete file) and just break tag
-" navigation (which is way better for my use case).
+" navigation (which is way better for my use case). I'm binding clang_jumpto_back_key to
+" silence a warning because it has no mapping
 let g:clang_jumpto_declaration_key = ''
 let g:clang_jumpto_declaration_in_preview_key = ''
-let g:clang_jumpto_back_key = ''
+let g:clang_jumpto_back_key = '<C-q>'
