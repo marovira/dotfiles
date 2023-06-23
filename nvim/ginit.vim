@@ -23,10 +23,6 @@
 if exists("g:neovide")
     if has('win32')
         set guifont=Consolas:h11:cANSI
-    elseif has('macunix')
-        set guifont=Menlo\ Regular:h14
-    else
-        set guifont=Inconsolata:h12
     endif
 
     let g:neovide_transparency=0.9
