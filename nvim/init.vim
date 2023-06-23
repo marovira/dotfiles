@@ -3,7 +3,8 @@ set nocompatible " be iMproved, required.
 " vim-plug setup.
 "=======================
 if has('win32')
-    let s:editorRoot=$VIM . '\vimfiles'
+    "let s:editorRoot=$VIM . '\vimfiles'
+    let s:editorRoot=expand($XDG_CONFIG_HOME . '\nvim')
 elseif has('nvim')
     let s:editorRoot=expand('~/.config/nvim')
 endif
@@ -19,7 +20,7 @@ if !filereadable(plugSrc)
 endif
 
 if has('win32')
-    call plug#begin('$VIM/vimfiles/plugged')
+    call plug#begin('$XDG_CONFIG_HOME/nvim/plugged')
 else
     call plug#begin()
 endif

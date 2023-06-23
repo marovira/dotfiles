@@ -15,13 +15,21 @@ if %errorLevel% == 0 (
 set CURDIR=%~dp0
 
 :: Set the Vim environment variable.
-setx -m VIM "C:\Vim"
+REM setx -m VIM "C:\Vim"
 
 :: First setup the vim shortcuts.
-mklink %VIM%\_vimrc %CURDIR%nvim\init.vim
-mklink %VIM%\_gvimrc %CURDIR%nvim\gvim.vim
-mklink %VIM%\_vsvimrc %CURDIR%nvim\vsvim.vim
-mklink /D %VIM%\vimfiles\after %CURDIR%nvim\after
+REM mklink %VIM%\_vimrc %CURDIR%nvim\init.vim
+REM mklink %VIM%\_gvimrc %CURDIR%nvim\gvim.vim
+REM mklink %VIM%\_vsvimrc %CURDIR%nvim\vsvim.vim
+REM mklink /D %VIM%\vimfiles\after %CURDIR%nvim\after
+
+:: NVim shortcuts
+setx -m XDG_CONFIG_HOME %LOCALAPPDATA%
+mkdir %LOCALAPPDATA%\nvim
+mklink %LOCALAPPDATA%\nvim\init.vim %CURDIR%nvim\init.vim
+mklink %LOCALAPPDATA%\nvim\gvim.vim %CURDIR%nvim\ginit.vim
+mklink /D %LOCALAPPDATA%\nvim\after %CURDIR%nvim\after
+
 
 :: Now setup the git stuff
 mklink %USERPROFILE%\.gitconfig %CURDIR%git\config
