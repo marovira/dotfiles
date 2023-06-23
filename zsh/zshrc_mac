@@ -27,7 +27,7 @@ fi
 # Vim aliases.
 alias vi='nvim'
 alias vim='nvim'
-alias gvim='vimr'
+alias gvim='neovide'
 
 # Grep aliases
 alias grep='grep --color'
