@@ -27,7 +27,7 @@ REM mklink /D %VIM%\vimfiles\after %CURDIR%nvim\after
 setx -m XDG_CONFIG_HOME %LOCALAPPDATA%
 mkdir %LOCALAPPDATA%\nvim
 mklink %LOCALAPPDATA%\nvim\init.vim %CURDIR%nvim\init.vim
-mklink %LOCALAPPDATA%\nvim\gvim.vim %CURDIR%nvim\ginit.vim
+mklink %LOCALAPPDATA%\nvim\ginit.vim %CURDIR%nvim\ginit.vim
 mklink /D %LOCALAPPDATA%\nvim\after %CURDIR%nvim\after
 
 
