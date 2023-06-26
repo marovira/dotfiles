@@ -1,9 +1,6 @@
-set nocompatible " be iMproved, required.
-
 " vim-plug setup.
 "=======================
 if has('win32')
-    "let s:editorRoot=$VIM . '\vimfiles'
     let s:editorRoot=expand($XDG_CONFIG_HOME . '\nvim')
 elseif has('nvim')
     let s:editorRoot=expand('~/.config/nvim')
@@ -19,12 +16,7 @@ if !filereadable(plugSrc)
     let plugInstalled = 0
 endif
 
-if has('win32')
-    call plug#begin('$XDG_CONFIG_HOME/nvim/plugged')
-else
-    call plug#begin()
-endif
-
+call plug#begin()
 " General plugins
 "=======================
 " Autocomplete
@@ -243,7 +235,7 @@ if has('win32')
     " Windows doesn't use the python3 convention for the exe name, so just set it to
     " python directly.
     let g:python3_host_prog = 'python'
-elseif has('nvim')
+else
     " Use a specific virtual environment for nvim so we don't have to install pynvim
     " everywhere.
     let g:python3_host_prog = '~/nvim/bin/python3'
