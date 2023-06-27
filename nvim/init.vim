@@ -309,6 +309,9 @@ let g:large_file = 1024 * 1024 * 100 " Large is defined > 100 MB
 augroup ma
     autocmd!
 
+    " Automatically reload files.
+    autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
+
     " Treat C files as C++. In the event we ever write C again, change this.
     autocmd BufRead,BufNewFile *.h,*.c set filetype=cpp
 
