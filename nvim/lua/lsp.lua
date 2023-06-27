@@ -13,6 +13,12 @@ lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
 end)
 
+lsp.ensure_installed({
+    'lua_ls',
+    'clangd',
+    'jedi_language_server'
+})
+
 local lspconfig = require('lspconfig')
 lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
 
