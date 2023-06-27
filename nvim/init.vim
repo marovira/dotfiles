@@ -50,40 +50,31 @@ Plug 'dracula/vim'
 " IDE-like plugins
 "=======================
 " Tree explorer for Vim.
-Plug 'scrooloose/nerdtree'
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'nvim-tree/nvim-tree.lua'
 
 " Bar with tags.
-Plug 'majutsushi/tagbar'
+Plug 'preservim/tagbar'
 
 " GLSL syntax highlighting.
 Plug 'tikhomirov/vim-glsl'
 
 " Commenter for all code!
-Plug 'scrooloose/nerdcommenter'
+Plug 'preservim/nerdcommenter'
 
 " Fast folding
 Plug 'Konfekt/FastFold'
 
 " Better statusline
 Plug 'itchyny/lightline.vim'
-
-" Show git branch in statusline
 Plug 'itchyny/vim-gitbranch'
-
-" Show ALE info in lightline.
-Plug 'maximbaz/lightline-ale'
-
-" Git plugin for NerdTree
-Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'josa42/nvim-lightline-lsp'
 
 " Indentation guides.
-Plug 'nathanaelkane/vim-indent-guides'
+Plug 'preservim/vim-indent-guides'
 
 " Autocomplete pairs.
 Plug 'Raimondi/delimitMate'
-
-" Auto-align.
-Plug 'junegunn/vim-easy-align'
 
 " Clang format.
 Plug 'rhysd/vim-clang-format'
@@ -100,8 +91,8 @@ Plug 'lervag/vimtex'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 
+" Linting
 Plug 'mfussenegger/nvim-lint'
-Plug 'mhartington/formatter.nvim'
 
 " Checkbox toggle for markdown.
 Plug 'jkramer/vim-checkbox'
@@ -303,17 +294,18 @@ let g:lightline = {
     \ 'active': {
         \ 'left': [ [ 'mode', 'paste' ],
         \           [ 'readonly', 'git_branch' ,'filename', 'modified' ] ],
-        \ 'right': [ ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok'],
+        \ 'right': [ ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_hits', 'linter_ok'],
         \            ['lineinfo'],
         \            [ 'percent' ],
         \            [ 'fileformat', 'fileencoding', 'filetype' ] ],
     \ },
     \ 'component_expand': {
-        \ 'linter_checking': 'lightline#ale#checking',
-        \ 'linter_infos': 'lightline#ale#infos',
-        \ 'linter_warnings': 'lightline#ale#warnings',
-        \ 'linter_errors': 'lightline#ale#errors',
-        \ 'linter-ok': 'lightline#ale#ok',
+        \ 'linter_checking': 'lsp_status',
+        \ 'linter_infos': 'lsp_info',
+        \ 'linter_hints': 'lsp_hints',
+        \ 'linter_warnings': 'lsp_warnings',
+        \ 'linter_errors': 'lsp_errors',
+        \ 'linter_ok': 'lsp_ok',
     \ },
     \ 'component_function': {
         \ 'git_branch': 'gitbranch#name',
@@ -380,5 +372,5 @@ nnoremap <Space> @q
 
 " IDE-like settings.
 nmap <F5> :UndotreeToggle<CR>
-nmap <F7> :NERDTree<CR>
+nmap <F7> :NvimTreeToggle<CR>
 nmap <F8> :TagbarToggle<CR>
