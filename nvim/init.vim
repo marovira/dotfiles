@@ -76,12 +76,6 @@ Plug 'preservim/vim-indent-guides'
 " Autocomplete pairs.
 Plug 'Raimondi/delimitMate'
 
-" Clang format.
-Plug 'rhysd/vim-clang-format'
-
-" Black (formatter for Python)
-Plug 'psf/black'
-
 " Language support
 "=======================
 " LaTeX support.
@@ -93,6 +87,9 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 
 " Linting
 Plug 'mfussenegger/nvim-lint'
+
+" Formatting
+Plug 'mhartington/formatter.nvim'
 
 " Checkbox toggle for markdown.
 Plug 'jkramer/vim-checkbox'
@@ -265,14 +262,6 @@ if has('win32') || has('win64')
     let g:SingleCompile_showresultafterrun = 1
 endif
 
-" Clang format
-let g:clang_format#auto_format = 1
-let g:clang_format#enable_fallback_style = 0
-let g:clang_format#auto_filetypes = ["c", "cpp", "objc", "glsl"]
-if has('unix') && !has('macunix')
-    let g:clang_format#command = 'clang-format-12'
-endif
-
 " Checkbox
 let g:insert_checkbox = '\<'
 let g:insert_checkbox_prefix = ''
@@ -334,15 +323,11 @@ augroup ma
     autocmd InsertLeave,BufNewFile,VimEnter * silent! :set rnu number
     autocmd BufRead,BufNewFile *.json silent! :set nofoldenable
     autocmd BufReadPre * let f=expand("<afile>") | if getfsize(f) > g:large_file | :call SetStateForLargeFiles() | endif
+    autocmd BufWritePost * FormatWriteLock
 
     " Syntax
     autocmd Syntax * call matchadd('Todo', '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)')
     autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\)')
-augroup end
-
-augroup black_on_save:
-    autocmd!
-    autocmd BufWritePre *.py Black
 augroup end
 
 " Key remaps
@@ -374,3 +359,5 @@ nnoremap <Space> @q
 nmap <F5> :UndotreeToggle<CR>
 nmap <F7> :NvimTreeToggle<CR>
 nmap <F8> :TagbarToggle<CR>
+nmap <silent> <leader>f :Format<CR>
+nmap <silent> <leader>F :FormatWrite<CR>
