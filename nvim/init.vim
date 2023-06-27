@@ -17,26 +17,27 @@ if !filereadable(plugSrc)
 endif
 
 call plug#begin()
-" General plugins
+" LSP + autocomplete
 "=======================
-" Autocomplete
-Plug 'lifepillar/vim-mucomplete'
+" LSP
+Plug 'williamboman/mason.nvim', {'do': ':MasonUpdate'}
+Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'neovim/nvim-lspconfig'
 
-" NCM2 (used for Python)
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-if has('win32')
-    Plug 'roxma/vim-hug-neovim-rpc'
-endif
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
+" Auto-complete
+Plug 'lifepillar/vim-mucomplete'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'L3MON4D3/LuaSnip'
+
+" Handle LSP setup
+Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
 
 " Undo tree.
 Plug 'mbbill/undotree'
-
-" Easy motion.
-Plug 'easymotion/vim-easymotion'
 
 " TMUX integration
 Plug 'christoomey/vim-tmux-navigator'
@@ -90,29 +91,25 @@ Plug 'rhysd/vim-clang-format'
 " Black (formatter for Python)
 Plug 'psf/black'
 
-" ALE linter.
-Plug 'dense-analysis/ale'
-
 " Language support
 "=======================
 " LaTeX support.
 Plug 'lervag/vimtex'
 
-" C/C++
-Plug 'xavierd/clang_complete'
-
-" Python
-Plug 'ncm2/ncm2-jedi'
-
 " Pandoc.
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 
+Plug 'mfussenegger/nvim-lint'
+Plug 'mhartington/formatter.nvim'
+
 " Checkbox toggle for markdown.
 Plug 'jkramer/vim-checkbox'
 
-" Simple compile for C++.
-Plug 'xuhdev/SingleCompile'
+" Simple compile for C++ (Windows only).
+if has('win32')
+    Plug 'xuhdev/SingleCompile'
+endif
 
 " Miscellaneous
 "=======================
@@ -146,14 +143,24 @@ function StripTrailingWhitespace()
     call winrestview(l:savepos)
 endfunction
 
-function EnterPythonBuffer(enter)
-   if a:enter
-      execute 'MUcompleteAutoOff' 
-      call ncm2#enable_for_buffer()
-   else 
-      execute 'MUcompleteAutoOn'
-      call ncm2#disable_for_buffer()
-   endif
+" Only enable nvim-cmp on specific buffers:
+" Python, C++, Lua
+function ShouldLSPBeEnabled()
+    if &ft == 'python' || &ft == 'cpp' || &ft == 'lua'
+        return 1
+    else
+        return 0
+    endif
+endfunction
+
+function EnterBuffer(enter)
+    if a:enter && ShouldLSPBeEnabled()
+        execute 'MUcompleteAutoOff'
+        lua require('cmp').setup.buffer({ enabled = true })
+    else
+        lua require('cmp').setup.buffer({ enabled = false })
+        execute 'MUcompleteAutoOn'
+    endif
 endfunction
 
 function SetStateForLargeFiles()
@@ -221,6 +228,10 @@ endif
 
 " Plug-in Settings
 "=======================
+" Lua-enabled plugins go first.
+lua require('lsp')
+lua require('plugins')
+
 " Undotree
 if has("persistent_undo")
     set undodir=~/.undodir/
@@ -252,40 +263,26 @@ let g:pandoc#formatting#mode = "h"
 let g:pandoc#formatting#textwidth = &tw
 let g:pandoc#modules#disabled = ['folding']
 
-" ALE
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
-let g:ale_open_list = 1
-let g:ale_completion_enabled = 1
-
-" Clang complete
-let g:clang_use_library = 1
+" Single compile
 if has('win32') || has('win64')
-    let g:clang_library_path = 'C:\Program Files\LLVM\bin'
-elseif has('unix')
-    let g:clang_library_path = '/usr/lib/llvm-12/lib/libclang-12.so.1'
+    call SingleCompile#SetCompilerTemplate('cpp', 'clang-cl', 'Windows Clang', 'clang-cl', '/std:c++20 /EHsc /Od /W3 -o $(FILE_TITLE)$', '$(FILE_TITLE)$')
+    call SingleCompile#SetOutfile('cpp', 'clang-cl', '$(FILE_TITLE)$.exe')
+
+    let g:SingleCompile_alwayscompile = 0
+    let g:SingleCompile_showquickfixiferror = 1
+    let g:SingleCompile_showquickfixifwarning = 1
+    let g:SingleCompile_showresultafterrun = 1
 endif
 
 " Clang format
 let g:clang_format#auto_format = 1
 let g:clang_format#enable_fallback_style = 0
 let g:clang_format#auto_filetypes = ["c", "cpp", "objc", "glsl"]
-if has('unix')
+if has('unix') && !has('macunix')
     let g:clang_format#command = 'clang-format-12'
 endif
 
-" Single compile
-if has('win32') || has('win64')
-    call SingleCompile#SetCompilerTemplate('cpp', 'clang-cl', 'Windows Clang', 'clang-cl', '/std:c++20 /EHsc /Od /W3 -o $(FILE_TITLE)$', '$(FILE_TITLE)$')
-    call SingleCompile#SetOutfile('cpp', 'clang-cl', '$(FILE_TITLE)$.exe')
-endif
-
-let g:SingleCompile_alwayscompile = 0
-let g:SingleCompile_showquickfixiferror = 1
-let g:SingleCompile_showquickfixifwarning = 1
-let g:SingleCompile_showresultafterrun = 1
-
-" Checkbox 
+" Checkbox
 let g:insert_checkbox = '\<'
 let g:insert_checkbox_prefix = ''
 let g:insert_checkbox_suffix = ' '
@@ -301,7 +298,7 @@ fun! GetMUCompleteStatus()
 endf
 
 " Lightline
-let g:lightline = { 
+let g:lightline = {
     \ 'colorscheme': 'darcula',
     \ 'active': {
         \ 'left': [ [ 'mode', 'paste' ],
@@ -326,22 +323,35 @@ let g:lightline = {
 
 " Autocommands
 "=======================
-autocmd InsertEnter * silent! :set nornu number
-autocmd InsertLeave,BufNewFile,VimEnter * silent! :set rnu number
-autocmd BufRead,BufNewFile *.json silent! :set nofoldenable
-
-" Better handling for large files.
 let g:large_file = 1024 * 1024 * 100 " Large is defined > 100 MB
-autocmd BufReadPre * let f=expand("<afile>") | if getfsize(f) > g:large_file | :call SetStateForLargeFiles() | endif
+augroup ma
+    autocmd!
 
-" Disable MUComplete for python files
-autocmd BufEnter * if &ft == 'python' | call EnterPythonBuffer(1) | endif
-autocmd BufLeave * if &ft == 'python' | call EnterPythonBuffer(0) | endif
+    " Treat C files as C++. In the event we ever write C again, change this.
+    autocmd BufRead,BufNewFile *.h,*.c set filetype=cpp
 
+    " If we're entering/leaving from a buffer that should ONLY use LSP, make sure that
+    " Mucomplete gets disabled.
+    autocmd BufEnter * call EnterBuffer(1)
+    autocmd BufLeave * call EnterBuffer(0)
 
-" Highlight TODO, FIXME, and NOTE in all files.
-autocmd Syntax * call matchadd('Todo', '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)')
-autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\)')
+    autocmd BufWritePost *.py lua require('lint').try_lint()
+
+    " Buffer behaviour
+    autocmd InsertEnter * silent! :set nornu number
+    autocmd InsertLeave,BufNewFile,VimEnter * silent! :set rnu number
+    autocmd BufRead,BufNewFile *.json silent! :set nofoldenable
+    autocmd BufReadPre * let f=expand("<afile>") | if getfsize(f) > g:large_file | :call SetStateForLargeFiles() | endif
+
+    " Syntax
+    autocmd Syntax * call matchadd('Todo', '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)')
+    autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\)')
+augroup end
+
+augroup black_on_save:
+    autocmd!
+    autocmd BufWritePre *.py Black
+augroup end
 
 " Key remaps
 "=======================
@@ -372,18 +382,3 @@ nnoremap <Space> @q
 nmap <F5> :UndotreeToggle<CR>
 nmap <F7> :NERDTree<CR>
 nmap <F8> :TagbarToggle<CR>
-
-" Autocommands
-"=======================
-" Black: format on save.
-augroup black_on_save:
-    autocmd!
-    autocmd BufWritePre *.py Black
-augroup end
-
-" Treat C as C++. This is mainly in the off-chance that I ever work with C again. If
-" something comes up, we can just make a new file in after/ftplugin
-augroup c_as_cpp:
-    autocmd!
-    autocmd BufRead,BufNewFile *.h,*.c set filetype=cpp
-augroup end
