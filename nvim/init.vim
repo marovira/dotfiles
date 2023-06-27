@@ -36,6 +36,8 @@ Plug 'L3MON4D3/LuaSnip'
 " Handle LSP setup
 Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
 
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
 " Undo tree.
 Plug 'mbbill/undotree'
 
@@ -131,10 +133,9 @@ function StripTrailingWhitespace()
     call winrestview(l:savepos)
 endfunction
 
-" Only enable nvim-cmp on specific buffers:
-" Python, C++, Lua
+" Enable LSP on code buffers.
 function ShouldLSPBeEnabled()
-    if &ft == 'python' || &ft == 'cpp' || &ft == 'lua'
+    if &ft == 'python' || &ft == 'cpp' || &ft == 'lua' || &ft == 'cmake'
         return 1
     else
         return 0
@@ -310,6 +311,9 @@ augroup ma
 
     " Treat C files as C++. In the event we ever write C again, change this.
     autocmd BufRead,BufNewFile *.h,*.c set filetype=cpp
+
+    " Treat shader files as glsl
+    autocmd BufRead,BufNewFile *.vert,*.tesc,*.tese,*.geom,*.frag,*.comp set filetype=glsl
 
     " If we're entering/leaving from a buffer that should ONLY use LSP, make sure that
     " Mucomplete gets disabled.

@@ -11,6 +11,19 @@ require("formatter").setup({
     }
 })
 
+require('nvim-treesitter.configs').setup({
+    ensure_installed = {
+        'c', 'cpp', 'lua', 'vim', 'vimdoc', 'query', 'python', 'cmake', 'glsl', 'bash',
+        'gitignore', 'git_config'
+    },
+    sync_install = false,
+    auto_install = true,
+    highlight = {
+        enable = true,
+        disable = {'gitcommit'}
+    }
+})
+
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
