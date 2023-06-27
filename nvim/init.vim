@@ -144,9 +144,9 @@ endfunction
 function EnterBuffer(enter)
     if a:enter && ShouldLSPBeEnabled()
         execute 'MUcompleteAutoOff'
-        lua require('cmp').setup.buffer({ enabled = true })
+        lua Enable_cmp(true)
     else
-        lua require('cmp').setup.buffer({ enabled = false })
+        lua Enable_cmp(false)
         execute 'MUcompleteAutoOn'
     endif
 endfunction

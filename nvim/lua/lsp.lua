@@ -25,19 +25,35 @@ lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
 
 lsp.setup()
 
-local cmp = require('cmp')
-local cmp_action = require('lsp-zero').cmp_action()
-cmp.setup({
-    -- Disable cmp by default. We'll enable it for buffers that need it only.
-    enabled = false,
-    sources = {
-        { name = 'path' },
-        { name = 'nvim_lsp' },
-        { name = 'nvim_lsp_signature_help' },
-        { name = 'buffer', keyword_length = 3 },
-    },
-    mapping = {
-        ['<Tab>'] = cmp_action.tab_complete(),
-        ['<S-Tab>'] = cmp_action.select_prev_or_fallback(),
-    }
-})
+function Enable_cmp(enable)
+    local cmp = require('cmp')
+    local cmp_action = require('lsp-zero').cmp_action()
+
+    if enable then
+        cmp.setup({
+            enabled = function()
+                -- disable completion in comments
+                local context = require 'cmp.config.context'
+                -- keep command mode completion enabled when cursor is in a comment
+                if vim.api.nvim_get_mode().mode == 'c' then
+                return true
+                else
+                return not context.in_treesitter_capture("comment")
+                  and not context.in_syntax_group("Comment")
+                end
+            end,
+            sources = {
+                { name = 'path' },
+                { name = 'nvim_lsp' },
+                { name = 'nvim_lsp_signature_help' },
+                { name = 'buffer', keyword_length = 3 },
+            },
+            mapping = {
+                ['<Tab>'] = cmp_action.tab_complete(),
+                ['<S-Tab>'] = cmp_action.select_prev_or_fallback(),
+            }
+        })
+    else
+        cmp.setup({ enabled = false })
+    end
+end
