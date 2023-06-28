@@ -1,5 +1,10 @@
 # Export variables
-export EDITOR='gvim'
+export EDITOR='nvim'
+
+# Vim aliases
+alias vi='nvim'
+alias vim='nvim'
+alias gvim='neovide'
 
 # Aliases
 alias grep='grep --color'

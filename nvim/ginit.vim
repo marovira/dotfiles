@@ -1,6 +1,6 @@
 if exists("g:neovide")
     if has('win32')
-        set guifont=Consolas:h11:cANSI
+        set guifont=FiraCode\ Nerd\ Font:h11
     endif
 
     let g:neovide_transparency=0.9
