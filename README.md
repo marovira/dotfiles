@@ -6,18 +6,19 @@ The source of all my config files.
 
 ### Windows
 
-1. Download **64-bit** [Vim](https://github.com/vim/vim-win32-installer/releases) and
-   install it to the root of C. **DO NOT** install to the default location! It generally
-   contains spaces and will cause problems later on, so just install to C:\Vim. Also make
-   sure that there are no default vimrc or vimfiles directory. **Note:** When installing
-   Vim, take note of the Python version that it was built with, you'll need this later on.
+1. Download **64-bit** [Neovim](https://github.com/neovim/neovim/releases) (MSI installer
+   is recommended) and install it. Default installation path is fine.
 2. Download and install [Git](https://git-scm.com/downloads). Make sure that everything is
    added to the path.
 3. Download Windows Terminal from the Windows app store.
-4. Download and install [Python](https://www.python.org/downloads/) **64-bit** ensuring
-   that the major and minor version match the one Vim was built with.
+4. Download and install [Python](https://www.python.org/downloads/). Latest version of
+   Python is usually fine unless parity is required with another OS.
+4. Download [Neovide](https://neovide.dev/) and add it to path (I think it's added
+   automatically).
 5. Clone this repository.
 6. Run `install.bat` as admin.
+7. On first open of Neovide, run `NeovideRegisterRightClick` to register the right-click
+   option in the context menu.
 
 ### Linux
 
@@ -54,6 +55,21 @@ Before running neovim, do the following:
    * `tmux source ~/.tmux.conf`, or
    * `tmux run ~/.tmux/plugins/tpm/tpm`
 
+### OSX
+
+1. Download and install [homebrew](https://docs.brew.sh/Installation)
+2. Using brew, install the same packages as Linux.
+3. Clone this repository.
+3. Run install_mac.sh
+
+**Notes:**
+
+1. Setup is almost identical to Linux, just using brew instead of the default package
+   manager.
+2. As of now, tmux crashes on start. I haven't been able to figure out why this happens,
+   but it may just resolve itself eventually.
+
+
 ## Vim Plug-in Dependencies
 
 Once the base installation of Vim is up and running, we can focus on the dependencies
@@ -77,7 +93,7 @@ default upon installation of Clang itself:
 
 ### Python
 
-In order to make vim play nice with virtual environments, there's going to be some more
+In order to make nvim play nice with virtual environments, there's going to be some more
 setup involved depending on the OS. For Windows, run:
 
 ```sh
@@ -87,7 +103,7 @@ pip install pynvim pylint jedi black
 This will install all required packages for development.
 
 > **Note:**
-> When running gvim in Windows, it will use the system-wide Python (as far as I know
+> When running neovide in Windows, it will use the system-wide Python (as far as I know
 > there's no way to change this) so you must ensure that any packages are installed
 > system-wide for pylint and jedi to work properly. Virtual environments should still be
 > used to run actual python code.
