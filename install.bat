@@ -17,6 +17,7 @@ set CURDIR=%~dp0
 :: First setup nvim
 setx -m XDG_CONFIG_HOME %LOCALAPPDATA%
 mklink /D %LOCALAPPDATA%\nvim %CURDIR%nvim
+mklink %USERPROFILE%\.vsvimrc %CURDIR%nvim\vsvim.vim
 
 :: Now setup the git stuff
 mklink %USERPROFILE%\.gitconfig %CURDIR%git\config
