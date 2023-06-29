@@ -695,3 +695,6 @@ __pycache__/
 
 # OpenCover UI analysis results
 OpenCover/
+
+# OSX DS_Store
+.DS_Store
