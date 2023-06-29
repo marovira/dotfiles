@@ -7,6 +7,8 @@ require("formatter").setup({
     filetype = {
         python = {require("formatter.filetypes.python").black},
         cpp = {require("formatter.filetypes.cpp").clangformat},
+        objcpp = {require("formatter.filetypes.cpp").clangformat},
+
         ["*"] = {require("formatter.filetypes.any").remove_trailing_whitespace}
     }
 })
