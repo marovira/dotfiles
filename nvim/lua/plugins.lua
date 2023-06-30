@@ -40,6 +40,9 @@ require('nvim-treesitter.configs').setup({
     },
 })
 
+require('telescope').setup()
+require('telescope').load_extension('zf-native')
+
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1

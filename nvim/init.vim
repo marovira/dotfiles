@@ -39,6 +39,12 @@ Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
 " Syntax highlighting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
+" Telescope
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.2' }
+Plug 'natecraddock/telescope-zf-native.nvim'
+
+
 " Undo tree.
 Plug 'mbbill/undotree'
 
@@ -299,6 +305,7 @@ augroup ma
     autocmd BufReadPre * lua require('autocmd').handle_large_buffer()
     autocmd BufEnter * lua require('autocmd').on_buffer_change(true)
     autocmd BufLeave * lua require('autocmd').on_buffer_change(false)
+    autocmd ModeChanged * lua require('autocmd').on_mode_changed()
 
     " Syntax
     autocmd Syntax * call matchadd('Todo', '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)')
@@ -333,3 +340,9 @@ nnoremap <Space> @q
 " IDE-like settings.
 nmap <F5> :UndotreeToggle<CR>
 nmap <F7> :NvimTreeToggle<CR>
+
+" Telescope keys
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>

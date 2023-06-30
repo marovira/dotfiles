@@ -92,4 +92,12 @@ function M.handle_large_buffer()
     end
 end
 
+function M.on_mode_changed()
+    if vim.bo.filetype == 'TelescopePrompt' then
+        vim.cmd('execute "MUcompleteAutoOff"')
+    else
+        vim.cmd('execute "MUcompleteAutoOn"')
+    end
+end
+
 return M

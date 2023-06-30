@@ -15,9 +15,11 @@ The source of all my config files.
    Python is usually fine unless parity is required with another OS.
 4. Download [Neovide](https://neovide.dev/) and add it to path (I think it's added
    automatically).
-5. Clone this repository.
-6. Run `install.bat` as admin.
-7. On first open of Neovide, run `NeovideRegisterRightClick` to register the right-click
+5. Download the latest released for [ripgrep](https://github.com/BurntSushi/ripgrep) and
+   [fd](https://github.com/sharkdp/fd). Extract the folders and add them to the path.
+6. Clone this repository.
+7. Run `install.bat` as admin.
+8. On first open of Neovide, run `NeovideRegisterRightClick` to register the right-click
    option in the context menu.
 
 ### Linux
@@ -29,6 +31,8 @@ The source of all my config files.
     * Python 3
     * tmux
     * bat
+    * fd `sudo apth install fd-find`
+    * ripgrep
     * python<ver>-venv (where <ver> is the version of Python installed. For example, for
       Python 3.10.xx, the package is python3.10-venv)
 2. Clone this repository.
