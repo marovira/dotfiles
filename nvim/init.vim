@@ -36,6 +36,7 @@ Plug 'L3MON4D3/LuaSnip'
 " Handle LSP setup
 Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
 
+" Syntax highlighting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Undo tree.
@@ -55,12 +56,6 @@ Plug 'dracula/vim'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-tree/nvim-tree.lua'
 
-" Bar with tags.
-Plug 'preservim/tagbar'
-
-" GLSL syntax highlighting.
-Plug 'tikhomirov/vim-glsl'
-
 " Commenter for all code!
 Plug 'preservim/nerdcommenter'
 
@@ -70,7 +65,7 @@ Plug 'Konfekt/FastFold'
 " Better statusline
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
-Plug 'josa42/nvim-lightline-lsp'
+Plug 'maximbaz/lightline-ale'
 
 " Indentation guides.
 Plug 'preservim/vim-indent-guides'
@@ -87,11 +82,8 @@ Plug 'lervag/vimtex'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 
-" Linting
-Plug 'mfussenegger/nvim-lint'
-
-" Formatting
-Plug 'mhartington/formatter.nvim'
+" Linting + formatting
+Plug 'dense-analysis/ale'
 
 " Checkbox toggle for markdown.
 Plug 'jkramer/vim-checkbox'
@@ -149,6 +141,13 @@ function EnterBuffer(enter)
     else
         lua Enable_cmp(false)
         execute 'MUcompleteAutoOn'
+    endif
+
+    " Enable diagnostics for python
+    if a:enter && &ft == 'python'
+        lua vim.diagnostic.enable()
+    else
+        lua vim.diagnostic.disable()
     endif
 endfunction
 
@@ -221,6 +220,16 @@ endif
 lua require('lsp')
 lua require('plugins')
 
+" Global linting options
+let g:ale_fixers = {
+            \ '*': ['remove_trailing_lines', 'trim_whitespace']
+            \}
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 0
+let g:ale_use_neovim_diagnostics_api = 1
+let g:ale_open_list = 1
+let g:ale_fix_on_save = 1
+
 " Undotree
 if has("persistent_undo")
     set undodir=~/.undodir/
@@ -230,10 +239,10 @@ endif
 " Mucomplete
 let g:mucomplete#enable_auto_at_startup = 1
 
-" NCM2
+" Python settings (needed for everything that needs python)
 if has('win32')
     " Windows doesn't use the python3 convention for the exe name, so just set it to
-    " python directly.
+    " python directly. Note that this implies the global Python.
     let g:python3_host_prog = 'python'
 else
     " Use a specific virtual environment for nvim so we don't have to install pynvim
@@ -290,12 +299,11 @@ let g:lightline = {
         \            [ 'fileformat', 'fileencoding', 'filetype' ] ],
     \ },
     \ 'component_expand': {
-        \ 'linter_checking': 'lsp_status',
-        \ 'linter_infos': 'lsp_info',
-        \ 'linter_hints': 'lsp_hints',
-        \ 'linter_warnings': 'lsp_warnings',
-        \ 'linter_errors': 'lsp_errors',
-        \ 'linter_ok': 'lsp_ok',
+        \ 'linter_checking': 'lightline#ale#checking',
+        \ 'linter_infos': 'lightline#ale#infos',
+        \ 'linter_warnings': 'lightline#ale#warnings',
+        \ 'linter_errors': 'lightline#ale#errors',
+        \ 'linter-ok': 'lightline#ale#ok',
     \ },
     \ 'component_function': {
         \ 'git_branch': 'gitbranch#name',
@@ -312,25 +320,21 @@ augroup ma
     " Automatically reload files.
     autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
 
-    " Treat C files as C++. In the event we ever write C again, change this.
+    " Set filetypes for files.
     autocmd BufRead,BufNewFile *.h,*.c set filetype=cpp
-
-    " Treat shader files as glsl
     autocmd BufRead,BufNewFile *.vert,*.tesc,*.tese,*.geom,*.frag,*.comp set filetype=glsl
+    autocmd BufRead,BufNewFile *.mm filetype=objcpp
 
     " If we're entering/leaving from a buffer that should ONLY use LSP, make sure that
     " Mucomplete gets disabled.
     autocmd BufEnter * call EnterBuffer(1)
     autocmd BufLeave * call EnterBuffer(0)
 
-    autocmd BufWritePost *.py lua require('lint').try_lint()
-
     " Buffer behaviour
     autocmd InsertEnter * silent! :set nornu number
     autocmd InsertLeave,BufNewFile,VimEnter * silent! :set rnu number
     autocmd BufRead,BufNewFile *.json silent! :set nofoldenable
     autocmd BufReadPre * let f=expand("<afile>") | if getfsize(f) > g:large_file | :call SetStateForLargeFiles() | endif
-    autocmd BufWritePost * FormatWriteLock
 
     " Syntax
     autocmd Syntax * call matchadd('Todo', '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)')
@@ -365,6 +369,3 @@ nnoremap <Space> @q
 " IDE-like settings.
 nmap <F5> :UndotreeToggle<CR>
 nmap <F7> :NvimTreeToggle<CR>
-nmap <F8> :TagbarToggle<CR>
-nmap <silent> <leader>f :Format<CR>
-nmap <silent> <leader>F :FormatWrite<CR>

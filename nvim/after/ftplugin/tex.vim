@@ -15,7 +15,8 @@ let b:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line 
 let g:vimtex_include_search_enabled = 0
 
 " ALE
-let b:ale_enabled = 0
+let b:ale_linters = []
+let b:ale_linters_explicit = 1
 
 " Make vimtex stop continuous compile before cleaning
 nnoremap <localleader>lc :VimtexStop<cr>:VimtexClean<cr>
@@ -25,4 +26,3 @@ augroup vimtex_config
     au!
     au User VimtexEventQuit call vimtex#compiler#clean(0)
 augroup END
-
