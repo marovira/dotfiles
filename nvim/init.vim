@@ -119,38 +119,6 @@ function ToggleNumbers()
     endif
 endfunction
 
-function StripTrailingWhitespace()
-    let l:savepos = winsaveview()
-    %s/\s\+$//e
-    call winrestview(l:savepos)
-endfunction
-
-" Enable LSP on code buffers.
-function ShouldLSPBeEnabled()
-    if &ft == 'python' || &ft == 'cpp' || &ft == 'lua' || &ft == 'cmake'
-        return 1
-    else
-        return 0
-    endif
-endfunction
-
-function EnterBuffer(enter)
-    if a:enter && ShouldLSPBeEnabled()
-        execute 'MUcompleteAutoOff'
-        lua Enable_cmp(true)
-    else
-        lua Enable_cmp(false)
-        execute 'MUcompleteAutoOn'
-    endif
-
-    " Enable diagnostics for python
-    if a:enter && &ft == 'python'
-        lua vim.diagnostic.enable()
-    else
-        lua vim.diagnostic.disable()
-    endif
-endfunction
-
 function SetStateForLargeFiles()
     setlocal bufhidden=unload       " Save memory when other file is viewed
     setlocal buftype=nowrite        " Is read-only
@@ -217,7 +185,6 @@ endif
 " Plug-in Settings
 "=======================
 " Lua-enabled plugins go first.
-lua require('lsp')
 lua require('plugins')
 
 " Global linting options
@@ -325,16 +292,13 @@ augroup ma
     autocmd BufRead,BufNewFile *.vert,*.tesc,*.tese,*.geom,*.frag,*.comp set filetype=glsl
     autocmd BufRead,BufNewFile *.mm filetype=objcpp
 
-    " If we're entering/leaving from a buffer that should ONLY use LSP, make sure that
-    " Mucomplete gets disabled.
-    autocmd BufEnter * call EnterBuffer(1)
-    autocmd BufLeave * call EnterBuffer(0)
-
     " Buffer behaviour
     autocmd InsertEnter * silent! :set nornu number
     autocmd InsertLeave,BufNewFile,VimEnter * silent! :set rnu number
     autocmd BufRead,BufNewFile *.json silent! :set nofoldenable
-    autocmd BufReadPre * let f=expand("<afile>") | if getfsize(f) > g:large_file | :call SetStateForLargeFiles() | endif
+    autocmd BufReadPre * lua require('autocmd').handle_large_buffer()
+    autocmd BufEnter * lua require('autocmd').on_buffer_change(true)
+    autocmd BufLeave * lua require('autocmd').on_buffer_change(false)
 
     " Syntax
     autocmd Syntax * call matchadd('Todo', '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)')

@@ -1,3 +1,32 @@
+
+local lsp = require('lsp-zero').preset({
+    manage_nvim_cmp = {
+        set_sources = 'recommended',
+        set_basic_mappings = true,
+        set_extra_mappings = true,
+        use_luasnip = true,
+        set_format = true,
+        documentation_window = true,
+    }
+})
+
+lsp.on_attach(function(client, bufnr)
+  lsp.default_keymaps({buffer = bufnr})
+end)
+
+lsp.ensure_installed({
+    'lua_ls',
+    'clangd',
+    'jedi_language_server',
+    'cmake',
+})
+
+local lspconfig = require('lspconfig')
+lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
+
+
+lsp.setup()
+
 require('nvim-treesitter.configs').setup({
     ensure_installed = {
         'c', 'cpp', 'lua', 'vim', 'vimdoc', 'query', 'python', 'cmake', 'glsl', 'bash',
