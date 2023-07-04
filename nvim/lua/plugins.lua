@@ -42,6 +42,7 @@ require('nvim-treesitter.configs').setup({
 
 require('telescope').setup()
 require('telescope').load_extension('zf-native')
+require('telescope').load_extension('file_browser')
 
 
 vim.g.loaded_netrw = 1
