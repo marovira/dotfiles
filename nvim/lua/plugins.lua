@@ -17,12 +17,23 @@ end)
 lsp.ensure_installed({
     'lua_ls',
     'clangd',
-    'jedi_language_server',
+    'pylsp',
     'cmake',
 })
 
 local lspconfig = require('lspconfig')
 lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
+lspconfig.pylsp.setup({
+    settings = {
+        pylsp = {
+            plugins = {
+                pyflakes = {enabled = false},
+                pylint = {enabled = false},
+                pycodestyle = {enabled = false}
+            }
+        }
+    }
+})
 
 
 lsp.setup()
