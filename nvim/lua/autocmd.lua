@@ -96,7 +96,11 @@ function M.on_mode_changed()
     if vim.bo.filetype == 'TelescopePrompt' then
         vim.cmd('execute "MUcompleteAutoOff"')
     else
-        vim.cmd('execute "MUcompleteAutoOn"')
+        if should_lsp_be_enabled() then
+            vim.cmd('execute "MUcompleteAutoOff"')
+        else
+            vim.cmd('execute "MUcompleteAutoOn"')
+        end
     end
 end
 
