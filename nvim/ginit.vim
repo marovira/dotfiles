@@ -8,4 +8,5 @@ if exists("g:neovide")
     let g:neovide_floating_blur_amount_y = 2.0
     let g:neovide_cursor_animation_length = 0
     let g:neovide_remember_window_size = v:false
+    let g:neovide_hide_mouse_when_typing = v:true
 endif
