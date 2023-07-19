@@ -28,7 +28,10 @@ mklink %USERPROFILE%\.gittemplate.txt %CURDIR%git\template
 mklink %USERPROFILE%\.clang-format %CURDIR%cpp\.clang-format
 mklink %USERPROFILE%\.pylintrc %CURDIR%python\pylintrc
 
-:: Finally, setup the bashrc.
-mklink %USERPROFILE%\.bashrc %CURDIR%bash\bashrc
+:: Finally, setup zsh
+mklink %USERPROFILE%\.bashrc %CURDIR%bash\bashrc_win_zsh
+mklink %USERPROFILE%\.zshrc %CURDIR%zsh\zshrc_win
+mklink %USERPROFILE%\.zsh_plugins.txt %CURDIR%zsh\zsh_plugins_win
+mklink %USERPROFILE%\.p10k.zsh %CURDIR%zsh\p10k.zsh
 
 echo Install finished successfully
