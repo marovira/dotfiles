@@ -54,3 +54,10 @@ export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+if [[ "$OSTYPE" == "msys" ]]; then
+    keep_current_path() {
+        printf "\e]9;9;%s\e\\" "$(cygpath -w "$PWD")"
+    }
+    precmd_functions+=(keep_current_path)
+fi
