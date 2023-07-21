@@ -217,7 +217,7 @@ let g:mucomplete#enable_auto_at_startup = 1
 if has('win32')
     " Windows doesn't use the python3 convention for the exe name, so just set it to
     " python directly. Note that this implies the global Python.
-    let g:python3_host_prog = 'python'
+    let g:python3_host_prog = expand($USERPROFILE . '\nvim\Scripts\python')
 else
     " Use a specific virtual environment for nvim so we don't have to install pynvim
     " everywhere.
