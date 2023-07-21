@@ -1,7 +1,7 @@
 #!/bin/sh
 #vim:set et sw=2 ts=4 tw=84:
 
-ln -s "$PWD/zsh/zshrc_mac" "$HOME/.zshrc"
+ln -s "$PWD/zsh/zshrc" "$HOME/.zshrc"
 ln -s "$PWD/zsh/zsh_plugins" "$HOME/.zsh_plugins.txt"
 ln -s "$PWD/zsh/p10k.zsh" "$HOME/.p10k.zsh"
 ln -s "$PWD/zsh/zlogin" "$HOME/.zlogin"

@@ -2,6 +2,12 @@
 export EDITOR='nvim'
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
+# Load compinit for Windows (msys) and OSX since they don't enable it by default
+if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "darwin"* ]]; then
+    autoload -Uz compinit
+    compinit
+fi
+
 # Install antidote if necessary
 ANTIDOTE=~/.antidote
 if [ ! -d $ANTIDOTE ]; then
@@ -24,15 +30,19 @@ fi
 # Vim aliases.
 alias vi='nvim'
 alias vim='nvim'
-alias gvim='nvim-qt'
+alias gvim='neovide'
 
 # Grep aliases
 alias grep='grep --color'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
-# Emulates Apple's open.
-alias open='xdg-open'
+# Emulates Apple's open. Only applies to Linux (linux-gnu) and Windows (msys).
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    alias open='xdg-open'
+elif [[ "$OSTYPE" == "msys" ]]; then
+    alias open='start'
+fi
 
 # Directory listings.
 alias ls='ls -1 -hF --color=auto'
