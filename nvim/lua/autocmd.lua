@@ -1,3 +1,6 @@
+-- Is used to determine when LSP completion should be enabled or when MUcomplete should be
+-- active.
+-- TODO: Once we consolidate completion, these need to be adjusted.
 local function should_lsp_be_enabled()
     local lsp_filetypes = { "python", "cpp", "lua", "cmake" }
     local common = require("common")
@@ -5,6 +8,8 @@ local function should_lsp_be_enabled()
     return common.has_value(lsp_filetypes, vim.bo.filetype)
 end
 
+-- Used to enable/disable diagnostic functionality (i.e. the errors that come up when
+-- linting). Currently only used in Python
 local function should_diagnostic_be_enabled()
     local diagnostic_filetypes = { "python" }
     local common = require("common")
@@ -12,6 +17,7 @@ local function should_diagnostic_be_enabled()
     return common.has_value(diagnostic_filetypes, vim.bo.filetype)
 end
 
+-- Toggles diagnostics on/off
 function enable_diagnostic(enable)
     if enable then
         vim.diagnostic.enable()
@@ -20,6 +26,7 @@ function enable_diagnostic(enable)
     end
 end
 
+-- Toggles LSP on/off.
 local function enable_lsp_autocomp(enable)
     local cmp = require("cmp")
     local cmp_action = require("lsp-zero").cmp_action()
@@ -55,17 +62,10 @@ local function enable_lsp_autocomp(enable)
     end
 end
 
-local function set_state_for_large_files()
-    vim.opt_local.bufhidden = "unload"
-    vim.opt_local.buftype = "nowrite"
-    vim.opt_local.eventignore = vim.opt_local.eventignore + "FileType"
-    vim.opt_local.undolevels = -1
-    vim.opt_local.foldenable = false
-    vim.cmd("execute 'MUcompleteAutoOff'")
-end
-
+-- Used to determine if the file we're opening is "large". This is then used to disable a
+-- bunch of state to allow files to load faster. In this context, large files start at
+-- 100MB.
 local function is_large_file()
-    -- Large files start at 100MB
     local min_size = 1024 * 1024 * 100
     local f = vim.fn.expand("<afile>")
     if vim.fn.getfsize(f) > min_size then
@@ -75,36 +75,125 @@ local function is_large_file()
     return false
 end
 
-M = {}
-function M.on_buffer_change(enter)
-    local enable_lsp = should_lsp_be_enabled()
-    local enable_diag = should_diagnostic_be_enabled()
+-- Autocommands
+-- =======================
+local augroup = vim.api.nvim_create_augroup("vimrc", { clear = true })
 
-    if enter then
-        enable_diagnostic(enable_diag)
-        enable_lsp_autocomp(enable_lsp)
-    else
-        enable_diagnostic(not enable_diag)
-        enable_lsp_autocomp(not enable_lsp)
-    end
-end
+-- Makes it so neovim reloads the file whenever a change has been made externally.
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+    pattern = "*",
+    group = augroup,
+    callback = function()
+        if vim.fn.mode() ~= "c" then
+            vim.api.nvim_command("checktime")
+        end
+    end,
+})
 
-function M.handle_large_buffer()
-    if is_large_file() then
-        set_state_for_large_files()
-    end
-end
+-- Treat all h/c files as C++. In the event I ever write C again, this will be changed
+-- accordingly.
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    pattern = { ".h", "*.c" },
+    group = augroup,
+    command = "set filetype=cpp",
+})
 
-function M.on_mode_changed()
-    if vim.bo.filetype == "TelescopePrompt" then
-        vim.cmd("execute 'MUcompleteAutoOff'")
-    else
-        if should_lsp_be_enabled() then
+-- Ensure shader files are appropriately recognised.
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    pattern = { "*.vert", "*.tesc", "*.tese", "*.geom", "*.frag", "*.comp" },
+    group = augroup,
+    command = "set filetype=glsl",
+})
+
+-- Allow detection of Objective C++.
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    pattern = "*.mm",
+    group = augroup,
+    command = "set filetype=objcpp",
+})
+
+-- Don't enable folds on JSON files (it makes it harder to read).
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    pattern = "*.json",
+    group = augroup,
+    command = "silent! :set nofoldenable",
+})
+
+-- Switch to absolute line numbers in insert mode.
+vim.api.nvim_create_autocmd({ "InsertEnter" }, {
+    pattern = "*",
+    group = augroup,
+    command = "silent! :set nornu number",
+})
+
+-- Switch back to relative numbers in normal mode.
+vim.api.nvim_create_autocmd({ "InsertLeave", "BufNewFile", "VimEnter" }, {
+    pattern = "*",
+    group = augroup,
+    command = "silent! :set rnu number",
+})
+
+-- If a file is large, disable the necessary state to allow faster loads.
+vim.api.nvim_create_autocmd({ "BufReadPre" }, {
+    pattern = "*",
+    group = augroup,
+    callback = function()
+        if is_large_file() then
+            -- stylua: ignore start
+            vim.opt_local.bufhidden = "unload"                                  -- Save memory buffer is hidden.
+            vim.opt_local.buftype = "nowrite"                                   -- Is read-only
+            vim.opt_local.eventignore = vim.opt_local.eventignore + "FileType"  -- Ignore FileType autocommands.
+            vim.opt_local.undolevels = -1                                       -- No undo.
+            vim.opt_local.foldenable = false                                    -- Disable folding.
+            vim.cmd("execute 'MUcompleteAutoOff'")                              -- Disable Mu-complete
+            --stylua: ignore end
+        end
+    end,
+})
+
+-- Toggle lsp/diagnostics depending on filetype.
+vim.api.nvim_create_autocmd({ "BufEnter", "BufLeave" }, {
+    pattern = "*",
+    group = augroup,
+    callback = function(args)
+        local enable_lsp = should_lsp_be_enabled()
+        local enable_diag = should_diagnostic_be_enabled()
+        if args.event == "BufEnter" then
+            enable_diagnostic(enable_diag)
+            enable_lsp_autocomp(enable_lsp)
+        elseif args.event == "BufLeave" then
+            enable_diagnostic(not enable_diag)
+            enable_lsp_autocomp(not enable_lsp)
+        end
+    end,
+})
+
+-- Ensure Mu-complete doesn't get enabled in Telescope windows.
+vim.api.nvim_create_autocmd({ "ModeChanged" }, {
+    pattern = "*",
+    group = augroup,
+    callback = function()
+        if vim.bo.filetype == "TelescopePrompt" then
             vim.cmd("execute 'MUcompleteAutoOff'")
         else
-            vim.cmd("execute 'MUcompleteAutoOn'")
+            if should_lsp_be_enabled() then
+                vim.cmd("execute 'MUcompleteAutoOff'")
+            else
+                vim.cmd("execute 'MUcompleteAutoOn'")
+            end
         end
-    end
-end
+    end,
+})
 
-return M
+-- Highlight common comment headers.
+vim.api.nvim_create_autocmd({ "Syntax" }, {
+    pattern = "*",
+    group = augroup,
+    command = "call matchadd('Todo', '\\W\\zs\\(TODO\\|FIXME\\|CHANGED\\|XXX\\|BUG\\|HACK\\)')",
+})
+
+vim.api.nvim_create_autocmd({ "Syntax" }, {
+    pattern = "*",
+    group = augroup,
+    command = "call matchadd('Debug', '\\W\\zs\\(NOTE\\|INFO\\|IDEA\\)')",
+})

@@ -220,31 +220,7 @@ let g:lightline = {
 
 " Autocommands
 "=======================
-let g:large_file = 1024 * 1024 * 100 " Large is defined > 100 MB
-augroup ma
-    autocmd!
-
-    " Automatically reload files.
-    autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
-
-    " Set filetypes for files.
-    autocmd BufRead,BufNewFile *.h,*.c set filetype=cpp
-    autocmd BufRead,BufNewFile *.vert,*.tesc,*.tese,*.geom,*.frag,*.comp set filetype=glsl
-    autocmd BufRead,BufNewFile *.mm filetype=objcpp
-
-    " Buffer behaviour
-    autocmd InsertEnter * silent! :set nornu number
-    autocmd InsertLeave,BufNewFile,VimEnter * silent! :set rnu number
-    autocmd BufRead,BufNewFile *.json silent! :set nofoldenable
-    autocmd BufReadPre * lua require('autocmd').handle_large_buffer()
-    autocmd BufEnter * lua require('autocmd').on_buffer_change(true)
-    autocmd BufLeave * lua require('autocmd').on_buffer_change(false)
-    autocmd ModeChanged * lua require('autocmd').on_mode_changed()
-
-    " Syntax
-    autocmd Syntax * call matchadd('Todo', '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)')
-    autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\)')
-augroup end
+lua require("autocmd")
 
 " Key remaps
 "=======================
