@@ -47,8 +47,12 @@ end
 
 -- Needed for undo-tree, could be moved to plugin settings.
 if vim.fn.has("persistent_undo") then
-	vim.opt.undodir = "~/.undodir/"
 	vim.opt.undofile = true
+    if vim.fn.has("win32") then
+        vim.opt.undodir = vim.fn.expand("$XDG_CONFIG_HOME") .. "\\nvim-data\\"
+    else
+        vim.opt.undodir = "~/.undodir/"
+    end
 end
 
 -- Python settings (needed for everything that needs python). Make sure that we use a venv
