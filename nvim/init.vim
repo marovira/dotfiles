@@ -137,57 +137,7 @@ endfunction
 
 " Options
 "=======================
-set autoread                    " Automatically re-read file
-set backspace=start,indent,eol  " Backspace works on everything
-set cmdheight=2                 " More space for the command bar
-set confirm	                    " Save files on exit
-set cursorline	                " Show current cursor line
-set foldmethod=syntax           " Use syntax definitions for folding
-set hidden 	                    " Don't have to save when changing buffers
-set hlsearch	                " Highlights search
-set incsearch                   " Incremental search
-set infercase	                " Adjust case of match for keyword completion
-set laststatus=2                " Always show status bar
-set lazyredraw	                " Only redraws what is necessary, when necessary :redraw to force
-set modeline	                " Enable top-of-file modelines NOTE: security concerns with these
-set mouse=a	                    " Enable Mouse Clicks
-set mousefocus	                " Focus follows mouse
-set mousehide	                " Hides pointer while typing
-set nostartofline               " Don't move cusor on line jumps
-set ruler	                    " Show column and character in file
-set spell 	                    " Spelling
-set spelllang=en_gb             " Use GB English
-set tw=90 	                    " Text Width
-set wildmenu                    " Auto completion in commandline
-set completeopt=menuone,noselect,noinsert
-set shortmess+=ac                " Turn off completion messages.
-set belloff+=ctrlg              " If Vim beeps during completion.
-set number relativenumber       " Set hybrid line numbers
-
-" File format settings.
-set encoding=utf-8
-set fileformat=unix
-set fileformats=unix,dos
-
-" Tab settings
-set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
-
-" Syntax and file detection.
-filetype plugin indent on
-syntax on
-
-" Map leader and localleader to ,
-let mapleader = ","
-let maplocalleader = ","
-
-let g:dracula_colorterm = 0
-colorscheme dracula
-let &colorcolumn=join(range(&tw,&tw), ",")
-
-" Copy to system clipboard (this only works on windows and mac)
-if has("win32") || has("mac")
-    set clipboard=unnamed
-endif
+lua require("options")
 
 " Plug-in Settings
 "=======================
@@ -204,25 +154,8 @@ let g:ale_use_neovim_diagnostics_api = 1
 let g:ale_open_list = 1
 let g:ale_fix_on_save = 1
 
-" Undotree
-if has("persistent_undo")
-    set undodir=~/.undodir/
-    set undofile
-endif
-
 " Mucomplete
 let g:mucomplete#enable_auto_at_startup = 1
-
-" Python settings (needed for everything that needs python)
-if has('win32')
-    " Windows doesn't use the python3 convention for the exe name, so just set it to
-    " python directly. Note that this implies the global Python.
-    let g:python3_host_prog = expand($USERPROFILE . '\nvim\Scripts\python')
-else
-    " Use a specific virtual environment for nvim so we don't have to install pynvim
-    " everywhere.
-    let g:python3_host_prog = '~/nvim/bin/python3'
-endif
 
 " delimitMate
 let g:delimitMate_expand_cr = 2
