@@ -1,13 +1,13 @@
 local function should_lsp_be_enabled()
-    local lsp_filetypes = { 'python', 'cpp', 'lua', 'cmake' }
-    local common = require('common')
+    local lsp_filetypes = { "python", "cpp", "lua", "cmake" }
+    local common = require("common")
 
     return common.has_value(lsp_filetypes, vim.bo.filetype)
 end
 
 local function should_diagnostic_be_enabled()
-    local diagnostic_filetypes = { 'python' }
-    local common = require('common')
+    local diagnostic_filetypes = { "python" }
+    local common = require("common")
 
     return common.has_value(diagnostic_filetypes, vim.bo.filetype)
 end
@@ -21,50 +21,53 @@ function enable_diagnostic(enable)
 end
 
 local function enable_lsp_autocomp(enable)
-    local cmp = require('cmp')
-    local cmp_action = require('lsp-zero').cmp_action()
+    local cmp = require("cmp")
+    local cmp_action = require("lsp-zero").cmp_action()
 
     if enable then
-        vim.cmd('execute "MUcompleteAutoOff"')
+        vim.cmd("execute 'MUcompleteAutoOff'")
         cmp.setup({
             enabled = function()
-                local context = require 'cmp.config.context'
-                if context.in_treesitter_capture('comment') == true or context.in_syntax_group('Comment') then
+                local context = require("cmp.config.context")
+                if
+                    context.in_treesitter_capture("comment") == true
+                    or context.in_syntax_group("Comment")
+                then
                     return false
                 else
                     return true
                 end
             end,
             sources = {
-                { name = 'path' },
-                { name = 'nvim_lsp' },
-                { name = 'nvim_lsp_signature_help' },
-                { name = 'buffer', keyword_length = 3 },
+                { name = "path" },
+                { name = "nvim_lsp" },
+                { name = "nvim_lsp_signature_help" },
+                { name = "buffer", keyword_length = 3 },
             },
             mapping = {
-                ['<Tab>'] = cmp_action.tab_complete(),
-                ['<S-Tab>'] = cmp_action.select_prev_or_fallback(),
-            }
+                ["<Tab>"] = cmp_action.tab_complete(),
+                ["<S-Tab>"] = cmp_action.select_prev_or_fallback(),
+            },
         })
     else
-        vim.cmd('execute "MUcompleteAutoOn"')
+        vim.cmd("execute 'MUcompleteAutoOn'")
         cmp.setup({ enabled = false })
     end
 end
 
 local function set_state_for_large_files()
-    vim.opt_local.bufhidden = 'unload'
-    vim.opt_local.buftype = 'nowrite'
-    vim.opt_local.eventignore = vim.opt_local.eventignore + 'FileType'
+    vim.opt_local.bufhidden = "unload"
+    vim.opt_local.buftype = "nowrite"
+    vim.opt_local.eventignore = vim.opt_local.eventignore + "FileType"
     vim.opt_local.undolevels = -1
     vim.opt_local.foldenable = false
-    vim.cmd('execute "MUcompleteAutoOff"')
+    vim.cmd("execute 'MUcompleteAutoOff'")
 end
 
 local function is_large_file()
     -- Large files start at 100MB
     local min_size = 1024 * 1024 * 100
-    local f = vim.fn.expand('<afile>')
+    local f = vim.fn.expand("<afile>")
     if vim.fn.getfsize(f) > min_size then
         return true
     end
@@ -93,13 +96,13 @@ function M.handle_large_buffer()
 end
 
 function M.on_mode_changed()
-    if vim.bo.filetype == 'TelescopePrompt' then
-        vim.cmd('execute "MUcompleteAutoOff"')
+    if vim.bo.filetype == "TelescopePrompt" then
+        vim.cmd("execute 'MUcompleteAutoOff'")
     else
         if should_lsp_be_enabled() then
-            vim.cmd('execute "MUcompleteAutoOff"')
+            vim.cmd("execute 'MUcompleteAutoOff'")
         else
-            vim.cmd('execute "MUcompleteAutoOn"')
+            vim.cmd("execute 'MUcompleteAutoOn'")
         end
     end
 end
