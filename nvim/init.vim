@@ -224,36 +224,4 @@ lua require("autocmd")
 
 " Key remaps
 "=======================
-" Paste options.
-nnoremap <F2> :set invpaste paste?<CR>
-imap <F2> <C-O>:set invpaste paste?<CR>
-set pastetoggle=<F2>
-
-" Toggle numbers.
-nnoremap <C-n> :call ToggleNumbers()<CR>
-
-" Clear search highlight.
-nnoremap <silent> <ESC> :noh<CR><ESC>
-
-" Remap esc to jk.
-inoremap jk <ESC>
-
-" Buffer navigation.
-nnoremap <C-h> <C-w>h
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-nnoremap <C-j> <C-w>j
-
-" Play macro stored in buffer q with the space bar
-nnoremap <Space> @q
-
-" IDE-like settings.
-nmap <F5> :UndotreeToggle<CR>
-nmap <F7> :NvimTreeToggle<CR>
-
-" Telescope keys
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-nnoremap <leader>fd <cmd>Telescope file_browser<cr>
+lua require("maps")
