@@ -1,7 +1,7 @@
-common = {}
+M = {}
 
-function common.has_value(table, val)
-    for index, value in ipairs(table) do
+function M.has_value(table, val)
+    for _, value in ipairs(table) do
         if value == val then
             return true
         end
@@ -10,4 +10,4 @@ function common.has_value(table, val)
     return false
 end
 
-return common
+return M
