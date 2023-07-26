@@ -34,10 +34,7 @@ vim.opt.expandtab = true
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
 
--- Colorscheme
--- TODO: Move this to the plugin settings.
-vim.g.dracula_colorterm = 0
-vim.cmd("colorscheme dracula")
+-- Highlight column width.
 vim.cmd("let &colorcolumn=join(range(&tw,&tw), ',')")
 
 -- Copy to system clipboard if we're on Windows or Mac.

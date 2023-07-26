@@ -18,7 +18,7 @@ local function should_diagnostic_be_enabled()
 end
 
 -- Toggles diagnostics on/off
-function enable_diagnostic(enable)
+local function enable_diagnostic(enable)
     if enable then
         vim.diagnostic.enable()
     else
@@ -152,38 +152,38 @@ vim.api.nvim_create_autocmd({ "BufReadPre" }, {
 })
 
 -- Toggle lsp/diagnostics depending on filetype.
-vim.api.nvim_create_autocmd({ "BufEnter", "BufLeave" }, {
-    pattern = "*",
-    group = augroup,
-    callback = function(args)
-        local enable_lsp = should_lsp_be_enabled()
-        local enable_diag = should_diagnostic_be_enabled()
-        if args.event == "BufEnter" then
-            enable_diagnostic(enable_diag)
-            enable_lsp_autocomp(enable_lsp)
-        elseif args.event == "BufLeave" then
-            enable_diagnostic(not enable_diag)
-            enable_lsp_autocomp(not enable_lsp)
-        end
-    end,
-})
+--vim.api.nvim_create_autocmd({ "BufEnter", "BufLeave" }, {
+    --pattern = "*",
+    --group = augroup,
+    --callback = function(args)
+        --local enable_lsp = should_lsp_be_enabled()
+        --local enable_diag = should_diagnostic_be_enabled()
+        --if args.event == "BufEnter" then
+            --enable_diagnostic(enable_diag)
+            --enable_lsp_autocomp(enable_lsp)
+        --elseif args.event == "BufLeave" then
+            --enable_diagnostic(not enable_diag)
+            --enable_lsp_autocomp(not enable_lsp)
+        --end
+    --end,
+--})
 
 -- Ensure Mu-complete doesn't get enabled in Telescope windows.
-vim.api.nvim_create_autocmd({ "ModeChanged" }, {
-    pattern = "*",
-    group = augroup,
-    callback = function()
-        if vim.bo.filetype == "TelescopePrompt" then
-            vim.cmd("execute 'MUcompleteAutoOff'")
-        else
-            if should_lsp_be_enabled() then
-                vim.cmd("execute 'MUcompleteAutoOff'")
-            else
-                vim.cmd("execute 'MUcompleteAutoOn'")
-            end
-        end
-    end,
-})
+--vim.api.nvim_create_autocmd({ "ModeChanged" }, {
+    --pattern = "*",
+    --group = augroup,
+    --callback = function()
+        --if vim.bo.filetype == "TelescopePrompt" then
+            --vim.cmd("execute 'MUcompleteAutoOff'")
+        --else
+            --if should_lsp_be_enabled() then
+                --vim.cmd("execute 'MUcompleteAutoOff'")
+            --else
+                --vim.cmd("execute 'MUcompleteAutoOn'")
+            --end
+        --end
+    --end,
+--})
 
 -- Highlight common comment headers.
 vim.api.nvim_create_autocmd({ "Syntax" }, {
