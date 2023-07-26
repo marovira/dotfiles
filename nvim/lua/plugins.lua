@@ -60,7 +60,7 @@ require("nvim-treesitter.configs").setup({
     auto_install = true,
     highlight = {
         enable = true,
-        disable = { "gitcommit", "markdown" },
+        disable = { "gitcommit", "markdown", "latex" },
     },
 })
 
