@@ -6,6 +6,6 @@ return {
         config = function()
             vim.g.dracula_colorterm = false
             vim.cmd("colorscheme dracula")
-        end
+        end,
     },
 }

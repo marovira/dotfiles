@@ -39,12 +39,12 @@ vim.cmd("let &colorcolumn=join(range(&tw,&tw), ',')")
 
 -- Copy to system clipboard if we're on Windows or Mac.
 if vim.fn.has("win32") or vim.fn.has("mac") then
-	vim.opt.clipboard = "unnamed"
+    vim.opt.clipboard = "unnamed"
 end
 
 -- Needed for undo-tree, could be moved to plugin settings.
 if vim.fn.has("persistent_undo") then
-	vim.opt.undofile = true
+    vim.opt.undofile = true
     if vim.fn.has("win32") then
         vim.opt.undodir = vim.fn.expand("$XDG_CONFIG_HOME") .. "\\nvim-data\\"
     else
@@ -55,8 +55,8 @@ end
 -- Python settings (needed for everything that needs python). Make sure that we use a venv
 -- specific for nvim so we don't have to install pynvim everywhere
 if vim.fn.has("win32") then
-	-- Note that Windows doesn't use python3, so just set it to python directly.
-	vim.g.python3_host_prog = vim.fn.expand("$USERPROFILE") .. "\\nvim\\Scripts\\python"
+    -- Note that Windows doesn't use python3, so just set it to python directly.
+    vim.g.python3_host_prog = vim.fn.expand("$USERPROFILE") .. "\\nvim\\Scripts\\python"
 else
-	vim.g.python3_host_prog = "~/nvim/bin/python3"
+    vim.g.python3_host_prog = "~/nvim/bin/python3"
 end

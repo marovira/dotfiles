@@ -5,6 +5,6 @@ return {
         lazy = true,
         config = function()
             require("lsp-zero.settings").preset({})
-        end
+        end,
     },
 }

@@ -18,6 +18,6 @@ return {
             vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<CR>")
             vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>")
             vim.keymap.set("n", "<leader>fd", "<cmd>Telescope file_browser<CR>")
-        end
+        end,
     },
 }

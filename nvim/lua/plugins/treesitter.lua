@@ -27,6 +27,6 @@ return {
                     disable = { "gitcommit", "markdown", "latex" },
                 },
             })
-        end
+        end,
     },
 }

@@ -3,7 +3,7 @@ return {
         "hrsh7th/nvim-cmp",
         event = "InsertEnter",
         dependencies = {
-            {"L3MON4D3/LuaSnip"},
+            { "L3MON4D3/LuaSnip" },
         },
         config = function()
             require("lsp-zero.cmp").extend({
@@ -23,6 +23,6 @@ return {
                     ["<S-Tab>"] = cmp_action.select_prev_or_fallback(),
                 },
             })
-        end
-    }
+        end,
+    },
 }

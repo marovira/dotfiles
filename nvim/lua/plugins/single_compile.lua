@@ -14,6 +14,6 @@ return {
             vim.g.SingleCompile_showquickfixiferror = true
             vim.g.SingleCompile_showquickfixifwarning = true
             vim.g.SingleCompile_showresultafterrun = true
-        end
+        end,
     },
 }

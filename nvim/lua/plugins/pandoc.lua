@@ -12,6 +12,6 @@ return {
                 let g:pandoc#formatting#textwidth = &tw
                 let g:pandoc#modules#disabled = ['folding']
             ]])
-        end
+        end,
     },
 }
