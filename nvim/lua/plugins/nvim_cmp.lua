@@ -9,6 +9,7 @@ return {
             { "hrsh7th/cmp-path" },
             { "hrsh7th/cmp-buffer" },
             { "f3fora/cmp-spell" },
+            { "hrsh7th/cmp-omni" },
         },
         config = function()
             require("lsp-zero.cmp").extend({
@@ -35,6 +36,8 @@ return {
                             enable_in_context = function()
                                 return context.in_treesitter_capture("spell")
                                     or vim.bo.filetype == "pandoc"
+                                    or vim.bo.filetype == "gitcommit"
+                                    or vim.bo.filetype == "tex"
                             end,
                         },
                     },
@@ -55,6 +58,14 @@ return {
                             enable_in_context = function()
                                 return context.in_treesitter_capture("comment")
                                     or context.in_syntax_group("Comment")
+                            end,
+                        },
+                    },
+                    {
+                        name = "omni",
+                        option = {
+                            enable_in_context = function()
+                                return vim.bo.filetype == "tex"
                             end,
                         },
                     },
