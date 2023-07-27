@@ -1,8 +1,9 @@
+local common = require("common")
 return {
     {
         "xuhdev/SingleCompile",
         cond = function()
-            return vim.fn.has("win32")
+            return common.is_windows()
         end,
         config = function()
             vim.cmd([[
