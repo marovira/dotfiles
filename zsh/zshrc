@@ -44,6 +44,12 @@ elif [[ "$OSTYPE" == "msys" ]]; then
     alias open='start'
 fi
 
+# Allow Windows to open bash without any settings. This is mainly to address an issue
+# where certain paths don't work in zsh.
+if [[ "$OSTYPE" == "msys" ]]; then
+    alias bash='bash --norc --noprofile'
+fi
+
 # Directory listings.
 alias ls='ls -1 -hF --color=auto'
 alias la='ls -A'
