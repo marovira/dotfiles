@@ -6,7 +6,7 @@ return {
             { "L3MON4D3/LuaSnip" },
             { "hrsh7th/cmp-nvim-lsp" },
             { "hrsh7th/cmp-nvim-lsp-signature-help" },
-            { "hrsh7th/cmp-path" },
+            { "yehuohan/cmp-path" },
             { "hrsh7th/cmp-buffer" },
             { "f3fora/cmp-spell" },
             { "hrsh7th/cmp-omni" },
