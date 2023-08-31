@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+local -r archive=${1:?"error: no input path specified"}
+local -r out=${2:-.}
+
+mkdir -p $out
+pv $archive | zstd -d | tar xp -C $out

@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+local -r input=${1:?"error: no input path specified"}
+local -r out=${2:?"error: no output path specified"}
+tar cf - $input -P | pv -s $(du -sb $input | awk '{print $1}') | zstd > $out

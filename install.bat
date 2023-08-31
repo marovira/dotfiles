@@ -33,5 +33,6 @@ mklink %USERPROFILE%\.bashrc %CURDIR%bash\bashrc_win_zsh
 mklink %USERPROFILE%\.zshrc %CURDIR%zsh\zshrc
 mklink %USERPROFILE%\.zsh_plugins.txt %CURDIR%zsh\zsh_plugins_win
 mklink %USERPROFILE%\.p10k.zsh %CURDIR%zsh\p10k.zsh
+mklink /D %USERPROFILE%\.zshfn %CURDIR%zsh\zshfn
 
 echo Install finished successfully
