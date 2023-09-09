@@ -52,7 +52,7 @@ end
 
 -- Python settings (needed for everything that needs python). Make sure that we use a venv
 -- specific for nvim so we don't have to install pynvim everywhere
-if vim.fn.has("win32") then
+if common.is_windows() then
     -- Note that Windows doesn't use python3, so just set it to python directly.
     vim.g.python3_host_prog = vim.fn.expand("$USERPROFILE") .. "\\nvim\\Scripts\\python"
 else
