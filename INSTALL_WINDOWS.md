@@ -99,9 +99,10 @@ On first run of Neovide (after it finishes installing everything), run
 ### C/C++ Support
 
 To allow C/C++ syntax highlighting as well as compilation, we need `clang` and
-`clang-format`, which will be installed as part of Clang itself. To install it, go
-[here](https://github.com/llvm/llvm-project/releases) and download the required version.
-Make sure it gets added to the path.
+`clang-format`, which will be installed as part of Clang itself. The current minimum
+required version of Clang is 17. To install it, go
+[here](https://github.com/llvm/llvm-project/releases) and download the latest compatible
+version. Make sure it gets added to the path.
 
 ### Markdown
 
