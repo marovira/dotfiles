@@ -9,7 +9,7 @@ DeriveLineEnding: true
 DerivePointerAlignment: true
 IndentWidth: 4
 TabWidth: 4
-LineEndingStyle: LF
+LineEnding: LF
 UseTab: Never
 
 # Alignment settings
@@ -64,7 +64,7 @@ BraceWrapping:
     SplitEmptyNamespace: false
 
 # Break settings
-BreakAfterAttribute: Always
+BreakAfterAttributes: Always
 BreakBeforeBinaryOperators: NonAssignment
 BreakBeforeConceptDeclarations: Always
 BreakBeforeTernaryOperators: true
