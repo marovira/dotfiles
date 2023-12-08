@@ -1,11 +1,6 @@
 -- Remap ESC to jk (insert mode only)
 vim.keymap.set("i", "jk", "<ESC>")
 
--- Paste options.
-vim.keymap.set("n", "<F2>", "set invpaste paste?<CR>")
-vim.keymap.set("i", "<F2> <C-O>", "set invpaste paste?<CR>", { remap = true })
-vim.opt.pastetoggle = "<F2>"
-
 -- Toggle numbers
 local number_mode = false
 vim.keymap.set("n", "<C-n>", function()
