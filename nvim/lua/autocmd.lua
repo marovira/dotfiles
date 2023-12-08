@@ -34,6 +34,19 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     command = "set filetype=cpp",
 })
 
+-- Property sheets prefer 2 spaces instead of 4, so override those settings while ensuring
+-- they get treated as XML files.
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    pattern = { "*.props" },
+    group = augroup,
+    callback = function()
+        vim.cmd("set filetype=xml")
+        vim.opt_local.tabstop = 2
+        vim.opt_local.shiftwidth = 2
+        vim.opt_local.softtabstop = 2
+    end,
+})
+
 -- Disable showing diagnostics on C++ buffers. This is mainly because I can't come up with
 -- a way to configure clangd for Windows.
 vim.api.nvim_create_autocmd({ "BufRead" }, {
