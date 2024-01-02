@@ -27,3 +27,7 @@ require("autocmd")
 -- Key remaps
 -- =======================
 require("maps")
+
+-- GUI options
+-- =======================
+require("gui")
