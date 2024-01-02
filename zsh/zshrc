@@ -31,9 +31,11 @@ fi
 alias vi='nvim'
 alias vim='nvim'
 
-# On Windows only, override neovide so it opens with the size we want.
+# On Windows only, override neovide so it opens with the size we want. Also it seems the
+# latest version of Neovide has an issue with forking correctly on git bash, so ensure it
+# doesn't block the terminal when started.
 if [[ "$OSTYPE" == "msys" ]]; then
-    alias neovide='neovide --grid 100x50'
+    alias neovide='(neovide --grid 100x50 &)'
 fi
 
 # Grep aliases
