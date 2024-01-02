@@ -13,7 +13,7 @@ if not vim.loop.fs_stat(lazy_path) then
         "--filter=blob:none",
         "https://github.com/folke/lazy.nvim.git",
         "--branch=stable",
-        lazy_path
+        lazy_path,
     })
 end
 vim.opt.rtp:prepend(lazy_path)
