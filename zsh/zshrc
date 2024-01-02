@@ -30,7 +30,11 @@ fi
 # Vim aliases.
 alias vi='nvim'
 alias vim='nvim'
-alias gvim='neovide'
+
+# On Windows only, override neovide so it opens with the size we want.
+if [[ "$OSTYPE" == "msys" ]]; then
+    alias neovide='neovide --grid 100x50'
+fi
 
 # Grep aliases
 alias grep='grep --color'
