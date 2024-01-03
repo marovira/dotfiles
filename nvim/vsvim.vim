@@ -46,25 +46,26 @@ nnoremap <Leader>cc :vsc Edit.CommentSelection<CR>
 nnoremap <Leader>cu :vsc Edit.UncommentSelection<CR>
 vnoremap <Leader>cc :vsc Edit.CommentSelection<CR>
 vnoremap <Leader>cu :vsc Edit.UnCommentSelection<CR>
-nnoremap <Leader>n  :vsc Edit.GoToNextIssueinFile<CR>
-nnoremap <Leader>p  :vsc Edit.GoToPreviousIssueinFile<CR>
 
 " Format selection for both normal and visual modes.
 nnoremap <Leader>f :vsc Edit.FormatSelection<CR>
 vnoremap <Leader>f :vsc Edit.FormatSelection<CR>
-nnoremap <Leader>d :vsc Edit.FormatDocument<CR>
+
+" Telescope-like commands
+nnoremap <Leader>ff :vsc VAssistX.OpenFileInSolutionDialog<CR>
+nnoremap <Leader>fg :vsc VAssistX.FindSymbolDialog<CR>
+nnoremap <Leader>fo :vsc VAssistX.OpenCorrespondingFile<CR>
+
+" LSP commands
+nnoremap gd :vsc VAssistX.GotoImplementation<CR><ESC>
+nnoremap gD :vsc VAssistX.GotoImplementation<CR><ESC>
+nnoremap gr :vsc VAssistX.FindReferences<CR>
+nnoremap <F2> :vsc VAssistX.RefactorRename<CR>
+nnoremap [d  :vsc Edit.GoToNextIssueinFile<CR>
+nnoremap ]d  :vsc Edit.GoToPreviousIssueinFile<CR>
 
 " Return to previous position.
 nnoremap <C-t> :vsc View.NavigateBackward<CR>
-
-" Open corresponding file.
-nnoremap <Leader>o :vsc VAssistX.OpenCorrespondingFile<CR>
-
-" Set/unset breakpoint in current line.
-nnoremap <Leader>b :vsc Debug.ToggleBreakpoint<CR>
-
-" Enable/disable breakpoint in current line.
-nnoremap <Leader>bt :vsc Debug.EnableBreakpoint<CR>
 
 nnoremap <Leader>n :set nornu<CR>
 nnoremap <Leader>r :set rnu<CR>
