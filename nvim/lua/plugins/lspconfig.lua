@@ -27,6 +27,7 @@ return {
                 "cmake",
             })
 
+            lspconfig.glsl_analyzer.setup({})
             lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
             lspconfig.pylsp.setup({
                 settings = {
