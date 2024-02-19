@@ -4,3 +4,5 @@
 vim.b.ale_linters = nil
 vim.b.ale_fixers = { "clang-format" }
 vim.b.ale_linters_explicit = true
+
+vim.opt_local.smartindent = true
