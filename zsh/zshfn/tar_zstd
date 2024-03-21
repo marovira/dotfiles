@@ -2,4 +2,11 @@
 
 local -r input=${1:?"error: no input path specified"}
 local -r out=${2:?"error: no output path specified"}
-tar cf - $input -P | pv -s $(du -sb $input | awk '{print $1}') | zstd > $out
+
+# Disable the usage of PV on Windows. For some weird reason it causes things to slow down
+# incredibly. If this ever changes, remove this.
+if [[ "$OSTYPE" == "msys" ]]; then
+    tar cfv - $input -P | zstd > $out
+else
+    tar cf - $input -P | pv -s $(du -sb $input | awk '{print $1}') | zstd > $out
+fi
