@@ -19,6 +19,7 @@ vim.opt.spell = true                                            -- Spelling.
 vim.opt.spelllang = "en_gb"                                     -- Use GB English.
 vim.opt.startofline = false                                     -- Don't move cursor on line jumps.
 vim.opt.tw = 90                                                 -- Text width. Should match all formatting tools.
+vim.opt.showmode = false                                        -- Disable showing mode in command bar
 -- stylua: ignore end
 
 -- File format settings.
