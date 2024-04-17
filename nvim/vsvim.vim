@@ -7,7 +7,7 @@ set incsearch                   " Incremental search
 set laststatus=2                " Always show status bar
 set modeline	                " Enable top-of-file modelines NOTE: security concerns with these
 set nostartofline               " Don't move cusor on line jumps
-set tw=80 	                    " Text Width
+set tw=80                       " Text Width
 set number relativenumber       " Set hybrid line numbers
 
 " Tab settings
@@ -52,15 +52,15 @@ nnoremap <Leader>f :vsc Edit.FormatSelection<CR>
 vnoremap <Leader>f :vsc Edit.FormatSelection<CR>
 
 " Telescope-like commands
-nnoremap <Leader>ff :vsc VAssistX.OpenFileInSolutionDialog<CR>
-nnoremap <Leader>fg :vsc VAssistX.FindSymbolDialog<CR>
-nnoremap <Leader>fo :vsc VAssistX.OpenCorrespondingFile<CR>
+nnoremap <Leader>ff :vsc Edit.GoToAll<CR>
+nnoremap <Leader>fg :vsc Edit.GoToAll<CR>
+nnoremap <Leader>fo :vsc EditorContextMenus.CodeWindow.ToggleHeaderCodeFile<CR>
 
 " LSP commands
-nnoremap gd :vsc VAssistX.GotoImplementation<CR><ESC>
-nnoremap gD :vsc VAssistX.GotoImplementation<CR><ESC>
-nnoremap gr :vsc VAssistX.FindReferences<CR>
-nnoremap <F2> :vsc VAssistX.RefactorRename<CR>
+nnoremap gd :vsc Edit.GoToDefinition<CR><ESC>
+nnoremap gD :vsc Edit.GoToDeclaration<CR><ESC>
+nnoremap gr :vsc Edit.FindAllReferences<CR>
+nnoremap <F2> :vsc Refactor.Rename<CR>
 nnoremap [d  :vsc Edit.GoToNextIssueinFile<CR>
 nnoremap ]d  :vsc Edit.GoToPreviousIssueinFile<CR>
 
