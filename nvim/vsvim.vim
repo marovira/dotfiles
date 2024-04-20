@@ -52,13 +52,15 @@ nnoremap <Leader>f :vsc Edit.FormatSelection<CR>
 vnoremap <Leader>f :vsc Edit.FormatSelection<CR>
 
 " Telescope-like commands
-nnoremap <Leader>ff :vsc Edit.GoToAll<CR>
-nnoremap <Leader>fg :vsc Edit.GoToAll<CR>
+nnoremap <Leader>ff :vsc Edit.GoToFile<CR>
+nnoremap <Leader>fg :vsc Edit.GoToText<CR>
+nnoremap <Leader>ft :vsc Edit.GoToType<CR>
 nnoremap <Leader>fo :vsc EditorContextMenus.CodeWindow.ToggleHeaderCodeFile<CR>
 
 " LSP commands
 nnoremap gd :vsc Edit.GoToDefinition<CR><ESC>
 nnoremap gD :vsc Edit.GoToDeclaration<CR><ESC>
+nnoremap gi :vsc Edit.GoToImplementation<CR><ESC>
 nnoremap gr :vsc Edit.FindAllReferences<CR>
 nnoremap <F2> :vsc Refactor.Rename<CR>
 nnoremap [d  :vsc Edit.GoToNextIssueinFile<CR>
