@@ -11,7 +11,6 @@ ln -s "$PWD/git/ignore" "$HOME/.gitignore"
 ln -s "$PWD/git/template" "$HOME/.gittemplate.txt"
 ln -s "$PWD/nvim" "$HOME/.config/nvim"
 ln -s "$PWD/cpp/.clang-format" "$HOME/.clang-format"
-ln -s "$PWD/python/pylintrc" "$HOME/pylintrc"
 ln -s "$PWD/tmux/tmux.conf" "$HOME/.tmux.conf"
 
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
