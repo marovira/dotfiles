@@ -42,10 +42,8 @@ set clipboard=unnamed
 " VS commands
 "=======================
 " Comment/Uncomment selection for both normal and visual modes.
-nnoremap <Leader>cc :vsc Edit.CommentSelection<CR>
-nnoremap <Leader>cu :vsc Edit.UncommentSelection<CR>
-vnoremap <Leader>cc :vsc Edit.CommentSelection<CR>
-vnoremap <Leader>cu :vsc Edit.UnCommentSelection<CR>
+nnoremap gc Edit.ToggleBlockComment<CR>
+vnoremap gc Edit.ToggleBlockComment<CR>
 
 " Format selection for both normal and visual modes.
 nnoremap <Leader>f :vsc Edit.FormatSelection<CR>
