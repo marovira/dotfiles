@@ -16,10 +16,12 @@ return {
             local cmp = require("cmp")
             local cmp_action = require("lsp-zero").cmp_action()
             local context = require("cmp.config.context")
+            local cmp_format = require("lsp-zero").cmp_format({ details = true })
 
             lsp_zero.extend_cmp()
 
             cmp.setup({
+                formatting = cmp_format,
                 mapping = {
                     ["<Tab>"] = cmp_action.tab_complete(),
                     ["<S-Tab>"] = cmp_action.select_prev_or_fallback(),

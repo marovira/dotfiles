@@ -71,9 +71,9 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     command = "set filetype=objcpp",
 })
 
--- Don't enable folds on JSON files (it makes it harder to read).
+-- Disable folds in JSON and markdown.
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = "*.json",
+    pattern = { "*.json", "*.md" },
     group = augroup,
     command = "silent! :set nofoldenable",
 })
