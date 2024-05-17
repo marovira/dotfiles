@@ -12,18 +12,13 @@ return {
             { "hrsh7th/cmp-omni" },
         },
         config = function()
-            require("lsp-zero.cmp").extend({
-                set_sources = "recommended",
-                set_basic_mappings = true,
-                set_extra_mappings = true,
-                use_luasnip = true,
-                set_format = true,
-                documentation_window = true,
-            })
-
+            local lsp_zero = require("lsp-zero")
             local cmp = require("cmp")
             local cmp_action = require("lsp-zero").cmp_action()
             local context = require("cmp.config.context")
+
+            lsp_zero.extend_cmp()
+
             cmp.setup({
                 mapping = {
                     ["<Tab>"] = cmp_action.tab_complete(),
@@ -35,9 +30,10 @@ return {
                         option = {
                             enable_in_context = function()
                                 return context.in_treesitter_capture("spell")
-                                    or vim.bo.filetype == "pandoc"
+                                    or vim.bo.filetype == "markdown"
                                     or vim.bo.filetype == "gitcommit"
                                     or vim.bo.filetype == "tex"
+                                    or vim.bo.filetype == "text"
                             end,
                         },
                     },

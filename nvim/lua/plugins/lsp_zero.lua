@@ -1,10 +1,11 @@
 return {
     {
         "VonHeikemen/lsp-zero.nvim",
-        branch = "v2.x",
+        branch = "v3.x",
         lazy = true,
-        config = function()
-            require("lsp-zero.settings").preset({})
+        init = function()
+            vim.g.lsp_zero_extend_cmp = 0
+            vim.g.lsp_zero_extend_lspconfig = 0
         end,
     },
 }

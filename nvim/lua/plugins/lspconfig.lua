@@ -1,7 +1,7 @@
 return {
     {
         "neovim/nvim-lspconfig",
-        cmd = "LspInfo",
+        cmd = { "LspInfo", "LspInstall", "LspStart" },
         event = { "BufReadPre", "BufNewFile" },
         dependencies = {
             { "williamboman/mason-lspconfig.nvim" },
@@ -13,39 +13,52 @@ return {
             },
         },
         config = function()
-            local lsp = require("lsp-zero")
+            local lsp_zero = require("lsp-zero")
             local lspconfig = require("lspconfig")
+            local mason = require("mason")
+            local mason_lsp = require("mason-lspconfig")
 
-            lsp.on_attach(function(_, bufnr)
-                lsp.default_keymaps({ buffer = bufnr })
+            lsp_zero.extend_lspconfig()
+            lsp_zero.on_attach(function(_, bufnr)
+                lsp_zero.default_keymaps({ buffer = bufnr })
             end)
 
-            lsp.ensure_installed({
-                "lua_ls",
-                "clangd",
-                "pylsp",
-                "cmake",
-            })
+            mason.setup({})
+            mason_lsp.setup({
+                ensure_installed = {
+                    "lua_ls",
+                    "clangd",
+                    "pylsp",
+                    "cmake",
+                },
+                handlers = {
+                    function(server_name)
+                        lspconfig[server_name].setup({})
+                    end,
 
-            lspconfig.glsl_analyzer.setup({})
-            lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
-            lspconfig.pylsp.setup({
-                settings = {
-                    pylsp = {
-                        plugins = {
-                            autopep8 = { enabled = false },
-                            flake8 = { enabled = false },
-                            mccabe = { enabled = false },
-                            pycodestyle = { enabled = false },
-                            pydocstyle = { enabled = false },
-                            pyflakes = { enabled = false },
-                            pylint = { enabled = false },
-                        },
-                    },
+                    lua_ls = function()
+                        lspconfig.lua_ls.setup(lsp_zero.nvim_lua_ls())
+                    end,
+
+                    pylsp = function()
+                        lspconfig.pylsp.setup({
+                            settings = {
+                                pylsp = {
+                                    plugins = {
+                                        autopep8 = { enabled = false },
+                                        flake8 = { enabled = false },
+                                        mccabe = { enabled = false },
+                                        pycodestyle = { enabled = false },
+                                        pydocstyle = { enabled = false },
+                                        pyflakes = { enabled = false },
+                                        pylint = { enabled = false },
+                                    },
+                                },
+                            },
+                        })
+                    end,
                 },
             })
-
-            lsp.setup()
         end,
     },
 }
