@@ -1,0 +1,20 @@
+#!/bin/zsh
+
+# Only works on Linux. Windows needs to manually update.
+if [[ "$OSTYPE" == "msys" ]]; then
+    return
+fi
+
+if [ "$EUID" -ne 0 ]; then
+    echo "Command must be run as root"
+    return 1
+fi
+
+# If a previous installation of nvim exists, remove it.
+if [ -f "/usr/local/bin/nvim" ]; then
+    sudo rm -R /usr/local/bin/nvim
+fi
+
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+chmod u+x nvim.appimage
+sudo mv nvim.appimage /usr/local/bin/nvim

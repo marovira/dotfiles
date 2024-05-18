@@ -67,6 +67,7 @@ export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 fpath+=(~/.zshfn)
 autoload -Uz tar_zstd
 autoload -Uz untar_zstd
+autoload -Uz nvim_update
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
