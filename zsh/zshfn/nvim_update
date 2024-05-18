@@ -5,11 +5,6 @@ if [[ "$OSTYPE" == "msys" ]]; then
     return
 fi
 
-if [ "$EUID" -ne 0 ]; then
-    echo "Command must be run as root"
-    return 1
-fi
-
 # If a previous installation of nvim exists, remove it.
 if [ -f "/usr/local/bin/nvim" ]; then
     sudo rm -R /usr/local/bin/nvim
