@@ -1,8 +1,10 @@
+local config = function()
+    vim.keymap.set("n", "<F5>", ":UndotreeToggle<CR>")
+end
+
 return {
     {
         "mbbill/undotree",
-        config = function()
-            vim.keymap.set("n", "<F5>", ":UndotreeToggle<CR>")
-        end,
+        config = config,
     },
 }
