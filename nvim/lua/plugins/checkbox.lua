@@ -1,12 +1,11 @@
 local config = function()
-    vim.g.insert_checkbox = "\\<"
-    vim.g.insert_checkbox_prefix = ""
-    vim.g.insert_checkbox_suffix = " "
+    vim.keymap.set("n", "<leader>tc", ":lua require('toggle-checkbox').toggle()<CR>")
 end
 
 return {
     {
-        "jkramer/vim-checkbox",
+        "opdavies/toggle-checkbox.nvim",
+        ft = "markdown",
         config = config,
     },
 }
