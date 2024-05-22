@@ -9,6 +9,8 @@ local config = function()
     vim.g.SingleCompile_showquickfixiferror = true
     vim.g.SingleCompile_showquickfixifwarning = true
     vim.g.SingleCompile_showresultafterrun = true
+
+    vim.keymap.set("n", "<leader>sc", ":SCCompileRun<CR>")
 end
 
 return {
