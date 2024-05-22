@@ -10,7 +10,7 @@ local config = function()
     vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<CR>")
     vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>")
     vim.keymap.set("n", "<leader>fd", "<cmd>Telescope file_browser<CR>")
-    vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<CR>")
+    vim.keymap.set("n", "<leader>fu", "<cmd>Telescope undo<CR>")
 end
 
 return {
