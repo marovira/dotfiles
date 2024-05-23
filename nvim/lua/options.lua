@@ -59,3 +59,9 @@ if common.is_windows() then
 else
     vim.g.python3_host_prog = "~/nvim/bin/python3"
 end
+
+-- Change the terminal to git-bash in Windows.
+if common.is_windows() then
+    vim.opt.shell = "bash"
+    vim.opt.shellcmdflag = "-s"
+end
