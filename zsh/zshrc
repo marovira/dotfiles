@@ -1,6 +1,7 @@
 # Export variables.
 export EDITOR='nvim'
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+export YSU_HARDCORE=1
 
 # Load compinit for Windows (msys) and OSX since they don't enable it by default
 if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "darwin"* ]]; then
