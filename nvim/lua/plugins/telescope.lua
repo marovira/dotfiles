@@ -1,6 +1,18 @@
 local config = function()
     local telescope = require("telescope")
-    telescope.setup()
+    telescope.setup({
+        extensions = {
+            undo = {
+                use_delta = true,
+                side_by_side = true,
+                diff_context_lines = 10,
+                layout_strategy = "vertical",
+                layout_config = {
+                    preview_height = 0.8,
+                },
+            },
+        },
+    })
     telescope.load_extension("zf-native")
     telescope.load_extension("file_browser")
     telescope.load_extension("undo")

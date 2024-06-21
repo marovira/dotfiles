@@ -42,6 +42,8 @@
     prompt = false
     keepBackup = false
     keepTemporaries = false
+[delta]
+    line-numbers = true
 [alias]
 	a = add --all
 	ai = add -i
@@ -171,4 +173,3 @@
 	wp = show -p
 	wr = show -p --no-color
 	#############
-
