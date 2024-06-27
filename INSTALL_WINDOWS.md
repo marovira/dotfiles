@@ -9,46 +9,69 @@
 
 Download and install the following software:
 
-1. Download **64-bit** [Neovim](https://github.com/neovim/neovim/releases) (MSI installer
-   is recommended) and install it. Default installation path is fine.
-2. Download and install [Git](https://git-scm.com/downloads). Make sure that everything is
+1. Download and install [Git](https://git-scm.com/downloads). Make sure that everything is
    added to the path.
-3. Download Windows Terminal from the Windows app store.
-4. Download and install [Python](https://www.python.org/downloads/). Latest version of
-   Python is usually fine unless parity is required with another OS.
-4. Download [Neovide](https://neovide.dev/) and add it to path (I think it's added
-   automatically).
-
-### Additional Dependencies
-
-The following tools are also required for optimal functionality:
-
-1. Download the latest release for
-   [ripgrep](https://github.com/BurntSushi/ripgrep/releases). The MSVC version is
-   recommended. Unzip the archive and copy `rg.exe` to C:/Program Files/Git/usr/bin
-2. Download the latest release for [fd](https://github.com/sharkdp/fd/releases). MSVC
-   version is recommended. Unzip the archive and copy `fd.exe` to
-   C:/Program Files/Git/usr/bin.
-3. Download the latest release for
-   [stylua](https://github.com/JohnnyMorganz/StyLua/releases). Create a new folder under
-   C:/Program Files/stylua and extract the contents of the archive in there. Add this
-   folder to path.
+2. Download Windows Terminal from the Windows app store.
+3. Install [chocolatey](https://chocolatey.org/install). Note that this *needs* to be done
+   from a powershell terminal with admin privileges.
 4. Download [FiraCode
    NerdFont](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode)
    and install it. Regular version is recommended.
-5. Download the latest release for [bat](https://github.com/sharkdp/bat/releases). The
-   MSVC version is recommended. Unzip the archive and copy `bat.exe` to
-   C:/Program Files/Git/usr/bin.
 
-### Installing ZSH
+### Install Chocolatey Packages
 
-ZSH can be installed with Git, but it does require a bit more work to set up. First,
-download the latest version of ZSH from
-[here](https://packages.msys2.org/package/zsh?repo=msys&variant=x86_64). The package can
-then be extracted with WinRAR. Once it is extracted, copy the following:
+Open a terminal with admin privileges (doesn't matter which) and using `choco install`,
+install the following packages:
 
-1. Copy the `etc` folder to C:/Program Files/Git/etc
-2. Copy the `usr` folder to C:/Program Files/Git/usr
+* `ripgrep`
+* `fd`
+* `stylua`
+* `bat`
+* `python`
+* `neovim`
+* `neovide`
+* `delta`
+* `llvm`
+* `zstandard`
+
+### Setting up pacman
+
+Open an admin terminal with git and execute the following code (may be copied in):
+
+```sh
+pacman="
+pacman-6.0.1-18-x86_64.pkg.tar.zst
+pacman-mirrors-20220205-1-any.pkg.tar.zst
+msys2-keyring-1~20220623-1-any.pkg.tar.zst
+"
+curl https://raw.githubusercontent.com/msys2/MSYS2-packages/7858ee9c236402adf569ac7cff6beb1f883ab67c/pacman/pacman.conf -o /etc/pacman.conf
+for f in $pacman; do curl https://repo.msys2.org/msys/$HOSTTYPE/$f -fo ~/Downloads/$f; done
+
+cd /
+# If any of these fail, manually extract the files into their corresponding directories.
+tar x --zstd -vf ~/Downloads/msys2-keyring-1~20220623-1-any.pkg.tar.zst usr
+tar x --zstd -vf ~/Downloads/pacman-mirrors-20220205-1-any.pkg.tar.zst etc
+tar x --zstd -vf ~/Downloads/pacman-6.0.1-18-x86_64.pkg.tar.zst usr
+mkdir -p /var/lib/pacman
+
+pacman-key --init
+pacmak-key --populate msys2
+pacman -Syu
+URL=https://github.com/git-for-windows/git-sdk-64/raw/main
+cat /etc/package-versions.txt | while read p v; do d=/var/lib/pacman/local/$p-$v;
+ mkdir -p $d; echo $d; for f in desc files install mtree; do curl -sSL "$URL$d/$f" -o $d/$f;
+ done; done
+
+pacman-key --refresh-keys
+```
+
+### Installing Pacman packages
+
+Once pacman is installed, on the same admin terminal install the following using `pacman
+-S`:
+
+* `zsh`
+* `util-linux`
 
 ## Installing dotfiles
 
@@ -58,24 +81,9 @@ Once everything has been installed, clone this repository and run `install.bat` 
 
 ### Creating a SSH Key
 
-Run `ssh-keygen` from bash using default settings (and default password). Once that is
-done, ZSH will automatically start the agent.
-
-### Fixing Antidote
-
-After installation, open Terminal and let antidote get installed. There will (most likely)
-be a ton of errors coming out from the mangled paths. To fix this, go to
-%USERPROFILE%/.antidote/functions and open `__antidote_get_cachedir`. Then add the
-following:
-
-```zsh
-  elif [[ "${OSTYPE}" == (cygwin|msys)* ]]; then
-    result=$(cygpath ${LOCALAPPDATA:-$LocalAppData}) # <-- This line
-```
-
-Now close the terminal and open it again. You may need to delete
-%USERPROFILE%/.zsh_plugins.zsh to force antidote to re-download the files, but after that
-ZSH should work successfully.
+Run `ssh-keygen -a 100 -t ed25519` and create the default key using the standard ssh
+password. Once it is done, restart the shell so ZSH can automatically start the ssh-agent
+process.
 
 ### Adding Python venv for Nvim
 
@@ -95,19 +103,6 @@ On first run of Neovide (after it finishes installing everything), run
 `:NeovideRegisterRightClick` to register the right-click option in the context menu.
 
 ## Extra Software
-
-### C/C++ Support
-
-To allow C/C++ syntax highlighting as well as compilation, we need `clang` and
-`clang-format`, which will be installed as part of Clang itself. The current minimum
-required version of Clang is 17. To install it, go
-[here](https://github.com/llvm/llvm-project/releases) and download the latest compatible
-version. Make sure it gets added to the path.
-
-### Markdown
-
-Markdown requires pandoc, which can be downloaded from
-[here](https://github.com/jgm/pandoc/releases). Also add it to the path.
 
 ### LaTeX
 
