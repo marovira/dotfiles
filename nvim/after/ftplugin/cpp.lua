@@ -14,3 +14,6 @@ if common.is_windows() or common.is_mac() then
 else
     vim.b.ale_c_clangformat_executable = "clang-format-15"
 end
+
+-- Override the commentstring for cpp.
+vim.bo.commentstring = "// %s"
