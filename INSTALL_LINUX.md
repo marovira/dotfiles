@@ -14,6 +14,7 @@ Using the package manager, install the following:
 * ripgrep
 * python<ver>-venv (where <ver> is the version of Python installed. For example, for
   Python 3.10.xx, the package is python3.10-venv)
+* delta 
 
 ## Installing dotfiles
 
