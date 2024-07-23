@@ -40,10 +40,8 @@ vim.g.maplocalleader = ","
 -- Highlight column width.
 vim.cmd("let &colorcolumn=join(range(&tw,&tw), ',')")
 
--- Copy to system clipboard if we're on Windows or Mac.
-if common.is_windows() or common.is_mac() then
-    vim.opt.clipboard = "unnamedplus"
-end
+-- Allow copying to system clipboard.
+vim.opt.clipboard = "unnamedplus"
 
 -- Needed for undo-tree, could be moved to plugin settings.
 if vim.fn.has("persistent_undo") then
