@@ -1,0 +1,21 @@
+#!/bin/zsh
+
+if [[ "$OSTYPE" == "msys" ]]; then
+    if ! command -v delta &> /dev/null; then
+        scoop install main/delta
+        return
+    else
+        scoop update delta
+    fi
+    return
+fi
+
+local -r version=${1:?"error: a version number is required"}
+
+if command -v delta &> /dev/null; then
+    sudo dpkg -r git-delta
+fi
+
+curl -LO "https://github.com/dandavison/delta/releases/download/${version}/git-delta_${version}_amd64.deb"
+sudo dpkg -i "git-delta_${version}_amd64.deb"
+rm "git-delta_${version}_amd64.deb"
