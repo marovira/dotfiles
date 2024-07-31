@@ -1,0 +1,13 @@
+#!/bin/sh
+
+rm "$HOME/.zshrc"
+rm "$HOME/.zsh_plugins.txt"
+rm "$HOME/.zsh_plugins.zsh"
+rm "$HOME/.p10k.zsh"
+rm "$HOME/.zlogin"
+rm "$HOME/.gitconfig"
+rm "$HOME/.gitignore"
+rm "$HOME/.gittemplate.txt"
+rm "$HOME/.config/nvim"
+rm "$HOME/.clang-format"
+rm "$HOME/.tmux.conf"
