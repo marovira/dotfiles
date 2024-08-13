@@ -47,16 +47,6 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     end,
 })
 
--- Disable showing diagnostics on C++ buffers. This is mainly because I can't come up with
--- a way to configure clangd for Windows.
-vim.api.nvim_create_autocmd({ "BufRead" }, {
-    pattern = { "*.h", "*.c", "*.cpp", "*.hpp" },
-    group = augroup,
-    callback = function()
-        vim.diagnostic.disable(0)
-    end,
-})
-
 -- Ensure shader files are appropriately recognised.
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = { "*.vert", "*.tesc", "*.tese", "*.geom", "*.frag", "*.comp" },
