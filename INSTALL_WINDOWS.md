@@ -12,37 +12,43 @@ Download and install the following software:
 1. Download and install [Git](https://git-scm.com/downloads). Make sure that everything is
    added to the path.
 2. Download Windows Terminal from the Windows app store.
-3. Install [chocolatey](https://chocolatey.org/install). Note that this *needs* to be done
-   from a powershell terminal with admin privileges.
+3. Install [scoop](https://scoop.sh). Note that this *needs* to be done from a Powershell
+   terminal. Admin privileges are not required.
 4. Download [FiraCode
    NerdFont](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode)
    and install it. Regular version is recommended.
 
 ### Install Chocolatey Packages
 
-Open a terminal with admin privileges (doesn't matter which) and using `choco install`,
-install the following packages:
+Open a terminal (doesn't matter which) run `scoop bucket add extras`. Then, using `scoop
+install`, install the following packages:
 
-* `ripgrep`
-* `fd`
-* `stylua`
-* `bat`
-* `python`
-* `neovim`
-* `neovide`
-* `delta`
-* `llvm`
-* `zstandard`
+* `main/ripgrep`
+* `main/fd`
+* `main/stylua`
+* `main/bat`
+* `main/python`
+* `main/neovim`
+* `extras/neovide`
+* `main/delta`
+* `main/llvm`
+* `main/zstd`
 
-### Setting up pacman
+> **WARNING:**
+> Unlike previous installs of Python, installing it through scoop **will not** result in
+> the python executable being `python`. Instead, it will now follow the standard Linux
+> convention of being named `python3`.
+
+
+### Setting up `pacman`
 
 Open an admin terminal with git and execute the following code (may be copied in):
 
 ```sh
 pacman="
-pacman-6.0.1-18-x86_64.pkg.tar.zst
-pacman-mirrors-20220205-1-any.pkg.tar.zst
-msys2-keyring-1~20220623-1-any.pkg.tar.zst
+pacman-6.0.1-32-x86_64.pkg.tar.zst
+pacman-mirrors-20240523-1-any.pkg.tar.zst
+msys2-keyring-1~20240410-2-any.pkg.tar.zst
 "
 curl https://raw.githubusercontent.com/msys2/MSYS2-packages/7858ee9c236402adf569ac7cff6beb1f883ab67c/pacman/pacman.conf -o /etc/pacman.conf
 for f in $pacman; do curl https://repo.msys2.org/msys/$HOSTTYPE/$f -fo ~/Downloads/$f; done
@@ -65,6 +71,11 @@ cat /etc/package-versions.txt | while read p v; do d=/var/lib/pacman/local/$p-$v
 pacman-key --refresh-keys
 ```
 
+> **Note:**
+> If any of the `curl` calls for the pacman packages result in a 404 error, then go to the
+> [msys2](https://repo.msys2.org/msys/x86_64/) page and search for the package names,
+> adjusting the paths to use the latest versions.
+
 ### Installing Pacman packages
 
 Once pacman is installed, on the same admin terminal install the following using `pacman
@@ -72,6 +83,7 @@ Once pacman is installed, on the same admin terminal install the following using
 
 * `zsh`
 * `util-linux`
+* `pv`
 
 ## Installing dotfiles
 
@@ -87,7 +99,7 @@ process.
 
 ### Adding Python venv for Nvim
 
-Open a terminal and navigate to %USERPROFILE% and enter `python -m venv nvim`. This will
+Open a terminal and navigate to %USERPROFILE% and enter `python3 -m venv nvim`. This will
 create a virtual environment for neovim. Now activate the environment with `.
 nvim/Scripts/activate` and run `pip install pynvim`. Once it is installed, enter
 `deactivate` to disable the virtual environment.
@@ -106,8 +118,8 @@ On first run of Neovide (after it finishes installing everything), run
 
 ### LaTeX
 
-Requires MiKTeX and a PDF viewer that doesn't block the file. Install the following:
+Requires MiKTeX and a PDF viewer that doesn't block the file. Install the following using
+`scoop install`:
 
-1. MiKTeX can be downloaded from [here](https://miktex.org/download). Add to path.
-2. Download [SumatraPDF](https://www.sumatrapdfreader.org/download-free-pdf-viewer) and
-   add to path.
+* `main/miktex`
+* `extras/sumatrapdf`
