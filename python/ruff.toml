@@ -1,0 +1,37 @@
+target-version = "py312"
+line-length = 90
+indent-width = 4
+src = [] # Fill this in with your source directories.
+
+[lint]
+select = [
+    "E",
+    "F",
+    "UP",
+    "B",
+    "SIM",
+    "I",
+    "D", # <- Comment this line if docstrings aren't necessary
+    "N",
+    "A",
+    "C4",
+    "T10",
+    "ICN",
+    "PIE",
+    "SLF",
+    "PTH",
+    "ERA",
+    "NPY",
+    "RUF100",
+]
+
+ignore = ["D100", "N812", "N802", "N806", "N803"]
+fixable = ["I", "D200", "D201", "D202", "D205", "RUF100"]
+extend-safe-fixes = ["D200", "D205"]
+unfixable = []
+
+[pydocstyle]
+convention = "pep257"
+
+[format]
+line-ending = "lf"
