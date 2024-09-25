@@ -20,7 +20,7 @@ local config = function()
         auto_install = true,
         highlight = {
             enable = true,
-            disable = { "gitcommit", "markdown", "latex" },
+            disable = { "gitcommit", "latex" },
         },
     })
 end
