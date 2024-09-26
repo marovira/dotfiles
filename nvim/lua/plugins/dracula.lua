@@ -1,13 +1,21 @@
 local config = function()
-    vim.g.dracula_colorterm = false
-    vim.cmd("colorscheme dracula")
+	require("tokyonight").setup({
+		style = "night",
+		transparent = true,
+		styles = {
+			keywords = {},
+			sidebars = "transparent",
+			floats = "transparent",
+		},
+	})
+	vim.cmd("colorscheme tokyonight-night")
 end
 
 return {
-    {
-        "dracula/vim",
-        lazy = false,
-        priority = 1000,
-        config = config,
-    },
+	{
+		"folke/tokyonight.nvim",
+		lazy = false,
+		priority = 1000,
+		config = config,
+	},
 }
