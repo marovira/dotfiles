@@ -2,7 +2,7 @@ local config = function()
 	local line = require("lualine")
 	line.setup({
 		options = {
-			theme = "tokyonight",
+			theme = "dracula",
 			disabled_filetypes = {
 				statusline = {
 					"NvimTree",
