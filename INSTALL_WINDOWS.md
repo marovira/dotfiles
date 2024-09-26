@@ -1,6 +1,6 @@
 # Windows Installation
 
-> **NOTE:**
+> [!NOTE]
 > If the PC is a work computer, don't add folders to the global path. Instead add them to
 > the user path. This does require logging off and on for the changes to take effect, but
 > it is the more secure option.
@@ -34,11 +34,6 @@ install`, install the following packages:
 * `main/llvm`
 * `main/zstd`
 
-> **WARNING:**
-> Unlike previous installs of Python, installing it through scoop **will not** result in
-> the python executable being `python`. Instead, it will now follow the standard Linux
-> convention of being named `python3`.
-
 
 ### Setting up `pacman`
 
@@ -71,7 +66,7 @@ cat /etc/package-versions.txt | while read p v; do d=/var/lib/pacman/local/$p-$v
 pacman-key --refresh-keys
 ```
 
-> **Note:**
+> [!NOTE]
 > If any of the `curl` calls for the pacman packages result in a 404 error, then go to the
 > [msys2](https://repo.msys2.org/msys/x86_64/) page and search for the package names,
 > adjusting the paths to use the latest versions.
@@ -104,7 +99,7 @@ create a virtual environment for neovim. Now activate the environment with `.
 nvim/Scripts/activate` and run `pip install pynvim`. Once it is installed, enter
 `deactivate` to disable the virtual environment.
 
-> **NOTE:**
+> [!IMPORTANT]
 > This setup now implies that all Python projects *MUST* use a virtual environment, since
 > nvim will now pull the state correctly. It is worth noting that once a virtual
 > environment is active, starting vi or neovide will pull the state with it.
