@@ -3,6 +3,7 @@
   "LuaSnip": { "branch": "master", "commit": "e808bee352d1a6fcf902ca1a71cee76e60e24071" },
   "SingleCompile": { "branch": "master", "commit": "b8f53a2f0ee250ab66ee435a67f8ee19d2295b5b" },
   "ale": { "branch": "master", "commit": "a7ef1817b7aa06d0f80952ad530be87ad3c8f6e2" },
+  "cmake-tools.nvim": { "branch": "master", "commit": "f1f917b584127b673c25138233cebf1d61a19f35" },
   "cmp-buffer": { "branch": "main", "commit": "3022dbc9166796b644a841a02de8dd1cc1d311fa" },
   "cmp-nvim-lsp": { "branch": "main", "commit": "39e2eda76828d88b773cc27a3f61d2ad782c922d" },
   "cmp-nvim-lsp-signature-help": { "branch": "main", "commit": "031e6ba70b0ad5eee49fd2120ff7a2e325b17fa7" },
