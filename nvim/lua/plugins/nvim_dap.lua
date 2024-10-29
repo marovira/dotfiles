@@ -72,7 +72,7 @@ local dap_py_config = function()
     if common.is_windows() then
         path = vim.fs.joinpath(path, "Scripts", "python")
     else
-        path = vim.fs.joinpath("bin", "python")
+        path = vim.fs.joinpath(path, "bin", "python3")
     end
 
     require("dap-python").setup(path)
