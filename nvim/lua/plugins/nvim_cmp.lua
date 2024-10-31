@@ -26,7 +26,7 @@ local config = function()
                     end,
                 },
             },
-            { name = "path" },
+            { name = "async_path" },
             { name = "buffer", keyword_length = 3 },
             {
                 name = "nvim_lsp",
@@ -67,7 +67,7 @@ return {
             { "VonHeikemen/lsp-zero.nvim" },
             { "hrsh7th/cmp-nvim-lsp" },
             { "hrsh7th/cmp-nvim-lsp-signature-help" },
-            { "yehuohan/cmp-path" },
+            { "https://codeberg.org/FelipeLema/cmp-async-path" },
             { "hrsh7th/cmp-buffer" },
             { "f3fora/cmp-spell" },
             { "hrsh7th/cmp-omni" },
