@@ -75,7 +75,9 @@ local dap_py_config = function()
         path = vim.fs.joinpath(path, "bin", "python3")
     end
 
-    require("dap-python").setup(path)
+    local dap_py = require('dap-python')
+    dap_py.setup(path)
+    dap_py.test_runner = 'pytest'
 end
 
 return {

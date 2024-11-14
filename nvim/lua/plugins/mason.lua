@@ -14,6 +14,7 @@ local mason_dap_config = function()
             function(config)
                 require("mason-nvim-dap").default_setup(config)
             end,
+            python = function() end
         },
         cpp = function(config)
             config.adapters = {
