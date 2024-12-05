@@ -4,9 +4,7 @@
 local function is_large_file()
     local min_size = 1024 * 1024 * 100
     local f = vim.fn.expand("<afile>")
-    if vim.fn.getfsize(f) > min_size then
-        return true
-    end
+    if vim.fn.getfsize(f) > min_size then return true end
 
     return false
 end
@@ -20,9 +18,7 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHo
     pattern = "*",
     group = augroup,
     callback = function()
-        if vim.fn.mode() ~= "c" then
-            vim.api.nvim_command("checktime")
-        end
+        if vim.fn.mode() ~= "c" then vim.api.nvim_command("checktime") end
     end,
 })
 

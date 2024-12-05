@@ -1,5 +1,9 @@
 local common = require("common")
 
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.opt.termguicolors = true
+
 -- stylua: ignore start
 vim.opt.belloff:append({ ctrlg = true })                        -- If nvim beeps during completion
 vim.opt.cmdheight = 2                                           -- More space for the command bar.
@@ -20,6 +24,7 @@ vim.opt.spelllang = "en_gb"                                     -- Use GB Englis
 vim.opt.startofline = false                                     -- Don't move cursor on line jumps.
 vim.opt.tw = 90                                                 -- Text width. Should match all formatting tools.
 vim.opt.showmode = false                                        -- Disable showing mode in command bar
+vim.opt.showcmd = false                                         -- Disable showing commands
 -- stylua: ignore end
 
 -- File format settings.
