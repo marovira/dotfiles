@@ -1,30 +1,22 @@
 return {
     {
-        "VonHeikemen/lsp-zero.nvim",
-        branch = "v3.x",
-        lazy = true,
-        init = function()
-            vim.g.lsp_zero_extend_cmp = 0
-            vim.g.lsp_zero_extend_lspconfig = 0
-        end,
+        "williamboman/mason.nvim",
+        lazy = false,
+        config = true,
+        build = function() pcall(vim.api.nvim_command, "MasonUpdate") end,
     },
     {
         "neovim/nvim-lspconfig",
         cmd = { "LspInfo", "LspInstall", "LspStart" },
         event = { "BufReadPre", "BufNewFile" },
         dependencies = {
-            { "VonHeikemen/lsp-zero.nvim" },
             { "williamboman/mason-lspconfig.nvim" },
+            { "hrsh7th/cmp-nvim-lsp" },
         },
         config = function()
-            local lsp_zero = require("lsp-zero")
             local lspconfig = require("lspconfig")
             local mason_lsp = require("mason-lspconfig")
-
-            lsp_zero.extend_lspconfig()
-            lsp_zero.on_attach(
-                function(_, bufnr) lsp_zero.default_keymaps({ buffer = bufnr }) end
-            )
+            local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
             mason_lsp.setup({
                 ensure_installed = {
@@ -34,12 +26,36 @@ return {
                     "cmake",
                 },
                 handlers = {
-                    function(server_name) lspconfig[server_name].setup({}) end,
+                    function(server_name)
+                        lspconfig[server_name].setup({
+                            capabilities = lsp_capabilities,
+                        })
+                    end,
 
-                    lua_ls = function() lspconfig.lua_ls.setup(lsp_zero.nvim_lua_ls()) end,
+                    lua_ls = function()
+                        lspconfig.lua_ls.setup({
+                            capabilities = lsp_capabilities,
+                            settings = {
+                                Lua = {
+                                    runtime = {
+                                        version = "LuaJIT",
+                                    },
+                                    diagnostics = {
+                                        globals = { "vim" },
+                                    },
+                                    workspace = {
+                                        library = {
+                                            vim.env.VIMRUNTIME,
+                                        },
+                                    },
+                                },
+                            },
+                        })
+                    end,
 
                     pylsp = function()
                         lspconfig.pylsp.setup({
+                            capabilities = lsp_capabilities,
                             settings = {
                                 pylsp = {
                                     plugins = {
@@ -60,17 +76,10 @@ return {
         end,
     },
     {
-        "williamboman/mason.nvim",
-        lazy = false,
-        config = true,
-        build = function() pcall(vim.api.nvim_command, "MasonUpdate") end,
-    },
-    {
         "hrsh7th/nvim-cmp",
         event = "InsertEnter",
         dependencies = {
             { "L3MON4D3/LuaSnip" },
-            { "VonHeikemen/lsp-zero.nvim" },
             { "hrsh7th/cmp-nvim-lsp" },
             { "hrsh7th/cmp-nvim-lsp-signature-help" },
             { "https://codeberg.org/FelipeLema/cmp-async-path" },
@@ -79,20 +88,42 @@ return {
             { "hrsh7th/cmp-omni" },
         },
         config = function()
-            local lsp_zero = require("lsp-zero")
             local cmp = require("cmp")
-            local cmp_action = lsp_zero.cmp_action()
             local context = require("cmp.config.context")
-            local cmp_format = lsp_zero.cmp_format({ details = true })
-
-            lsp_zero.extend_cmp()
 
             cmp.setup({
-                formatting = cmp_format,
-                mapping = {
-                    ["<Tab>"] = cmp_action.tab_complete(),
-                    ["<S-Tab>"] = cmp_action.select_prev_or_fallback(),
+                snippet = {
+                    expand = function(args) vim.snippet.expand(args.body) end,
                 },
+                mapping = cmp.mapping.preset.insert({
+                    ["<Tab>"] = cmp.mapping(function(fallback)
+                        local luasnip = require("luasnip")
+                        local col = vim.fn.col(".") - 1
+
+                        if cmp.visible() then
+                            cmp.select_next_item()
+                        elseif luasnip.expand_or_locally_jumpable() then
+                            luasnip.expand_or_jump()
+                        elseif
+                            col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
+                        then
+                            fallback()
+                        else
+                            cmp.complete()
+                        end
+                    end, { "i", "s" }),
+                    ["<S-Tab>"] = cmp.mapping(function(fallback)
+                        local luasnip = require("luasnip")
+
+                        if cmp.visible() then
+                            cmp.select_prev_item({ behavior = "select" })
+                        elseif luasnip.locally_jumpable(-1) then
+                            luasnip.jump(-1)
+                        else
+                            fallback()
+                        end
+                    end, { "i", "s" }),
+                }),
                 sources = {
                     {
                         name = "spell",

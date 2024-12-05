@@ -154,7 +154,6 @@ return {
         dependencies = {
             { "nvim-lua/plenary.nvim" },
             { "natecraddock/telescope-zf-native.nvim" },
-            { "nvim-telescope/telescope-file-browser.nvim" },
             { "debugloop/telescope-undo.nvim" },
         },
         config = function()
@@ -173,7 +172,6 @@ return {
                 },
             })
             telescope.load_extension("zf-native")
-            telescope.load_extension("file_browser")
             telescope.load_extension("undo")
         end,
         keys = {
@@ -196,11 +194,6 @@ return {
                 "<leader>fh",
                 "<cmd>Telescope help_tags<cr>",
                 desc = "Telescope help tags",
-            },
-            {
-                "<leader>fd",
-                "<cmd>Telescope file_browser<cr>",
-                desc = "Telescope file browser",
             },
             {
                 "<leader>fu",

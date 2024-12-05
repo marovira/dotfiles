@@ -21,3 +21,23 @@ vim.keymap.set(
 )
 
 vim.keymap.set("n", "<Space>", "@q", { desc = "Play macro stored in buffer q" })
+
+-- LSP diagnostic keymaps
+vim.keymap.set(
+    "n",
+    "gl",
+    "<cmd>lua vim.diagnostic.open_float()<cr>",
+    { desc = "LSP diagnostic open float" }
+)
+vim.keymap.set(
+    "n",
+    "[d",
+    "<cmd>lua vim.diagnostic.goto_prev()<cr>",
+    { desc = "LSP go to previous diagnostic" }
+)
+vim.keymap.set(
+    "n",
+    "]d",
+    "<cmd>lua vim.diagnostic.goto_next()<cr>",
+    { desc = "LSP go to next diagnostic" }
+)
