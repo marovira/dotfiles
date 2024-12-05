@@ -1,7 +1,5 @@
--- Remap ESC to jk (insert mode only)
-vim.keymap.set("i", "jk", "<ESC>")
+vim.keymap.set("i", "jk", "<ESC>", { desc = "Remap ESC to jk" })
 
--- Toggle numbers
 local number_mode = false
 vim.keymap.set("n", "<C-n>", function()
     if number_mode then
@@ -13,10 +11,13 @@ vim.keymap.set("n", "<C-n>", function()
         vim.opt.relativenumber = false
         number_mode = true
     end
-end)
+end, { desc = "Toggle between relative and absolute numbers" })
 
--- Clear search highlight
-vim.keymap.set("n", "<ESC>", ":noh<CR><ESC>", { silent = true })
+vim.keymap.set(
+    "n",
+    "<ESC>",
+    ":noh<CR><ESC>",
+    { silent = true, desc = "Clear search highlight" }
+)
 
--- Play macro stored in buffer q with the space bar.
-vim.keymap.set("n", "<Space>", "@q")
+vim.keymap.set("n", "<Space>", "@q", { desc = "Play macro stored in buffer q" })

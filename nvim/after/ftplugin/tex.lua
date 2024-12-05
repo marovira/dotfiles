@@ -24,7 +24,9 @@ vim.b.ale_linters_explicit = true
 -- Remaps
 -- =======================
 -- Make Vimtex stop continuous compile before cleaning
-vim.keymap.set("n", "<localleader>lc", ":VimtexStop<CR>:VimtexClean<CR>")
+vim.keymap.set("n", "<localleader>lc", ":VimtexStop<CR>:VimtexClean<CR>", {
+    desc = "Stop Vimtex continous compile before cleaning",
+})
 
 -- Make vimtex clean everything when we close the file.
 local augroup = vim.api.nvim_create_augroup("vimtex", { clear = true })
