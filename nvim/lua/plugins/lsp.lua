@@ -1,3 +1,4 @@
+local common = require("common")
 return {
     {
         "williamboman/mason.nvim",
@@ -17,6 +18,7 @@ return {
             local lspconfig = require("lspconfig")
             local mason_lsp = require("mason-lspconfig")
             local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+            -- local lsp_capabilities = require("blink.cmp").get_lsp_capabilities()
 
             mason_lsp.setup({
                 ensure_installed = {
@@ -75,6 +77,50 @@ return {
             })
         end,
     },
+    -- {
+    --     "saghen/blink.cmp",
+    --     lazy = false,
+    --     dependencies = {
+    --         { "saghen/blink.compat", lazy = true, config = true },
+    --         { "f3fora/cmp-spell" },
+    --         { "hrsh7th/cmp-omni" },
+    --     },
+    --     version = "v0.*",
+    --     opts = {
+    --         keymap = {
+    --             preset = "enter",
+    --             ["<Tab>"] = { "select_next", "accept", "fallback" },
+    --             ["<S-Tab>"] = { "select_prev", "fallback" },
+    --         },
+    --         documentation = { auto_show = true },
+    --         signature = { enabled = true },
+    --         sources = {
+    --             default = { "lsp", "path", "buffer", "spell", "omni" },
+    --         },
+    --         providers = {
+    --             spell = {
+    --                 name = "spell",
+    --                 module = "blink.compat.source",
+    --                 opts = {
+    --                     enable_in_context = function()
+    --                         return common.in_treesitter_capture("spell")
+    --                             or vim.bo.filetype == "markdown"
+    --                             or vim.bo.filetype == "gitcommit"
+    --                             or vim.bo.filetype == "tex"
+    --                             or vim.bo.filetype == "text"
+    --                     end,
+    --                 },
+    --             },
+    --             omni = {
+    --                 name = "omni",
+    --                 module = "blink.compat.source",
+    --                 opts = {
+    --                     enable_in_context = function() return vim.bo.filetype == "tex" end,
+    --                 },
+    --             },
+    --         },
+    --     },
+    -- },
     {
         "hrsh7th/nvim-cmp",
         event = "InsertEnter",
@@ -89,7 +135,6 @@ return {
         },
         config = function()
             local cmp = require("cmp")
-            local context = require("cmp.config.context")
 
             cmp.setup({
                 snippet = {
@@ -129,7 +174,7 @@ return {
                         name = "spell",
                         option = {
                             enable_in_context = function()
-                                return context.in_treesitter_capture("spell")
+                                return common.in_treesitter_capture("spell")
                                     or vim.bo.filetype == "markdown"
                                     or vim.bo.filetype == "gitcommit"
                                     or vim.bo.filetype == "tex"
@@ -143,8 +188,8 @@ return {
                         name = "nvim_lsp",
                         option = {
                             enable_in_context = function()
-                                return context.in_treesitter_capture("comment")
-                                    or context.in_syntax_group("Comment")
+                                return common.in_treesitter_capture("comment")
+                                    or common.in_syntax_group("Comment")
                             end,
                         },
                     },
@@ -152,8 +197,8 @@ return {
                         name = "nvim_lsp_signature_help",
                         option = {
                             enable_in_context = function()
-                                return context.in_treesitter_capture("comment")
-                                    or context.in_syntax_group("Comment")
+                                return common.in_treesitter_capture("comment")
+                                    or common.in_syntax_group("Comment")
                             end,
                         },
                     },
