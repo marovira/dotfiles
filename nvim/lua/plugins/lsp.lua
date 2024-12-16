@@ -77,59 +77,16 @@ return {
             })
         end,
     },
-    -- {
-    --     "saghen/blink.cmp",
-    --     lazy = false,
-    --     dependencies = {
-    --         { "saghen/blink.compat", lazy = true, config = true },
-    --         { "f3fora/cmp-spell" },
-    --         { "hrsh7th/cmp-omni" },
-    --     },
-    --     version = "v0.*",
-    --     opts = {
-    --         keymap = {
-    --             preset = "enter",
-    --             ["<Tab>"] = { "select_next", "accept", "fallback" },
-    --             ["<S-Tab>"] = { "select_prev", "fallback" },
-    --         },
-    --         documentation = { auto_show = true },
-    --         signature = { enabled = true },
-    --         sources = {
-    --             default = { "lsp", "path", "buffer", "spell", "omni" },
-    --         },
-    --         providers = {
-    --             spell = {
-    --                 name = "spell",
-    --                 module = "blink.compat.source",
-    --                 opts = {
-    --                     enable_in_context = function()
-    --                         return common.in_treesitter_capture("spell")
-    --                             or vim.bo.filetype == "markdown"
-    --                             or vim.bo.filetype == "gitcommit"
-    --                             or vim.bo.filetype == "tex"
-    --                             or vim.bo.filetype == "text"
-    --                     end,
-    --                 },
-    --             },
-    --             omni = {
-    --                 name = "omni",
-    --                 module = "blink.compat.source",
-    --                 opts = {
-    --                     enable_in_context = function() return vim.bo.filetype == "tex" end,
-    --                 },
-    --             },
-    --         },
-    --     },
-    -- },
     {
-        "hrsh7th/nvim-cmp",
+        "iguanacucumber/magazine.nvim",
+        name = "nvim-cmp",
         event = "InsertEnter",
         dependencies = {
-            { "L3MON4D3/LuaSnip" },
-            { "hrsh7th/cmp-nvim-lsp" },
+            { "iguanacucumber/mag-nvim-lsp", name = "cmp-nvim-lsp", opts = {} },
             { "hrsh7th/cmp-nvim-lsp-signature-help" },
             { "https://codeberg.org/FelipeLema/cmp-async-path" },
-            { "hrsh7th/cmp-buffer" },
+            { "iguanacucumber/mag-buffer", name = "cmp-buffer" },
+            { "iguanacucumber/mag-cmdline", name = "cmp-cmdline" },
             { "f3fora/cmp-spell" },
             { "hrsh7th/cmp-omni" },
         },
@@ -142,13 +99,10 @@ return {
                 },
                 mapping = cmp.mapping.preset.insert({
                     ["<Tab>"] = cmp.mapping(function(fallback)
-                        local luasnip = require("luasnip")
                         local col = vim.fn.col(".") - 1
 
                         if cmp.visible() then
                             cmp.select_next_item()
-                        elseif luasnip.expand_or_locally_jumpable() then
-                            luasnip.expand_or_jump()
                         elseif
                             col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
                         then
@@ -212,6 +166,26 @@ return {
                     },
                 },
             })
+
+            cmp.setup.cmdline("/", {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = {
+                    { name = "buffer" },
+                },
+            })
+            cmp.setup.cmdline(":", {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = cmp.config.sources({
+                    { name = "path" },
+                }, {
+                    {
+                        name = "cmdline",
+                        option = {
+                            ignore_cmds = { "Man", "!" },
+                        },
+                    },
+                }),
+            })
         end,
     },
     {
@@ -227,4 +201,54 @@ return {
             vim.g.ale_fix_on_save = true
         end,
     },
+    -- I'm leaving this here in case we decide to shift to blink. It currently has the
+    -- following issues:
+    -- 1. Super-tab completion does not work correctly. Specifically, there's no way to
+    --  both select a suggestion and accept it with Tab.
+    -- 2. Spell doesn't work as expected. I suspect I need to spend more time fiddling
+    --  with the config, but given that super-tab doesn't work, there's little point.
+    -- {
+    --     "saghen/blink.cmp",
+    --     lazy = false,
+    --     dependencies = {
+    --         { "saghen/blink.compat", lazy = true, config = true },
+    --         { "f3fora/cmp-spell" },
+    --         { "hrsh7th/cmp-omni" },
+    --     },
+    --     version = "v0.*",
+    --     opts = {
+    --         keymap = {
+    --             preset = "enter",
+    --             ["<Tab>"] = { "select_next", "accept", "fallback" },
+    --             ["<S-Tab>"] = { "select_prev", "fallback" },
+    --         },
+    --         documentation = { auto_show = true },
+    --         signature = { enabled = true },
+    --         sources = {
+    --             default = { "lsp", "path", "buffer", "spell", "omni" },
+    --         },
+    --         providers = {
+    --             spell = {
+    --                 name = "spell",
+    --                 module = "blink.compat.source",
+    --                 opts = {
+    --                     enable_in_context = function()
+    --                         return common.in_treesitter_capture("spell")
+    --                             or vim.bo.filetype == "markdown"
+    --                             or vim.bo.filetype == "gitcommit"
+    --                             or vim.bo.filetype == "tex"
+    --                             or vim.bo.filetype == "text"
+    --                     end,
+    --                 },
+    --             },
+    --             omni = {
+    --                 name = "omni",
+    --                 module = "blink.compat.source",
+    --                 opts = {
+    --                     enable_in_context = function() return vim.bo.filetype == "tex" end,
+    --                 },
+    --             },
+    --         },
+    --     },
+    -- },
 }
