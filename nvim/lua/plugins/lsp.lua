@@ -80,6 +80,7 @@ return {
     {
         "iguanacucumber/magazine.nvim",
         name = "nvim-cmp",
+        enabled = true,
         event = "InsertEnter",
         dependencies = {
             { "iguanacucumber/mag-nvim-lsp", name = "cmp-nvim-lsp", opts = {} },
@@ -201,15 +202,12 @@ return {
             vim.g.ale_fix_on_save = true
         end,
     },
-    -- I'm leaving this here in case we decide to shift to blink. It currently has the
-    -- following issues:
-    -- 1. Super-tab completion does not work correctly. Specifically, there's no way to
-    --  both select a suggestion and accept it with Tab.
-    -- 2. Spell doesn't work as expected. I suspect I need to spend more time fiddling
-    --  with the config, but given that super-tab doesn't work, there's little point.
+    -- Almost fully functional setup for blink. The only part that's missing (as far as I
+    -- can tell) is that path completion doesn't work well on Windows.
     -- {
     --     "saghen/blink.cmp",
     --     lazy = false,
+    --     enabled = false,
     --     dependencies = {
     --         { "saghen/blink.compat", lazy = true, config = true },
     --         { "f3fora/cmp-spell" },
@@ -219,33 +217,44 @@ return {
     --     opts = {
     --         keymap = {
     --             preset = "enter",
-    --             ["<Tab>"] = { "select_next", "accept", "fallback" },
+    --             ["<Tab>"] = { "select_next", "fallback" },
     --             ["<S-Tab>"] = { "select_prev", "fallback" },
     --         },
-    --         documentation = { auto_show = true },
+    --         completion = {
+    --             list = {
+    --                 selection = "auto_insert",
+    --             },
+    --             documentation = { auto_show = true },
+    --         },
     --         signature = { enabled = true },
     --         sources = {
-    --             default = { "lsp", "path", "buffer", "spell", "omni" },
-    --         },
-    --         providers = {
-    --             spell = {
-    --                 name = "spell",
-    --                 module = "blink.compat.source",
-    --                 opts = {
-    --                     enable_in_context = function()
-    --                         return common.in_treesitter_capture("spell")
-    --                             or vim.bo.filetype == "markdown"
-    --                             or vim.bo.filetype == "gitcommit"
-    --                             or vim.bo.filetype == "tex"
-    --                             or vim.bo.filetype == "text"
-    --                     end,
-    --                 },
+    --             completion = {
+    --                 enabled_providers = function()
+    --                     local base_list = { "lsp", "path", "buffer" }
+    --                     if
+    --                         common.in_treesitter_capture("spell")
+    --                         or vim.bo.filetype == "markdown"
+    --                         or vim.bo.filetype == "gitcommit"
+    --                         or vim.bo.filetype == "tex"
+    --                         or vim.bo.filetype == "text"
+    --                     then
+    --                         table.insert(base_list, "spell")
+    --                     end
+    --                     if vim.bo.filetype == "tex" then
+    --                         table.insert(base_list, 1, "omni")
+    --                     end
+    --                     return base_list
+    --                 end,
     --             },
-    --             omni = {
-    --                 name = "omni",
-    --                 module = "blink.compat.source",
-    --                 opts = {
-    --                     enable_in_context = function() return vim.bo.filetype == "tex" end,
+    --             cmdline = {},
+    --             providers = {
+    --                 spell = {
+    --                     name = "spell",
+    --                     module = "blink.compat.source",
+    --                 },
+    --                 omni = {
+    --                     name = "omni",
+    --                     module = "blink.compat.source",
     --                 },
     --             },
     --         },
