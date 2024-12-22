@@ -126,20 +126,6 @@ return {
                 }),
                 sources = {
                     {
-                        name = "spell",
-                        option = {
-                            enable_in_context = function()
-                                return common.in_treesitter_capture("spell")
-                                    or vim.bo.filetype == "markdown"
-                                    or vim.bo.filetype == "gitcommit"
-                                    or vim.bo.filetype == "tex"
-                                    or vim.bo.filetype == "text"
-                            end,
-                        },
-                    },
-                    { name = "async_path" },
-                    { name = "buffer", keyword_length = 3 },
-                    {
                         name = "nvim_lsp",
                         option = {
                             enable_in_context = function()
@@ -154,6 +140,20 @@ return {
                             enable_in_context = function()
                                 return common.in_treesitter_capture("comment")
                                     or common.in_syntax_group("Comment")
+                            end,
+                        },
+                    },
+                    { name = "buffer", keyword_length = 3 },
+                    { name = "async_path" },
+                    {
+                        name = "spell",
+                        option = {
+                            enable_in_context = function()
+                                return common.in_treesitter_capture("spell")
+                                    or vim.bo.filetype == "markdown"
+                                    or vim.bo.filetype == "gitcommit"
+                                    or vim.bo.filetype == "tex"
+                                    or vim.bo.filetype == "text"
                             end,
                         },
                     },
