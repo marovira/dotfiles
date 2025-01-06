@@ -150,10 +150,46 @@ return {
         },
     },
     {
+        "ibhagwan/fzf-lua",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        config = true,
+        keys = {
+            {
+                "<leader>ff",
+                "<cmd>FzfLua files<cr>",
+                desc = "FZF files",
+            },
+            {
+                "<leader>fg",
+                "<cmd>FzfLua grep<cr><cr>",
+                desc = "FZF live grep",
+            },
+            {
+                "<leader>fb",
+                "<cmd>FzfLua buffers<cr>",
+                desc = "FZF buffers",
+            },
+            {
+                "<leader>fh",
+                "<cmd>FzfLua helptags<cr>",
+                desc = "FZF help tags",
+            },
+            {
+                "gr",
+                "<cmd>FzfLua lsp_references<cr>",
+                desc = "FZF find references",
+            },
+            {
+                "<leader>fs",
+                "<cmd>FzfLua lsp_document_symbols<cr>",
+                desc = "FZF LSP document symbols",
+            },
+        },
+    },
+    {
         "nvim-telescope/telescope.nvim",
         dependencies = {
             { "nvim-lua/plenary.nvim" },
-            { "natecraddock/telescope-zf-native.nvim" },
             { "debugloop/telescope-undo.nvim" },
         },
         config = function()
@@ -171,30 +207,9 @@ return {
                     },
                 },
             })
-            telescope.load_extension("zf-native")
             telescope.load_extension("undo")
         end,
         keys = {
-            {
-                "<leader>ff",
-                "<cmd>Telescope find_files<cr>",
-                desc = "Telescope find files",
-            },
-            {
-                "<leader>fg",
-                "<cmd>Telescope live_grep<cr>",
-                desc = "Telescope live grep",
-            },
-            {
-                "<leader>fb",
-                "<cmd>Telescope buffers<cr>",
-                desc = "Telescope buffers",
-            },
-            {
-                "<leader>fh",
-                "<cmd>Telescope help_tags<cr>",
-                desc = "Telescope help tags",
-            },
             {
                 "<leader>fu",
                 "<cmd>Telescope undo<cr>",

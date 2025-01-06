@@ -145,12 +145,6 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
         )
         vim.keymap.set(
             "n",
-            "gr",
-            "<cmd>lua vim.lsp.buf.references()<cr>",
-            { buffer = event.buf, desc = "LSP list references" }
-        )
-        vim.keymap.set(
-            "n",
             "gs",
             "<cmd>lua vim.lsp.buf.signature_help()<cr>",
             { buffer = event.buf, desc = "LSP signature help" }
