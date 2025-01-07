@@ -12,7 +12,6 @@ vim.opt.confirm = true                                          -- Save files on
 vim.opt.cursorline = true                                       -- Show current cursor line.
 vim.opt.foldmethod = "syntax"                                   -- Use syntax definitions for folding.
 vim.opt.infercase = true                                        -- Adjust case of match for keyword completion.
-vim.opt.lazyredraw = true                                       -- Only redraws what is necessary, when necessary.
 vim.opt.modeline = true                                         -- Enable top-of-file modelines.
 vim.opt.mouse = "a"                                             -- Enable mouse clicks.
 vim.opt.mousefocus = true                                       -- Focus follows mouse.

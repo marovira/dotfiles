@@ -128,4 +128,43 @@ return {
         },
         config = function() require("telescope").load_extension("toggleterm") end,
     },
+    {
+        "folke/todo-comments.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        opts = {},
+    },
+    {
+        "folke/ts-comments.nvim",
+        opts = {},
+        event = "VeryLazy",
+        enabled = vim.fn.has("nvim-0.10.0") == 1,
+    },
+    {
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        opts = {
+            lsp = {
+                override = {
+                    ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                    ["vim.lsp.util.stylize_markdown"] = true,
+                    ["cmp.entry.get_documentation"] = true,
+                },
+            },
+            presets = {
+                bottom_search = true,
+                command_palette = true,
+                long_message_to_split = true,
+                inc_rename = false,
+                lsp_doc_border = false,
+            },
+        },
+        dependencies = {
+            { "MunifTanjim/nui.nvim", event = "VeryLazy" },
+            {
+                "rcarriga/nvim-notify",
+                event = "VeryLazy",
+                opts = { background_colour = "#000000" },
+            },
+        },
+    },
 }
