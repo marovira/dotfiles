@@ -1,0 +1,52 @@
+#!/bin/zsh
+
+local -r app=${1:?"error: no app to update has been specified"}
+
+update_nvim() {
+    if [[ "$OSTYPE" == "msys" ]]; then
+        if ! command -v nvim &> /dev/null; then
+            scoop install main/neovim
+            return
+        else
+            scoop update neovim
+        fi
+        return
+    fi
+
+    # If a previous installation of nvim exists, remove it.
+    if [ -f "$HOME/.local/bin/nvim" ]; then
+        rm -R "$HOME/.local/bin/nvim"
+    fi
+
+    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+    chmod u+x nvim.appimage
+    mv nvim.appimage "$HOME/.local/bin/nvim"
+}
+
+update_delta() {
+    if [[ "$OSTYPE" == "msys" ]]; then
+        if ! command -v delta &> /dev/null; then
+            scoop install main/delta
+            return
+        else
+            scoop update delta
+        fi
+        return
+    fi
+
+    local -r version=${1:?"error: a version number is required"}
+
+    if command -v delta &> /dev/null; then
+        sudo dpkg -r git-delta
+    fi
+
+    curl -LO "https://github.com/dandavison/delta/releases/download/${version}/git-delta_${version}_amd64.deb"
+    sudo dpkg -i "git-delta_${version}_amd64.deb"
+    rm "git-delta_${version}_amd64.deb"
+}
+
+if [[ "${app}" == "nvim" ]]; then
+    update_nvim
+elif [[ "${app}" == "delta" ]]; then
+    update_delta ${2}
+fi
