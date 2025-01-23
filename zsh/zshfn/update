@@ -45,8 +45,23 @@ update_delta() {
     rm "git-delta_${version}_amd64.deb"
 }
 
+update_fzf() {
+    cwd=$(pwd)
+    cd "$FZF_PATH"
+    git checkout master > /dev/null 2>&1
+    git fetch --tags > /dev/null
+    tag=$(git describe --tags "$(git rev-list --tags --max-count=1)")
+    echo "Updating to version $tag"
+    git checkout $tag > /dev/null 2>&1
+    cd "$cwd"
+
+    $FZF_PATH/install --bin
+}
+
 if [[ "${app}" == "nvim" ]]; then
     update_nvim
 elif [[ "${app}" == "delta" ]]; then
     update_delta ${2}
+elif [[ "${app}" == "fzf" ]]; then
+    update_fzf
 fi
