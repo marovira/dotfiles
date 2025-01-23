@@ -90,6 +90,7 @@ return {
             { "iguanacucumber/mag-cmdline", name = "cmp-cmdline" },
             { "f3fora/cmp-spell" },
             { "hrsh7th/cmp-omni" },
+            { "L3MON4D3/LuaSnip", version = "v2.*" },
         },
         config = function()
             local cmp = require("cmp")

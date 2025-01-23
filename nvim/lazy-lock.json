@@ -1,5 +1,6 @@
 {
   "FastFold": { "branch": "master", "commit": "fff6d05064dec4d7e1398aa507db35fcd57edfb4" },
+  "LuaSnip": { "branch": "master", "commit": "03c8e67eb7293c404845b3982db895d59c0d1538" },
   "SingleCompile": { "branch": "master", "commit": "b8f53a2f0ee250ab66ee435a67f8ee19d2295b5b" },
   "ale": { "branch": "master", "commit": "0551602b198ca50650f9853d23fd970f3655842a" },
   "cmake-tools.nvim": { "branch": "master", "commit": "4e134ed5532e5fc3c0331d1b38b7acaa4bb31894" },
