@@ -32,12 +32,12 @@
 [diff]
     tool = bc
 [difftool "bc"]
-    path = "C:/Program Files/Beyond Compare 4/BComp.exe"
+    path = "C:/Program Files/Beyond Compare 5/BComp.exe"
     prompt = false
 [merge]
     tool = bc
 [mergetool "bc"]
-    path = "C:/Program Files/Beyond Compare 4/BComp.exe"
+    path = "C:/Program Files/Beyond Compare 5/BComp.exe"
 [mergetool]
     prompt = false
     keepBackup = false
