@@ -129,11 +129,6 @@ return {
         config = function() require("telescope").load_extension("toggleterm") end,
     },
     {
-        "folke/todo-comments.nvim",
-        dependencies = { "nvim-lua/plenary.nvim" },
-        opts = {},
-    },
-    {
         "folke/ts-comments.nvim",
         opts = {},
         event = "VeryLazy",
