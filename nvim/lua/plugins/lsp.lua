@@ -18,7 +18,6 @@ return {
             local lspconfig = require("lspconfig")
             local mason_lsp = require("mason-lspconfig")
             local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
-            -- local lsp_capabilities = require("blink.cmp").get_lsp_capabilities()
 
             mason_lsp.setup({
                 ensure_installed = {
@@ -90,41 +89,60 @@ return {
             { "iguanacucumber/mag-cmdline", name = "cmp-cmdline" },
             { "f3fora/cmp-spell" },
             { "hrsh7th/cmp-omni" },
-            { "L3MON4D3/LuaSnip", version = "v2.*" },
+            {
+                "L3MON4D3/LuaSnip",
+                version = "v2.*",
+                dependencies = { "rafamadriz/friendly-snippets" },
+            },
         },
         config = function()
             local cmp = require("cmp")
+            local luasnip = require("luasnip")
+            require("luasnip.loaders.from_vscode").lazy_load()
 
             cmp.setup({
                 snippet = {
-                    expand = function(args) vim.snippet.expand(args.body) end,
+                    expand = function(args) luasnip.lsp_expand(args.body) end,
                 },
-                mapping = cmp.mapping.preset.insert({
-                    ["<Tab>"] = cmp.mapping(function(fallback)
-                        local col = vim.fn.col(".") - 1
-
-                        if cmp.visible() then
-                            cmp.select_next_item()
-                        elseif
-                            col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
-                        then
-                            fallback()
+                mapping = {
+                    ["<C-space>"] = function()
+                        if cmp.visible_docs() then
+                            cmp.close_docs()
                         else
-                            cmp.complete()
+                            cmp.open_docs()
+                        end
+                    end,
+                    ["<C-e>"] = cmp.mapping.close(),
+                    ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+                    ["<Up>"] = cmp.mapping.select_prev_item({
+                        behavior = cmp.SelectBehavior.Insert,
+                    }),
+                    ["<Down>"] = cmp.mapping.select_next_item({
+                        behavior = cmp.SelectBehavior.Insert,
+                    }),
+                    ["<C-p>"] = cmp.mapping.select_prev_item({
+                        behavior = cmp.SelectBehavior.Insert,
+                    }),
+                    ["<C-n>"] = cmp.mapping.select_next_item({
+                        behavior = cmp.SelectBehavior.Insert,
+                    }),
+                    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+                    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+                    ["<Tab>"] = cmp.mapping(function(fallback)
+                        if luasnip.locally_jumpable(1) then
+                            luasnip.jump(1)
+                        else
+                            fallback()
                         end
                     end, { "i", "s" }),
                     ["<S-Tab>"] = cmp.mapping(function(fallback)
-                        local luasnip = require("luasnip")
-
-                        if cmp.visible() then
-                            cmp.select_prev_item({ behavior = "select" })
-                        elseif luasnip.locally_jumpable(-1) then
+                        if luasnip.locally_jumpable(-1) then
                             luasnip.jump(-1)
                         else
                             fallback()
                         end
                     end, { "i", "s" }),
-                }),
+                },
                 sources = {
                     {
                         name = "nvim_lsp",
@@ -134,6 +152,9 @@ return {
                                     or common.in_syntax_group("Comment")
                             end,
                         },
+                    },
+                    {
+                        name = "luasnip",
                     },
                     {
                         name = "nvim_lsp_signature_help",
@@ -203,62 +224,4 @@ return {
             vim.g.ale_fix_on_save = true
         end,
     },
-    -- Almost fully functional setup for blink. The only part that's missing (as far as I
-    -- can tell) is that path completion doesn't work well on Windows.
-    -- {
-    --     "saghen/blink.cmp",
-    --     lazy = false,
-    --     enabled = false,
-    --     dependencies = {
-    --         { "saghen/blink.compat", lazy = true, config = true },
-    --         { "f3fora/cmp-spell" },
-    --         { "hrsh7th/cmp-omni" },
-    --     },
-    --     version = "v0.*",
-    --     opts = {
-    --         keymap = {
-    --             preset = "enter",
-    --             ["<Tab>"] = { "select_next", "fallback" },
-    --             ["<S-Tab>"] = { "select_prev", "fallback" },
-    --         },
-    --         completion = {
-    --             list = {
-    --                 selection = "auto_insert",
-    --             },
-    --             documentation = { auto_show = true },
-    --         },
-    --         signature = { enabled = true },
-    --         sources = {
-    --             completion = {
-    --                 enabled_providers = function()
-    --                     local base_list = { "lsp", "path", "buffer" }
-    --                     if
-    --                         common.in_treesitter_capture("spell")
-    --                         or vim.bo.filetype == "markdown"
-    --                         or vim.bo.filetype == "gitcommit"
-    --                         or vim.bo.filetype == "tex"
-    --                         or vim.bo.filetype == "text"
-    --                     then
-    --                         table.insert(base_list, "spell")
-    --                     end
-    --                     if vim.bo.filetype == "tex" then
-    --                         table.insert(base_list, 1, "omni")
-    --                     end
-    --                     return base_list
-    --                 end,
-    --             },
-    --             cmdline = {},
-    --             providers = {
-    --                 spell = {
-    --                     name = "spell",
-    --                     module = "blink.compat.source",
-    --                 },
-    --                 omni = {
-    --                     name = "omni",
-    --                     module = "blink.compat.source",
-    --                 },
-    --             },
-    --         },
-    --     },
-    -- },
 }
