@@ -1,5 +1,37 @@
 local common = require("common")
+
+local function blink_highlight(ctx)
+    local hl = "BlinkCmpKind" .. ctx.kind
+        or require("blink.cmp.completion.windows.render.tailwind").get_hl(ctx)
+    if vim.tbl_contains({ "Path" }, ctx.source_name) then
+        local dev_icon, dev_hl = require("nvim-web-devicons").get_icon(ctx.label)
+        if dev_icon then hl = dev_hl end
+    end
+    return hl
+end
+
+---@return boolean
+local function enable_spell()
+    return vim.bo.filetype == "markdown"
+        or vim.bo.filetype == "gitcommit"
+        or vim.bo.filetype == "tex"
+        or vim.bo.filetype == "text"
+end
+
 return {
+    {
+        "dense-analysis/ale",
+        init = function()
+            vim.cmd([[
+                let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
+            ]])
+            vim.g.ale_set_loclist = false
+            vim.g.ale_set_quickfix = false
+            vim.g.ale_use_neovim_diagnostics_api = true
+            vim.g.ale_open_list = true
+            vim.g.ale_fix_on_save = true
+        end,
+    },
     {
         "williamboman/mason.nvim",
         lazy = false,
@@ -12,13 +44,12 @@ return {
         event = { "BufReadPre", "BufNewFile" },
         dependencies = {
             { "williamboman/mason-lspconfig.nvim" },
-            { "hrsh7th/cmp-nvim-lsp" },
+            { "saghen/blink.cmp" },
         },
         config = function()
             local lspconfig = require("lspconfig")
             local mason_lsp = require("mason-lspconfig")
-            local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
-
+            local lsp_capabilities = require("blink.cmp").get_lsp_capabilities()
             mason_lsp.setup({
                 ensure_installed = {
                     "lua_ls",
@@ -77,172 +108,105 @@ return {
         end,
     },
     {
-        "iguanacucumber/magazine.nvim",
-        name = "nvim-cmp",
-        enabled = true,
-        event = "InsertEnter",
+        "saghen/blink.cmp",
+        version = "*",
         dependencies = {
-            { "iguanacucumber/mag-nvim-lsp", name = "cmp-nvim-lsp", opts = {} },
-            { "hrsh7th/cmp-nvim-lsp-signature-help" },
-            { "https://codeberg.org/FelipeLema/cmp-async-path" },
-            { "iguanacucumber/mag-buffer", name = "cmp-buffer" },
-            { "iguanacucumber/mag-cmdline", name = "cmp-cmdline" },
+            { "saghen/blink.compat", version = "*", lazy = true, config = true },
             { "f3fora/cmp-spell" },
             { "hrsh7th/cmp-omni" },
-            { "onsails/lspkind.nvim" },
+            { "rafamadriz/friendly-snippets" },
             {
-                "L3MON4D3/LuaSnip",
-                version = "v2.*",
-                dependencies = { "rafamadriz/friendly-snippets" },
+                "onsails/lspkind.nvim",
+                opts = {
+                    symbol_map = { spell = "󰓆" },
+                },
             },
         },
-        config = function()
-            local cmp = require("cmp")
-            local luasnip = require("luasnip")
-            local lspkind = require("lspkind")
-            require("luasnip.loaders.from_vscode").lazy_load()
+        opts = {
+            keymap = { preset = "default" },
+            appearance = {
+                use_nvim_cmp_as_default = true,
+                nerd_font_variant = "normal",
+            },
+            completion = {
+                menu = {
+                    border = "single",
+                    draw = {
+                        components = {
+                            kind_icon = {
+                                ellipsis = false,
+                                text = function(ctx)
+                                    local lspkind = require("lspkind")
+                                    local icon = ctx.kind_icon
+                                    if vim.tbl_contains({ "Path" }, ctx.source_name) then
+                                        local dev_icon, _ =
+                                            require("nvim-web-devicons").get_icon(
+                                                ctx.label
+                                            )
+                                        if dev_icon then icon = dev_icon end
+                                    else
+                                        if
+                                            vim.tbl_contains({ "spell" }, ctx.source_name)
+                                        then
+                                            icon = lspkind.symbolic(
+                                                "spell",
+                                                { mode = "symbol" }
+                                            )
+                                        else
+                                            icon = require("lspkind").symbolic(ctx.kind, {
+                                                mode = "symbol",
+                                            })
+                                        end
+                                    end
 
-            cmp.setup({
-                window = {
-                    completion = cmp.config.window.bordered(),
-                    documentation = cmp.config.window.bordered(),
-                },
-                formatting = {
-                    format = function(entry, vim_item)
-                        if vim.tbl_contains({ "path" }, entry.source.name) then
-                            local icon, hl_group = require("nvim-web-devicons").get_icon(
-                                entry:get_completion_item().label
-                            )
-                            if icon then
-                                vim_item.kind = icon
-                                vim_item.kind_hl_group = hl_group
-                                return vim_item
-                            end
-                        end
-                        return lspkind.cmp_format({ with_text = true })(entry, vim_item)
-                    end,
-                },
-                snippet = {
-                    expand = function(args) luasnip.lsp_expand(args.body) end,
-                },
-                mapping = {
-                    ["<C-space>"] = function()
-                        if cmp.visible_docs() then
-                            cmp.close_docs()
-                        else
-                            cmp.open_docs()
-                        end
-                    end,
-                    ["<C-e>"] = cmp.mapping.close(),
-                    ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-                    ["<Up>"] = cmp.mapping.select_prev_item({
-                        behavior = cmp.SelectBehavior.Insert,
-                    }),
-                    ["<Down>"] = cmp.mapping.select_next_item({
-                        behavior = cmp.SelectBehavior.Insert,
-                    }),
-                    ["<C-p>"] = cmp.mapping.select_prev_item({
-                        behavior = cmp.SelectBehavior.Insert,
-                    }),
-                    ["<C-n>"] = cmp.mapping.select_next_item({
-                        behavior = cmp.SelectBehavior.Insert,
-                    }),
-                    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-                    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-                    ["<Tab>"] = cmp.mapping(function(fallback)
-                        if luasnip.locally_jumpable(1) then
-                            luasnip.jump(1)
-                        else
-                            fallback()
-                        end
-                    end, { "i", "s" }),
-                    ["<S-Tab>"] = cmp.mapping(function(fallback)
-                        if luasnip.locally_jumpable(-1) then
-                            luasnip.jump(-1)
-                        else
-                            fallback()
-                        end
-                    end, { "i", "s" }),
-                },
-                sources = {
-                    {
-                        name = "nvim_lsp",
-                        option = {
-                            enable_in_context = function()
-                                return common.in_treesitter_capture("comment")
-                                    or common.in_syntax_group("Comment")
-                            end,
+                                    return icon .. ctx.icon_gap
+                                end,
+                                highlight = function(ctx) return blink_highlight(ctx) end,
+                            },
+                            kind = {
+                                highlight = function(ctx) return blink_highlight(ctx) end,
+                            },
                         },
                     },
-                    {
-                        name = "luasnip",
-                    },
-                    {
-                        name = "nvim_lsp_signature_help",
-                        option = {
-                            enable_in_context = function()
-                                return common.in_treesitter_capture("comment")
-                                    or common.in_syntax_group("Comment")
-                            end,
-                        },
-                    },
-                    { name = "buffer", keyword_length = 3 },
-                    { name = "async_path" },
-                    {
+                },
+                documentation = {
+                    auto_show = true,
+                    window = { border = "single" },
+                },
+            },
+            signature = {
+                enabled = true,
+                window = { border = "single" },
+            },
+            sources = {
+                default = function()
+                    local base_list = { "lsp", "buffer", "path" }
+                    if common.in_treesitter_capture("spell") or enable_spell() then
+                        table.insert(base_list, "spell")
+                    end
+                    if vim.bo.filetype == "tex" then
+                        table.insert(base_list, 1, "omni")
+                    end
+                    return base_list
+                end,
+                cmdline = function()
+                    local type = vim.fn.getcmdtype()
+
+                    if type == "/" or type == "?" then return { "buffer" } end
+                    if type == ":" or type == "@" then return { "cmdline", "path" } end
+                    return {}
+                end,
+                providers = {
+                    spell = {
                         name = "spell",
-                        option = {
-                            enable_in_context = function()
-                                return common.in_treesitter_capture("spell")
-                                    or vim.bo.filetype == "markdown"
-                                    or vim.bo.filetype == "gitcommit"
-                                    or vim.bo.filetype == "tex"
-                                    or vim.bo.filetype == "text"
-                            end,
-                        },
+                        module = "blink.compat.source",
                     },
-                    {
+                    omni = {
                         name = "omni",
-                        option = {
-                            enable_in_context = function()
-                                return vim.bo.filetype == "tex"
-                            end,
-                        },
+                        module = "blink.compat.source",
                     },
                 },
-            })
-
-            cmp.setup.cmdline("/", {
-                mapping = cmp.mapping.preset.cmdline(),
-                sources = {
-                    { name = "buffer" },
-                },
-            })
-            cmp.setup.cmdline(":", {
-                mapping = cmp.mapping.preset.cmdline(),
-                sources = cmp.config.sources({
-                    { name = "path" },
-                }, {
-                    {
-                        name = "cmdline",
-                        option = {
-                            ignore_cmds = { "Man", "!" },
-                        },
-                    },
-                }),
-            })
-        end,
-    },
-    {
-        "dense-analysis/ale",
-        init = function()
-            vim.cmd([[
-                let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
-            ]])
-            vim.g.ale_set_loclist = false
-            vim.g.ale_set_quickfix = false
-            vim.g.ale_use_neovim_diagnostics_api = true
-            vim.g.ale_open_list = true
-            vim.g.ale_fix_on_save = true
-        end,
+            },
+        },
     },
 }
