@@ -11,6 +11,10 @@ function M.has_value(table, val)
     return false
 end
 
+---@param str string
+---@return boolean
+function M.is_empty_string(str) return str == nil or str == "" end
+
 ---@return boolean
 function M.is_windows() return vim.fn.has("win32") ~= 0 or vim.fn.has("win64") ~= 0 end
 
