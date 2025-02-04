@@ -10,14 +10,6 @@ local function blink_highlight(ctx)
     return hl
 end
 
----@return boolean
-local function enable_spell()
-    return vim.bo.filetype == "markdown"
-        or vim.bo.filetype == "gitcommit"
-        or vim.bo.filetype == "tex"
-        or vim.bo.filetype == "text"
-end
-
 return {
     {
         "dense-analysis/ale",
@@ -138,6 +130,7 @@ return {
                                 text = function(ctx)
                                     local lspkind = require("lspkind")
                                     local icon = ctx.kind_icon
+
                                     if vim.tbl_contains({ "Path" }, ctx.source_name) then
                                         local dev_icon, _ =
                                             require("nvim-web-devicons").get_icon(
@@ -149,11 +142,11 @@ return {
                                             vim.tbl_contains({ "spell" }, ctx.source_name)
                                         then
                                             icon = lspkind.symbolic(
-                                                "spell",
+                                                ctx.source_name,
                                                 { mode = "symbol" }
                                             )
                                         else
-                                            icon = require("lspkind").symbolic(ctx.kind, {
+                                            icon = lspkind.symbolic(ctx.kind, {
                                                 mode = "symbol",
                                             })
                                         end
@@ -181,7 +174,13 @@ return {
             sources = {
                 default = function()
                     local base_list = { "lsp", "buffer", "path" }
-                    if common.in_treesitter_capture("spell") or enable_spell() then
+                    if
+                        common.in_treesitter_capture("spell")
+                        or common.has_value(
+                            { "markdown", "gitcommit", "tex", "text" },
+                            vim.bo.filetype
+                        )
+                    then
                         table.insert(base_list, "spell")
                     end
                     if vim.bo.filetype == "tex" then
