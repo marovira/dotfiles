@@ -110,7 +110,7 @@ return {
             {
                 "onsails/lspkind.nvim",
                 opts = {
-                    symbol_map = { spell = "󰓆" },
+                    symbol_map = { spell = "󰓆", cmdline = "" },
                 },
             },
         },
@@ -124,6 +124,11 @@ return {
                 menu = {
                     border = "single",
                     draw = {
+                        columns = {
+                            { "kind_icon" },
+                            { "label", "label_description", gap = 1 },
+                            -- { "source_name" }, -- <- Useful for debugging sources.
+                        },
                         components = {
                             kind_icon = {
                                 ellipsis = false,
@@ -139,7 +144,10 @@ return {
                                         if dev_icon then icon = dev_icon end
                                     else
                                         if
-                                            vim.tbl_contains({ "spell" }, ctx.source_name)
+                                            vim.tbl_contains(
+                                                { "spell", "cmdline" },
+                                                ctx.source_name
+                                            )
                                         then
                                             icon = lspkind.symbolic(
                                                 ctx.source_name,
