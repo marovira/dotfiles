@@ -200,7 +200,9 @@ return {
                     local type = vim.fn.getcmdtype()
 
                     if type == "/" or type == "?" then return { "buffer" } end
-                    if type == ":" or type == "@" then return { "cmdline", "path" } end
+                    if type == ":" or type == "@" then
+                        return { "cmdline", "path", "buffer" }
+                    end
                     return {}
                 end,
                 providers = {
