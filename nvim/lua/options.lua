@@ -26,6 +26,9 @@ vim.opt.showmode = false                                        -- Disable showi
 vim.opt.showcmd = false                                         -- Disable showing commands
 -- stylua: ignore end
 
+-- Diff options
+vim.opt.diffopt = "filler,internal,closeoff,algorithm:histogram,context:5,linematch:60"
+
 -- File format settings.
 vim.opt.encoding = "utf-8"
 vim.opt.fileformat = "unix"
