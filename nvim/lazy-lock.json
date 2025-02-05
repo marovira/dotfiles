@@ -7,7 +7,6 @@
   "cmake-tools.nvim": { "branch": "master", "commit": "83268ea6f969f1e6eaa85f72118a11acb6198bf0" },
   "cmp-omni": { "branch": "main", "commit": "4ef610bbd85a5ee4e97e09450c0daecbdc60de86" },
   "cmp-spell": { "branch": "master", "commit": "694a4e50809d6d645c1ea29015dad0c293f019d6" },
-  "flash.nvim": { "branch": "main", "commit": "f899265876ecdcf7352dbc9f0adf87068cedefbb" },
   "friendly-snippets": { "branch": "main", "commit": "efff286dd74c22f731cdec26a70b46e5b203c619" },
   "fzf-lua": { "branch": "main", "commit": "e3fefd97875827e47dc4bbf1074ee464b2d8e6a8" },
   "indent-blankline.nvim": { "branch": "master", "commit": "e10626f7fcd51ccd56d7ffc00883ba7e0aa28f78" },
