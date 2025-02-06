@@ -58,10 +58,32 @@ update_fzf() {
     $FZF_PATH/install --bin
 }
 
+update_stylua() {
+    if [[ "$OSTYPE" == "msys" ]]; then
+        if ! command -v stylua &> /dev/null; then
+            scoop install main/stylua
+            return
+        else
+            scoop update stylua
+        fi
+        return
+    fi
+
+    if [ -f "$HOME/.local/bin/stylua" ]; then
+        rm "$HOME/.local/bin/stylua"
+    fi
+
+    curl -LO https://github.com/JohnnyMorganz/StyLua/releases/latest/download/stylua-linux-x86_64.zip
+    unzip stylua-linux-x86_64.zip -d "$HOME/.local/bin/"
+    rm stylua-linux-x86_64.zip
+}
+
 if [[ "${app}" == "nvim" ]]; then
     update_nvim
 elif [[ "${app}" == "delta" ]]; then
     update_delta ${2}
 elif [[ "${app}" == "fzf" ]]; then
     update_fzf
+elif [[ "${app}" == "stylua" ]]; then
+    update_stylua
 fi
