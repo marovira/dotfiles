@@ -48,13 +48,7 @@ return {
                 },
             },
             sections = {
-                lualine_a = {
-                    "mode",
-                    {
-                        require("noice").api.statusline.mode.get,
-                        cond = require("noice").api.statusline.mode.has,
-                    },
-                },
+                lualine_a = { "mode" },
                 lualine_b = {
                     "branch",
                     "diff",

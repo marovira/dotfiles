@@ -91,29 +91,14 @@ return {
         enabled = vim.fn.has("nvim-0.10.0") == 1,
     },
     {
-        "folke/noice.nvim",
-        dependencies = {
-            { "MunifTanjim/nui.nvim", event = "VeryLazy" },
-            {
-                "rcarriga/nvim-notify",
-                event = "VeryLazy",
-                opts = { background_colour = "#000000" },
-            },
-        },
-        event = "VeryLazy",
+        "j-hui/fidget.nvim",
+        version = "v*",
         opts = {
-            lsp = {
-                override = {
-                    ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-                    ["vim.lsp.util.stylize_markdown"] = true,
+            notification = {
+                window = {
+                    winblend = 0,
+                    border = "rounded",
                 },
-            },
-            presets = {
-                bottom_search = true,
-                command_palette = true,
-                long_message_to_split = true,
-                inc_rename = false,
-                lsp_doc_border = false,
             },
         },
     },
