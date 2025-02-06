@@ -92,12 +92,11 @@ return {
     },
     {
         "j-hui/fidget.nvim",
-        version = "v*",
+        version = "*",
         opts = {
             notification = {
                 window = {
                     winblend = 0,
-                    border = "rounded",
                 },
             },
         },
