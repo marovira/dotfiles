@@ -56,6 +56,7 @@ return {
         config = function()
             local dap, dapui = require("dap"), require("dapui")
             dapui.setup()
+            dap.defaults.python.exception_breakpoints = {"raised"}
 
             dap.listeners.before.attach.dapui_config = function() dapui.open() end
             dap.listeners.before.launch.dapui_config = function() dapui.open() end
