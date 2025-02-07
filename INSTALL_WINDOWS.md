@@ -9,7 +9,8 @@
 
 Download and install the following software:
 
-1. Download and install [Git](https://git-scm.com/downloads). Make sure that everything is
+1. Download and install the *latest* version of
+   [git](https://github.com/git-for-windows/git/releases). Make sure that everything is
    added to the path.
 2. Download Windows Terminal from the Windows app store.
 3. Install [scoop](https://scoop.sh). Note that this *needs* to be done from a Powershell
@@ -18,7 +19,7 @@ Download and install the following software:
    NerdFont](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode)
    and install it. Regular version is recommended.
 
-### Install Chocolatey Packages
+### Install Scoop Packages
 
 Open a terminal (doesn't matter which) run `scoop bucket add extras`. Then, using `scoop
 install`, install the following packages:
@@ -37,44 +38,22 @@ install`, install the following packages:
 
 ### Setting up `pacman`
 
-Open an admin terminal with git and execute the following code (may be copied in):
+Open an admin terminal with git and run `sh install_pacman.sh` from this
+repository.
 
-```sh
-pacman="
-pacman-6.0.1-32-x86_64.pkg.tar.zst
-pacman-mirrors-20240523-1-any.pkg.tar.zst
-msys2-keyring-1~20240410-2-any.pkg.tar.zst
-"
-curl https://raw.githubusercontent.com/msys2/MSYS2-packages/7858ee9c236402adf569ac7cff6beb1f883ab67c/pacman/pacman.conf -o /etc/pacman.conf
-for f in $pacman; do curl https://repo.msys2.org/msys/$HOSTTYPE/$f -fo ~/Downloads/$f; done
+> [!WARNING]
+> The script to install pacman assumes that the *latest* version of Git has been installed
+> (regardless of whether it's a release candidate or not). If a stable release is
+> installed instead, this could lead to errors with a mismatched version of git. If this
+> occurs, simply uninstall git and re-install with the latest version.
 
-cd /
-# If any of these fail, manually extract the files into their corresponding directories.
-tar x --zstd -vf ~/Downloads/msys2-keyring-1~20220623-1-any.pkg.tar.zst usr
-tar x --zstd -vf ~/Downloads/pacman-mirrors-20220205-1-any.pkg.tar.zst etc
-tar x --zstd -vf ~/Downloads/pacman-6.0.1-18-x86_64.pkg.tar.zst usr
-mkdir -p /var/lib/pacman
-
-pacman-key --init
-pacmak-key --populate msys2
-pacman -Syu
-URL=https://github.com/git-for-windows/git-sdk-64/raw/main
-cat /etc/package-versions.txt | while read p v; do d=/var/lib/pacman/local/$p-$v;
- mkdir -p $d; echo $d; for f in desc files install mtree; do curl -sSL "$URL$d/$f" -o $d/$f;
- done; done
-
-pacman-key --refresh-keys
-```
-
-> [!NOTE]
-> If any of the `curl` calls for the pacman packages result in a 404 error, then go to the
-> [msys2](https://repo.msys2.org/msys/x86_64/) page and search for the package names,
-> adjusting the paths to use the latest versions.
+Once the script finishes, open a new admin terminal with git and run `pacman -Suu` to
+update everything.
 
 ### Installing Pacman packages
 
-Once pacman is installed, on the same admin terminal install the following using `pacman
--S`:
+Once pacman is installed and updated, using the same admin terminal, install the following
+packages with `pacman -S`
 
 * `zsh`
 * `util-linux`
