@@ -1,5 +1,7 @@
 local common = require("common")
 
+---@param ctx blink.cmp.DrawItemContext
+---@return string
 local function blink_highlight(ctx)
     local hl = "BlinkCmpKind" .. ctx.kind
         or require("blink.cmp.completion.windows.render.tailwind").get_hl(ctx)
@@ -8,6 +10,50 @@ local function blink_highlight(ctx)
         if dev_icon then hl = dev_hl end
     end
     return hl
+end
+
+---@param a blink.cmp.Context
+---@param items blink.cmp.CompletionItem[]
+---@return blink.cmp.CompletionItem[]
+local function preserve_case(a, items)
+    local keyword = a.get_keyword()
+    local correct, case
+    if keyword:match("^%l") then
+        correct = "^%u%l+$"
+        case = string.lower
+    elseif keyword:match("^%u") then
+        correct = "^%l+$"
+        case = string.upper
+    else
+        return items
+    end
+
+    local seen = {}
+    local out = {}
+    for _, item in ipairs(items) do
+        local raw
+        if item.insertText ~= nil then
+            raw = item.insertText
+        else
+            raw = item.label
+        end
+
+        if raw == nil then goto continue end
+
+        local modified = raw
+        if raw:match(correct) then
+            local text = case(raw:sub(1, 1)) .. raw:sub(2)
+            modified = text
+            item.label = text
+        end
+        if not seen[modified] then
+            seen[modified] = true
+            table.insert(out, item)
+        end
+
+        ::continue::
+    end
+    return out
 end
 
 return {
@@ -64,14 +110,6 @@ return {
                                     runtime = {
                                         version = "LuaJIT",
                                     },
-                                    diagnostics = {
-                                        globals = { "vim" },
-                                    },
-                                    workspace = {
-                                        library = {
-                                            vim.env.VIMRUNTIME,
-                                        },
-                                    },
                                 },
                             },
                         })
@@ -100,12 +138,20 @@ return {
         end,
     },
     {
+        "folke/lazydev.nvim",
+        ft = "lua",
+        opts = {
+            library = {
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+            },
+        },
+    },
+    {
         "saghen/blink.cmp",
         version = "*",
         dependencies = {
-            { "saghen/blink.compat", version = "*", lazy = true, config = true },
-            { "f3fora/cmp-spell" },
-            { "hrsh7th/cmp-omni" },
+            -- { "ribru17/blink-cmp-spell" },
+            { "marovira/blink-cmp-spell" },
             { "rafamadriz/friendly-snippets" },
             {
                 "onsails/lspkind.nvim",
@@ -180,23 +226,46 @@ return {
                 window = { border = "single" },
             },
             sources = {
-                default = function()
-                    local base_list = { "lsp", "buffer", "path" }
-                    if
-                        common.in_treesitter_capture("spell")
-                        or common.has_value(
-                            { "markdown", "gitcommit", "tex", "text" },
-                            vim.bo.filetype
-                        )
-                    then
-                        table.insert(base_list, "spell")
-                    end
-                    if vim.bo.filetype == "tex" then
-                        table.insert(base_list, 1, "omni")
-                    end
-                    return base_list
-                end,
-                cmdline = function()
+                default = { "lazydev", "lsp", "omni", "buffer", "path", "spell" },
+                providers = {
+                    buffer = {
+                        transform_items = preserve_case,
+                    },
+                    lazydev = {
+                        name = "LazyDev",
+                        module = "lazydev.integrations.blink",
+                        score_offset = 100,
+                    },
+                    spell = {
+                        name = "spell",
+                        module = "blink-cmp-spell",
+                        opts = {
+                            enable_in_context = function()
+                                local ret = common.in_treesitter_capture("spell")
+                                    or common.has_value(
+                                        { "markdown", "gitcommit", "tex", "text" },
+                                        vim.bo.filetype
+                                    )
+                                return ret
+                            end,
+                            -- max_entries = 3, -- Always return the maximum number of entries
+                        },
+                        transform_items = preserve_case,
+                    },
+                    omni = {
+                        name = "Omni",
+                        module = "blink.cmp.sources.omni",
+                        opts = { disable_omnifuncs = { "v:lua.vim.lsp.omnifunc" } },
+                        enabled = function()
+                            return common.has_value({ "tex" }, vim.bo.filetype)
+                        end,
+                    },
+                },
+            },
+            cmdline = {
+                enabled = true,
+                keymap = nil,
+                sources = function()
                     local type = vim.fn.getcmdtype()
 
                     if type == "/" or type == "?" then return { "buffer" } end
@@ -205,14 +274,11 @@ return {
                     end
                     return {}
                 end,
-                providers = {
-                    spell = {
-                        name = "spell",
-                        module = "blink.compat.source",
-                    },
-                    omni = {
-                        name = "omni",
-                        module = "blink.compat.source",
+                completion = {
+                    menu = {
+                        draw = {
+                            columns = { { "kind_icon", "label", "label_description" } },
+                        },
                     },
                 },
             },
