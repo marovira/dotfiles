@@ -67,6 +67,37 @@ return {
         },
     },
     {
+        "debugloop/telescope-undo.nvim",
+        dependencies = {
+            { "nvim-telescope/telescope.nvim" },
+            { "nvim-lua/plenary.nvim" },
+        },
+        keys = {
+            {
+                "<leader>fu",
+                "<cmd>Telescope undo<cr>",
+                desc = "Telescope undo",
+            },
+        },
+        opts = {
+            extensions = {
+                undo = {
+                    use_delta = true,
+                    side_by_side = true,
+                    vim_diff_opts = { ctxlen = 10 },
+                    layout_strategy = "vertical",
+                    layout_config = {
+                        preview_height = 0.8,
+                    },
+                },
+            },
+        },
+        config = function(_, opts)
+            require("telescope").setup(opts)
+            require("telescope").load_extension("undo")
+        end,
+    },
+    {
         "da-moon/telescope-toggleterm.nvim",
         event = "TermOpen",
         dependencies = {
@@ -77,12 +108,16 @@ return {
         },
         keys = {
             {
-                "<leader>t",
+                "<leader>ft",
                 "<cmd>Telescope toggleterm<cr>",
                 desc = "Telescope toggleterm",
             },
         },
-        config = function() require("telescope").load_extension("toggleterm") end,
+        opts = {},
+        config = function(_, opts)
+            require("telescope").setup(opts)
+            require("telescope").load_extension("toggleterm")
+        end,
     },
     {
         "folke/ts-comments.nvim",

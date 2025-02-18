@@ -187,37 +187,6 @@ return {
         },
     },
     {
-        "nvim-telescope/telescope.nvim",
-        dependencies = {
-            { "nvim-lua/plenary.nvim" },
-            { "debugloop/telescope-undo.nvim" },
-        },
-        config = function()
-            local telescope = require("telescope")
-            telescope.setup({
-                extensions = {
-                    undo = {
-                        use_delta = true,
-                        side_by_side = true,
-                        vim_diff_opts = { ctxlen = 10 },
-                        layout_strategy = "vertical",
-                        layout_config = {
-                            preview_height = 0.8,
-                        },
-                    },
-                },
-            })
-            telescope.load_extension("undo")
-        end,
-        keys = {
-            {
-                "<leader>fu",
-                "<cmd>Telescope undo<cr>",
-                desc = "Telescope undo",
-            },
-        },
-    },
-    {
         "nvim-treesitter/nvim-treesitter",
         build = function()
             require("nvim-treesitter.install").update({ with_sync = true })()
@@ -225,6 +194,7 @@ return {
         config = function()
             local configs = require("nvim-treesitter.configs")
 
+            ---@diagnostic disable: missing-fields
             configs.setup({
                 ensure_installed = {
                     "c",
