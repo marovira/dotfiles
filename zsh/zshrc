@@ -5,7 +5,7 @@ export COLUMNS
 export FZF_PREVIEW_COLUMNS
 
 # Forgit exports
-# export FORGIT_NO_ALIASES=1
+export FORGIT_NO_ALIASES=1
 
 
 if [[ "$OSTYPE" == "msys" ]]; then
