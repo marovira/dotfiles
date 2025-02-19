@@ -78,6 +78,10 @@ export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 fpath+=(~/.zshfn)
 autoload -U $fpath[-1]/*(.:t)
 
+# Add forgit to path for completions
+fpath+=($FORGIT_INSTALL_DIR/completions/_git-forgit)
+autoload -U $FORGIT_INSTALL_DIR/completions/_git-forgit
+
 PATH="$PATH:$FORGIT_INSTALL_DIR/bin"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
