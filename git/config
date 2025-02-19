@@ -9,7 +9,7 @@
     pager = delta --side-by-side --width ${FZF_PREVIEW_COLUMNS-$COLUMNS}
 
 [interactive]
-    diffFilter = delta --color-only 
+    diffFilter = delta --color-only
 
 [commit]
 	template = ~/.gittemplate.txt
@@ -70,13 +70,13 @@
 [alias]
     # Add commands
     #==============================#
-    a = add --all
+    a = forgit add
 
     # Branch commands
     #==============================#
     b = branch
     ba = branch -a
-    bd = branch -d
+    bd = forgit branch_delete
     br = branch -r
 
     # Commit commands
@@ -87,9 +87,9 @@
 
     # Diff commands
     #==============================#
-    d = diff
+    d = forgit diff
     dl = difftool
-    dc = diff --cached
+    dc = forgit diff --cached
     dlc = difftool --cached
 
     # Merge commands
@@ -102,7 +102,19 @@
     # Checkout commands
     #==============================#
     o = checkout
-    ob = checkout -b
+    oc = forgit checkout_commit
+    ob = forgit checkout_branch
+    of = forgit checkout_file
+    ot = forgit checkout_tag
+
+    # Revert commands
+    #==============================#
+    rc = forgit revert_commit
+    rh = forgit reset_head
+
+    # Clean commands
+    #==============================#
+    cn = forgit clean
 
     # Push commands
     #==============================#
@@ -115,3 +127,14 @@
     # Status commands
     #==============================#
     s = status
+    so = forgit show
+
+    # Log commands
+    #==============================#
+    lo = forgit log
+    rl = forgit reflog
+
+    # Stash commands
+    #==============================#
+    ss = forgit stash_show
+    sp = forgit stash_push
