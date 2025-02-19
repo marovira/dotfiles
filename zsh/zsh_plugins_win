@@ -19,3 +19,6 @@ romkatv/powerlevel10k
 agkozak/zsh-z
 unixorn/fzf-zsh-plugin
 Aloxaf/fzf-tab
+
+# Git
+wfxr/forgit

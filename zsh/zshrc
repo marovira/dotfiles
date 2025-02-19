@@ -1,7 +1,13 @@
 # Export variables.
 export EDITOR='nvim'
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-export YSU_HARDCORE=1
+export COLUMNS
+export FZF_PREVIEW_COLUMNS
+
+# Forgit exports
+# export FORGIT_NO_ALIASES=1
+
+
 if [[ "$OSTYPE" == "msys" ]]; then
     unset SHELL
 fi
@@ -71,6 +77,8 @@ export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 # Automatically load all zshfn files.
 fpath+=(~/.zshfn)
 autoload -U $fpath[-1]/*(.:t)
+
+PATH="$PATH:$FORGIT_INSTALL_DIR/bin"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
