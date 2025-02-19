@@ -71,6 +71,7 @@
     # Add commands
     #==============================#
     a = forgit add
+    al = forgit add --all
 
     # Branch commands
     #==============================#
