@@ -26,6 +26,11 @@
 [color]
 	ui = auto
 
+[color "status"]
+    changed = yellow
+    added = green
+    untracked = red
+
 [diff]
     tool = nvim
 
