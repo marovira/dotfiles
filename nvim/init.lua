@@ -6,6 +6,7 @@ require("options")
 -- =======================
 -- Bootstrap lazy.nvim
 local lazy_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+---@diagnostic disable: undefined-field
 if not vim.loop.fs_stat(lazy_path) then
     vim.fn.system({
         "git",
@@ -23,6 +24,10 @@ require("lazy").setup("plugins", { rocks = { enabled = false } })
 -- Autocommands
 -- =======================
 require("autocmd")
+
+-- Custom Commands
+-- =======================
+require("commands")
 
 -- Key remaps
 -- =======================

@@ -45,6 +45,7 @@ return {
             local lspconfig = require("lspconfig")
             local mason_lsp = require("mason-lspconfig")
             local lsp_capabilities = require("blink.cmp").get_lsp_capabilities()
+            ---@diagnostic disable:missing-fields
             mason_lsp.setup({
                 ensure_installed = {
                     "lua_ls",
