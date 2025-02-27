@@ -85,6 +85,12 @@ autoload -U $fpath[-1]/*(.:t)
 fpath+=($FORGIT_INSTALL_DIR/completions/_git-forgit)
 autoload -U $FORGIT_INSTALL_DIR/completions/_git-forgit
 
+# Add UV completions (if it exists)
+if type "uv" > /dev/null; then
+    eval "$(uv generate-shell-completion zsh)"
+    eval "$(uvx --generate-shell-completion zsh)"
+fi
+
 PATH="$PATH:$FORGIT_INSTALL_DIR/bin"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
