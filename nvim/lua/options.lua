@@ -10,7 +10,6 @@ vim.opt.cmdheight = 2                                           -- More space fo
 vim.opt.completeopt = { "menuone", "noselect", "noinsert" }     -- Complete options.
 vim.opt.confirm = true                                          -- Save files on exit.
 vim.opt.cursorline = true                                       -- Show current cursor line.
-vim.opt.foldmethod = "syntax"                                   -- Use syntax definitions for folding.
 vim.opt.infercase = true                                        -- Adjust case of match for keyword completion.
 vim.opt.modeline = true                                         -- Enable top-of-file modelines.
 vim.opt.mouse = "a"                                             -- Enable mouse clicks.
@@ -28,6 +27,12 @@ vim.opt.showcmd = false                                         -- Disable showi
 
 -- Diff options
 vim.opt.diffopt = "filler,internal,closeoff,algorithm:histogram,context:5,linematch:60"
+
+-- Fold options
+vim.o.foldenable = true
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.o.foldlevel = 99
 
 -- File format settings.
 vim.opt.encoding = "utf-8"
