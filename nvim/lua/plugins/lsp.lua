@@ -211,7 +211,6 @@ return {
             },
             cmdline = {
                 enabled = true,
-                keymap = nil,
                 sources = function()
                     local type = vim.fn.getcmdtype()
 
@@ -222,11 +221,7 @@ return {
                     return {}
                 end,
                 completion = {
-                    menu = {
-                        draw = {
-                            columns = { { "kind_icon", "label", "label_description" } },
-                        },
-                    },
+                    menu = { auto_show = true },
                 },
             },
         },
