@@ -1,10 +1,8 @@
 -- Custom implementation for spell completion for blink.
 
-local common = require("common")
-
 ---@module "blink.cmp"
 
----@class cmp-spell.Config
+local common = require("common")
 local defaults = {
     max_entries = 3,
     keep_all_entries = false,
@@ -12,16 +10,33 @@ local defaults = {
     preserve_case = true,
 }
 
----@class cmp-spell.Source: blink.cmp.Source
-local M = {}
+---@return boolean
+local function enable_in_context()
+    return common.in_treesitter_capture("spell")
+        or common.has_value({ "markdown", "gitcommit", "tex", "text" }, vim.bo.filetype)
+end
 
-M.max_entries = 0 ---@type integer
-M.keep_all_entries = false ---@type boolean
-M.preselect_correct_word = true ---@type boolean
-M.preserve_case = true ---@type boolean
+---@param len integer
+---@return integer
+local function len_to_loglen(len) return math.ceil(math.log10(len + 1)) end
 
----@param opts? cmp-spell.Config
-function M.new(opts)
+---@param input string
+---@param number integer
+---@param loglen integer
+---@return string
+local function number_to_text(input, number, loglen)
+    return string.format(input .. "%0" .. loglen .. "d", number)
+end
+
+---@class cmp-spell.Source : blink.cmp.Source
+---@field max_entries integer
+---@field keep_all_entries boolean
+---@field preselect_correct_word boolean
+---@field preserve_case boolean
+local source = {}
+
+function source.new(opts)
+    ---@type cmp-spell.Source
     local config = vim.tbl_deep_extend("keep", opts or {}, defaults)
     vim.validate({
         max_entries = { config.max_entries, "number" },
@@ -30,33 +45,16 @@ function M.new(opts)
         preserve_case = { config.preserve_case, "boolean" },
     })
 
-    return setmetatable({
-        max_entries = config.max_entries,
-        keep_all_entries = config.keep_all_entries,
-        preselect_correct_word = config.preselect_correct_word,
-        preserve_case = config.preserve_case,
-    }, { __index = M })
+    return setmetatable(config, { __index = source })
 end
 
 ---@return boolean
-function M:enabled() return vim.wo.spell end
-
----@param len integer
----@return integer
-function M:len_to_loglen(len) return math.ceil(math.log10(len + 1)) end
-
----@param input string
----@param number integer
----@param loglen integer
----@return string
-function M:number_to_text(input, number, loglen)
-    return string.format(input .. "%0" .. loglen .. "d", number)
-end
+function source:enabled() return vim.wo.spell end
 
 ---@param input string
 ---@param items blink.cmp.CompletionItem[]
 ---@return blink.cmp.CompletionItem[]
-function M:adjust_case(input, items)
+function source:adjust_case(input, items)
     local correct, case
     if input:match("^%l") then
         correct = "^%u%l+$"
@@ -95,68 +93,62 @@ function M:adjust_case(input, items)
     end
     return out
 end
-
+---
 ---@param input string
----@param src cmp-spell.Source
 ---@return table
-function M:candidates(input, src)
+function source:candidates(input)
     local items = {}
-    local entries = vim.fn.spellsuggest(input, src.max_entries)
+    local entries = vim.fn.spellsuggest(input, self.max_entries)
     local offset
     local loglen
     local kind = vim.lsp.protocol.CompletionItemKind.Text
-    if src.preselect_correct_word and vim.tbl_isempty(vim.spell.check(input)) then
+    print(self.preselect_correct_word)
+    if self.preselect_correct_word and vim.tbl_isempty(vim.spell.check(input)) then
         offset = 1
-        loglen = self:len_to_loglen(#entries + offset)
+        loglen = len_to_loglen(#entries + offset)
 
         items[offset] = {
             label = input,
             filterText = input,
             kind = kind,
-            sortText = self:number_to_text(input, offset, loglen),
+            sortText = number_to_text(input, offset, loglen),
             preselct = true,
         }
-        if not src.keep_all_entries then return items end
+        if not self.keep_all_entries then return items end
     else
         offset = 0
-        loglen = self:len_to_loglen(#entries + offset)
+        loglen = len_to_loglen(#entries + offset)
     end
 
     for k, v in ipairs(entries) do
         items[k + offset] = {
             label = v,
-            filterText = src.keep_all_entries and input or v,
-            sortText = src.keep_all_entries
-                    and self:number_to_text(input, k + offset, loglen)
+            filterText = self.keep_all_entries and input or v,
+            sortText = self.keep_all_entries
+                    and number_to_text(input, k + offset, loglen)
                 or v,
             kind = kind,
             preselct = false,
         }
     end
 
-    if src.preserve_case then items = self:adjust_case(input, items) end
+    if self.preserve_case then items = self:adjust_case(input, items) end
 
     return items
 end
 
----@return boolean
-function M:enable_in_context()
-    return common.in_treesitter_capture("spell")
-        or common.has_value({ "markdown", "gitcommit", "tex", "text" }, vim.bo.filetype)
-end
-
 ---@param context blink.cmp.Context
 ---@param callback blink.cmp.CompletionResponse
-function M:get_completions(context, callback)
+function source:get_completions(context, callback)
     vim.schedule(function()
         local input = string.sub(
             context.line,
             context.bounds.start_col,
             context.bounds.start_col + context.bounds.length - 1
         )
-        if self:enable_in_context() then
+        if enable_in_context() then
             callback({
-                items = self:candidates(input, self),
+                items = self:candidates(input),
                 is_incomplete_forward = true,
                 is_incomplete_backward = true,
             })
@@ -170,4 +162,4 @@ function M:get_completions(context, callback)
     end)
 end
 
-return M
+return source
