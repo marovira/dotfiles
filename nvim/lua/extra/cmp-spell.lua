@@ -102,7 +102,6 @@ function source:candidates(input)
     local offset
     local loglen
     local kind = vim.lsp.protocol.CompletionItemKind.Text
-    print(self.preselect_correct_word)
     if self.preselect_correct_word and vim.tbl_isempty(vim.spell.check(input)) then
         offset = 1
         loglen = len_to_loglen(#entries + offset)

@@ -109,10 +109,11 @@ return {
         version = "*",
         dependencies = {
             { "rafamadriz/friendly-snippets" },
+            { "MeanderingProgrammer/render-markdown.nvim" },
             {
                 "onsails/lspkind.nvim",
                 opts = {
-                    symbol_map = { spell = "󰓆", cmdline = "" },
+                    symbol_map = { spell = "󰓆", cmdline = "", markdown = "" },
                 },
             },
         },
@@ -147,7 +148,7 @@ return {
                                     else
                                         if
                                             vim.tbl_contains(
-                                                { "spell", "cmdline" },
+                                                { "spell", "cmdline", "markdown" },
                                                 ctx.source_name
                                             )
                                         then
@@ -182,7 +183,15 @@ return {
                 window = { border = "single" },
             },
             sources = {
-                default = { "lazydev", "lsp", "omni", "buffer", "path", "spell" },
+                default = {
+                    "lazydev",
+                    "lsp",
+                    "omni",
+                    "buffer",
+                    "path",
+                    "spell",
+                    "markdown",
+                },
                 providers = {
                     buffer = {
                         transform_items = function(a, items)
@@ -206,6 +215,14 @@ return {
                         enabled = function()
                             return common.has_value({ "tex" }, vim.bo.filetype)
                         end,
+                    },
+                    markdown = {
+                        name = "markdown",
+                        module = "render-markdown.integ.blink",
+                        enabled = function()
+                            return common.has_value({ "markdown" }, vim.bo.filetype)
+                        end,
+                        fallbacks = { "lsp" },
                     },
                 },
             },
