@@ -1,5 +1,5 @@
 local common = require("common")
-local spell = require("cmp-spell")
+local spell = require("extra.cmp-spell")
 
 ---@param ctx blink.cmp.DrawItemContext
 ---@return string
@@ -196,7 +196,7 @@ return {
                     },
                     spell = {
                         name = "spell",
-                        module = "cmp-spell",
+                        module = "extra.cmp-spell",
                         opts = {},
                     },
                     omni = {
