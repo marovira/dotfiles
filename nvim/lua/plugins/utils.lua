@@ -136,4 +136,32 @@ return {
             },
         },
     },
+    {
+        "ggandor/leap.nvim",
+        config = function()
+            local leap = require("leap")
+            leap.opts.equivalence_classes = { " \t\r\n", "([{", ")]}", "'\"`" }
+            leap.opts.preview_filter = function(ch0, ch1, ch2)
+                return not (
+                    ch1:match("%s")
+                    or ch0:match("%w") and ch1:match("%w") and ch2:match("%w")
+                )
+            end
+
+            require("leap.user").set_repeat_keys("<enter>", "<backspace>")
+
+            vim.keymap.set(
+                { "n", "x", "o" },
+                "s",
+                "<Plug>(leap-forward)",
+                { desc = "Leap forward" }
+            )
+            vim.keymap.set(
+                { "n", "x", "o" },
+                "S",
+                "<Plug>(leap-backward)",
+                { desc = "Leap backward" }
+            )
+        end,
+    },
 }
