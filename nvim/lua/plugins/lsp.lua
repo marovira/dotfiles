@@ -198,6 +198,9 @@ return {
                             return spell:adjust_case(a.get_keyword(), items)
                         end,
                     },
+                    lsp = {
+                        fallbacks = {},
+                    },
                     lazydev = {
                         name = "LazyDev",
                         module = "lazydev.integrations.blink",
