@@ -18,4 +18,3 @@ else
 end
 
 vim.g.ale_cpp_cc_options = "-std=c++20 -Wall --pedantic"
-vim.o.foldmethod = "indent"

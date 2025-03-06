@@ -31,7 +31,7 @@ vim.opt.diffopt = "filler,internal,closeoff,algorithm:histogram,context:5,linema
 -- Fold options
 vim.o.foldenable = true
 vim.o.foldmethod = "expr"
-vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 vim.o.foldlevel = 99
 
 -- File format settings.

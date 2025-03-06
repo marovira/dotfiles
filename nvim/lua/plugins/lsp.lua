@@ -177,6 +177,7 @@ return {
                     auto_show = true,
                     window = { border = "single" },
                 },
+                accept = { auto_brackets = { enabled = false } },
             },
             signature = {
                 enabled = true,
