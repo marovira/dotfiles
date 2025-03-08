@@ -48,6 +48,23 @@ return {
         opts = {
             cmake_build_directory = "build",
         },
+        keys = {
+            {
+                "<leader>mg",
+                "<cmd>CMakeGenerate<cr>",
+                desc = "CMake generate",
+            },
+            {
+                "<leader>mb",
+                "<cmd>CMakeBuild<cr>",
+                desc = "CMake build",
+            },
+            {
+                "<leader>mr",
+                "<cmd>CMakeRun<cr>",
+                desc = "CMake run",
+            },
+        },
     },
     {
         "akinsho/toggleterm.nvim",
