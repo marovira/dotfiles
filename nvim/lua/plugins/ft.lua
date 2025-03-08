@@ -37,4 +37,26 @@ return {
             )
         end,
     },
+    {
+        "p00f/clangd_extensions.nvim",
+        ft = "cpp",
+        opts = {},
+        keys = {
+            {
+                "<leader>ch",
+                "<cmd>ClangdSwitchSourceHeader<cr>",
+                desc = "Clangd switch source/header file",
+            },
+            {
+                "<leader>cs",
+                "<cmd>ClangdSymbolInfo<cr>",
+                desc = "Clangd show symbol info",
+            },
+            {
+                "<leader>ct",
+                "<cmd>ClangdTypeHierarchy<cr>",
+                desc = "Clagnd show type hierarchy",
+            },
+        },
+    },
 }

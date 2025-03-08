@@ -3,6 +3,7 @@
   "SingleCompile": { "branch": "master", "commit": "b8f53a2f0ee250ab66ee435a67f8ee19d2295b5b" },
   "ale": { "branch": "master", "commit": "e319d489410df7705d72708ff9e44ae730721ac8" },
   "blink.cmp": { "branch": "main", "commit": "dcda20d3aa345025699a920c45b0a0603551f41d" },
+  "clangd_extensions.nvim": { "branch": "main", "commit": "db28f29be928d18cbfb86fbfb9f83f584f658feb" },
   "cmake-tools.nvim": { "branch": "master", "commit": "1d96327bf64189110286811a2b502c8c2262d4ca" },
   "fidget.nvim": { "branch": "main", "commit": "b61e8af9b8b68ee0ec7da5fb7a8c203aae854f2e" },
   "flash.nvim": { "branch": "main", "commit": "3c942666f115e2811e959eabbdd361a025db8b63" },
