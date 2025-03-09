@@ -9,55 +9,71 @@
 
 Download and install the following software:
 
-1. Download and install the *latest* version of
-   [git](https://github.com/git-for-windows/git/releases). Make sure that everything is
-   added to the path.
-2. Download Windows Terminal from the Windows app store.
-3. Install [scoop](https://scoop.sh). Note that this *needs* to be done from a Powershell
+1. Download Windows Terminal from the Windows app store.
+2. Install [scoop](https://scoop.sh). Note that this *needs* to be done from a Powershell
    terminal. Admin privileges are not required.
-4. Download [FiraCode
+3. Download [FiraCode
    NerdFont](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode)
    and install it. Regular version is recommended.
+
+### Install Git
+
+Download the latest release from [here](https://git-scm.com/downloads). When installing,
+use the following options:
+
+* Default editor: Vim (will be overridden by `gitconfig`)
+* Override default branch name to `master`. If this is a work PC, use whatever standard is
+  used there.
+* Select "Git from the command line and also from 3rd-party software". Remaining Linux
+  environment will be set by msys2.
+* Use external OpenSSH
+* Use OpenSSL
+* Checkout as-is, commit Unix-style. If this is a work PC, use whatever standard is used
+  there.
+* Remaining options to default value as appropriate.
 
 ### Install Scoop Packages
 
 Open a terminal (doesn't matter which) run `scoop bucket add extras`. Then, using `scoop
 install`, install the following packages:
 
-* `main/ripgrep`
-* `main/fd`
-* `main/stylua`
-* `main/bat`
-* `main/python`
-* `main/neovim`
-* `extras/neovide`
-* `main/delta`
-* `main/llvm`
-* `main/zstd`
+* `cmake`
+* `delta`
+* `fd`
+* `llvm`
+* `msys2`
+* `neovide`
+* `neovim`
+* `python`
+* `ripgrep`
+* `stylua`
+* `tree-sitter`
+* `zstd`
+
+> [!NOTE]
+> If python will be used for development, then also install `uv`
 
 
-### Setting up `pacman`
+### Setting up `msys2`
 
-Open an admin terminal with git and run `sh install_pacman.sh` from this
-repository.
+After scoop has finished installing everything, run `msys2` to finish setting up the
+environment. Once that is done, open the settings for Windows Terminal and create a new
+profile with the following settings:
 
-> [!WARNING]
-> The script to install pacman assumes that the *latest* version of Git has been installed
-> (regardless of whether it's a release candidate or not). If a stable release is
-> installed instead, this could lead to errors with a mismatched version of git. If this
-> occurs, simply uninstall git and re-install with the latest version.
+* Name: MSYS2
+* Command line: `%USERPROFILE%\scoop\apps\msys2\current\msys2_shell.cmd -defterm -here
+  -no-start -ucrt64 -use-full-path`
+* Starting directory: use whatever is appropriate
+* Icon: `%USERPROFILE%\scoop\apps\msys2\current\msys2.ico`
 
-Once the script finishes, open a new admin terminal with git and run `pacman -Suu` to
-update everything.
-
-### Installing Pacman packages
-
-Once pacman is installed and updated, using the same admin terminal, install the following
-packages with `pacman -S`
+Set this profile as default and restart terminal. If everything is correctly set, the
+UCRT64 bash from msys2 should show up. Run `pacman -Suu` to ensure there aren't any
+updates and now install with `pacman -S`:
 
 * `zsh`
 * `util-linux`
 * `pv`
+* `openssh`
 
 ## Installing dotfiles
 

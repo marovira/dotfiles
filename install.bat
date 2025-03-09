@@ -14,12 +14,15 @@ if %errorLevel% == 0 (
 :: Grab the current directory.
 set CURDIR=%~dp0
 
-:: First setup nvim
-setx -m XDG_CONFIG_HOME %LOCALAPPDATA%
+:: Set environment variables
+setx HOME %USERPROFILE%
+setx XDG_CONFIG_HOME %LOCALAPPDATA%
+
+:: Setup nvim
 mklink /D %LOCALAPPDATA%\nvim %CURDIR%nvim
 mklink %USERPROFILE%\.vsvimrc %CURDIR%nvim\vsvim.vim
 
-:: Now setup the git stuff
+:: Now setup git
 mklink %USERPROFILE%\.gitconfig %CURDIR%git\config
 mklink %USERPROFILE%\.gitignore %CURDIR%git\ignore
 mklink %USERPROFILE%\.gittemplate.txt %CURDIR%git\template
