@@ -11,16 +11,23 @@ if %errorLevel% == 0 (
     exit /B
 )
 
+:: Environment variables
 setx -m XDG_CONFIG_HOME ""
+setx -m HOME ""
+
+:: Neovim
 rmdir %LOCALAPPDATA%\nvim
 del %USERPROFILE%\.vsvimrc
 
+:: Git
 del %USERPROFILE%\.gitconfig
 del %USERPROFILE%\.gitignore
 del %USERPROFILE%\.gittemplate.txt
 
+:: Language
 del %USERPROFILE%\.clang-format
 
+:: ZSH
 del %USERPROFILE%\.bashrc
 del %USERPROFILE%\.zshrc
 del %USERPROFILE%\.zsh_plugins.txt
@@ -29,3 +36,4 @@ rmdir %USERPROFILE%\.zshfn
 rmdir %APPDATA%\bat
 
 echo Clean finished successfully
+pause
