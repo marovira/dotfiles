@@ -14,7 +14,7 @@ Using the package manager, install the following:
 * ripgrep
 * python<ver>-venv (where <ver> is the version of Python installed. For example, for
   Python 3.10.xx, the package is python3.10-venv)
-* delta 
+* delta
 
 ## Installing dotfiles
 
@@ -33,6 +33,7 @@ Open a terminal and navigate to the home directory. Run `python3 -m venv nvim` a
 activate the environment with `. nvim/bin/activate`. Then run `pip install pynvim`. Once
 it is installed, enter `deactivate` to disable the virtual environment.
 
+
 ## Troubleshooting
 
 1. Make sure the installation script runs **before** the switch to ZSH is made. This
@@ -44,6 +45,7 @@ it is installed, enter `deactivate` to disable the virtual environment.
 3. The installation script will automatically clone TPM (plugin manager for TMUX) into the
    corresponding directory. When opening TMUX for the first time, create a split `<prefix>
    |` and see if Vim bindings for switching splits work. If not, then try:
+   * `<prefix> I` to install plugins,
    * `tmux source ~/.tmux.conf`, or
    * `tmux run ~/.tmux/plugins/tpm/tpm`
 

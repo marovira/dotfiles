@@ -74,6 +74,7 @@ updates and now install with `pacman -S`:
 * `util-linux`
 * `pv`
 * `openssh`
+* `tmux`
 
 ## Installing dotfiles
 
