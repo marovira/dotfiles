@@ -21,16 +21,10 @@ Download and install the following software:
 Download the latest release from [here](https://git-scm.com/downloads). When installing,
 use the following options:
 
-* Default editor: Vim (will be overridden by `gitconfig`)
-* Override default branch name to `master`. If this is a work PC, use whatever standard is
-  used there.
-* Select "Git from the command line and also from 3rd-party software". Remaining Linux
-  environment will be set by msys2.
-* Use external OpenSSH
-* Use OpenSSL
-* Checkout as-is, commit Unix-style. If this is a work PC, use whatever standard is used
-  there.
-* Remaining options to default value as appropriate.
+* If using a work PC, override default branch to be whatever standard is used there.
+  Otherwise, set to `master`.
+* Ensure that *all* of git is added to path.
+* Remaining options may be left as default or modified as appropriate.
 
 ### Install Scoop Packages
 
@@ -41,7 +35,6 @@ install`, install the following packages:
 * `delta`
 * `fd`
 * `llvm`
-* `msys2`
 * `neovide`
 * `neovim`
 * `python`
@@ -54,33 +47,36 @@ install`, install the following packages:
 > If python will be used for development, then also install `uv`
 
 
-### Setting up `msys2`
-
-After scoop has finished installing everything, run `msys2` to finish setting up the
-environment. Once that is done, open the settings for Windows Terminal and create a new
-profile with the following settings:
-
-* Name: MSYS2
-* Command line: `%USERPROFILE%\scoop\apps\msys2\current\msys2_shell.cmd -defterm -here
-  -no-start -ucrt64 -use-full-path`
-* Starting directory: use whatever is appropriate
-* Icon: `%USERPROFILE%\scoop\apps\msys2\current\msys2.ico`
-
-Set this profile as default and restart terminal. If everything is correctly set, the
-UCRT64 bash from msys2 should show up. Run `pacman -Suu` to ensure there aren't any
-updates and now install with `pacman -S`:
-
-* `zsh`
-* `util-linux`
-* `pv`
-* `openssh`
-* `tmux`
-
 ## Installing dotfiles
 
 Once everything has been installed, clone this repository and run `install.bat` as admin.
 
+
 ## Post-build Steps
+
+### Setting up `pacman`
+
+1. Open an admin terminal running git bash and run `sh install_pacman.sh` from this
+   repository.
+2. Run `pacman -Suu` to update everything.
+
+Once `pacman` is correctly installed, open another admin terminal and install:
+
+* `zsh`
+* `util-linux`
+* `pv`
+
+> [!NOTE]
+> Errors during install referring to `man` are normal as it is not actually installed.
+
+> [!WARNING]
+> 1. It is possible that conflicts between packages occur on installation. I believe this
+>    is caused by mismatches between whatever git installs and what pacman pulls down. In
+>    that case, usually installing the latest pre-release version solves the issue.
+> 2. When updating git, it is entirely possible that mismatches occur again. The only
+>    solution I've found so far is to uninstall Git (removing the folder) and then
+>    installing everything again.
+
 
 ### Creating a SSH Key
 

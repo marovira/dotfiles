@@ -13,7 +13,6 @@ if %errorLevel% == 0 (
 
 :: Environment variables
 setx -m XDG_CONFIG_HOME ""
-setx -m HOME ""
 
 :: Neovim
 rmdir %LOCALAPPDATA%\nvim

@@ -15,7 +15,6 @@ if %errorLevel% == 0 (
 set CURDIR=%~dp0
 
 :: Set environment variables
-setx HOME %USERPROFILE%
 setx XDG_CONFIG_HOME %LOCALAPPDATA%
 
 :: Setup nvim
@@ -37,9 +36,6 @@ mklink %USERPROFILE%\.zsh_plugins.txt %CURDIR%zsh\zsh_plugins
 mklink %USERPROFILE%\.p10k.zsh %CURDIR%zsh\p10k.zsh
 mklink /D %USERPROFILE%\.zshfn %CURDIR%zsh\zshfn
 mklink /D %APPDATA%\bat %CURDIR%bat
-
-:: Clone TPM
-git clone https://github.com/tmux-plugins/tpm %USERPROFILE%\.tmux\plugins\tpm
 
 echo Install finished successfully
 pause
