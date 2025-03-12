@@ -17,7 +17,7 @@ cfg.cursor_blink_ease_in = "Constant"
 cfg.cursor_blink_ease_out = "Constant"
 
 -- Blur + Opacity settings
-local default_opacity = 0.5
+local default_opacity = common.is_mac() and 0.8 or 0.5
 cfg.window_background_opacity = default_opacity
 cfg.win32_system_backdrop = "Acrylic"
 cfg.macos_window_background_blur = 20
