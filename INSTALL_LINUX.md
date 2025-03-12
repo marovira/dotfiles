@@ -56,3 +56,7 @@ If a UI for nvim is required, then install
 installing it. Once that is done, download [FiraCode
 NerdFont](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode) and
 install it.
+
+### Installing Wezterm
+
+If a terminal UI is required, then install [wezterm](https://wezterm.org/install/linux.html)

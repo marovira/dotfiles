@@ -37,5 +37,8 @@ mklink %USERPROFILE%\.p10k.zsh %CURDIR%zsh\p10k.zsh
 mklink /D %USERPROFILE%\.zshfn %CURDIR%zsh\zshfn
 mklink /D %APPDATA%\bat %CURDIR%bat
 
+:: Setup Wezterm
+mklink /D %LOCALAPPDATA%\wezterm %CURDIR%wezterm
+
 echo Install finished successfully
 pause

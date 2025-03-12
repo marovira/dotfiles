@@ -34,5 +34,8 @@ del %USERPROFILE%\.p10k.zsh
 rmdir %USERPROFILE%\.zshfn
 rmdir %APPDATA%\bat
 
+:: Setup Wezterm
+rmdir %LOCALAPPDATA%\wezterm
+
 echo Clean finished successfully
 pause

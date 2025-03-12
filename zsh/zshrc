@@ -53,6 +53,11 @@ alias grep='grep --color'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
+# Alias for wezterm (Linux only)
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    alias wezterm="flatpak run org.wezfurlong.wezterm"
+fi
+
 # Emulates Apple's open. Only applies to Linux (linux-gnu) and Windows (msys).
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias open='xdg-open'
@@ -98,7 +103,8 @@ PATH="$PATH:$FORGIT_INSTALL_DIR/bin"
 
 if [[ "$OSTYPE" == "msys" ]]; then
     keep_current_path() {
-        printf "\e]9;9;%s\e\\" "$(cygpath -w "$PWD")"
+        # printf "\e]9;9;%s\e\\" "$(cygpath -w "$PWD")"
+        printf "\033]7;file//$HOST/$PWD\033\\"
     }
     precmd_functions+=(keep_current_path)
 fi

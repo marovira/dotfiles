@@ -27,14 +27,34 @@ return {
         end,
     },
     {
-        "alexghergh/nvim-tmux-navigation",
+        "numToStr/Navigator.nvim",
         opts = {
-            disable_when_zoomed = true,
-            keybindings = {
-                left = "<C-h>",
-                down = "<C-j>",
-                up = "<C-k>",
-                right = "<C-l>",
+            disable_on_zoom = true,
+        },
+        keys = {
+            {
+                "<C-h>",
+                "<cmd>NavigatorLeft<cr>",
+                mode = "n",
+                desc = "Navigate left",
+            },
+            {
+                "<C-j>",
+                "<cmd>NavigatorDown<cr>",
+                mode = "n",
+                desc = "Navigate down",
+            },
+            {
+                "<C-k>",
+                "<cmd>NavigatorUp<cr>",
+                mode = "n",
+                desc = "Navigate up",
+            },
+            {
+                "<C-l>",
+                "<cmd>NavigatorRight<cr>",
+                mode = "n",
+                desc = "Navigate right",
             },
         },
     },
@@ -201,6 +221,7 @@ return {
         "m4xshen/hardtime.nvim",
         dependencies = { "MunifTanjim/nui.nvim" },
         opts = {
+            disable_mouse = false,
             disabled_filetype = { "startify" },
             hints = {
                 ["[dcyvV][ia][%(%)]"] = {

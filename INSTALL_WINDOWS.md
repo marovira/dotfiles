@@ -42,6 +42,7 @@ install`, install the following packages:
 * `stylua`
 * `tree-sitter`
 * `zstd`
+* `wezterm`
 
 > [!NOTE]
 > If python will be used for development, then also install `uv`
@@ -77,6 +78,9 @@ Once `pacman` is correctly installed, open another admin terminal and install:
 >    solution I've found so far is to uninstall Git (removing the folder) and then
 >    installing everything again.
 
+> [!NOTE]
+> Once `wezterm` is installed and fully configured, Windows Terminal can be left alone and
+> only used when strictly necessary.
 
 ### Creating a SSH Key
 
