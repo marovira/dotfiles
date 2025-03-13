@@ -131,10 +131,19 @@ cfg.keys = {
         mods = "CTRL|SHIFT",
         action = act.ReloadConfiguration,
     },
+    {
+        key = "f",
+        mods = "CTRL|SHIFT",
+        action = act.Search({ CaseSensitiveString = "" }),
+    },
     bind_if(is_outside_vim, "h", "CTRL", act.ActivatePaneDirection("Left")),
     bind_if(is_outside_vim, "j", "CTRL", act.ActivatePaneDirection("Down")),
     bind_if(is_outside_vim, "k", "CTRL", act.ActivatePaneDirection("Up")),
     bind_if(is_outside_vim, "l", "CTRL", act.ActivatePaneDirection("Right")),
+    bind_if(is_outside_vim, "b", "CTRL", act.ScrollByPage(-1)),
+    bind_if(is_outside_vim, "f", "CTRL", act.ScrollByPage(1)),
+    bind_if(is_outside_vim, "u", "CTRL", act.ScrollByPage(-0.5)),
+    bind_if(is_outside_vim, "d", "CTRL", act.ScrollByPage(0.5)),
 }
 
 return cfg
