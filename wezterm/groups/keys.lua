@@ -22,6 +22,7 @@ local function is_inside_vim(pane)
     end
     return pane:get_foreground_process_name():find("n?vim?") ~= nil
         or pane:get_title():find("n?vim?") ~= nil
+        or pane:get_title():find("ts?a?") ~= nil
 end
 
 local function is_outside_vim(pane) return not is_inside_vim(pane) end
@@ -135,6 +136,26 @@ cfg.keys = {
         key = "f",
         mods = "CTRL|SHIFT",
         action = act.Search({ CaseSensitiveString = "" }),
+    },
+    {
+        key = "LeftArrow",
+        mods = "ALT",
+        action = act.ActivatePaneDirection("Left"),
+    },
+    {
+        key = "DownArrow",
+        mods = "ALT",
+        action = act.ActivatePaneDirection("Down"),
+    },
+    {
+        key = "UpArrow",
+        mods = "ALT",
+        action = act.ActivatePaneDirection("Up"),
+    },
+    {
+        key = "RightArrow",
+        mods = "ALT",
+        action = act.ActivatePaneDirection("Right"),
     },
     bind_if(is_outside_vim, "h", "CTRL", act.ActivatePaneDirection("Left")),
     bind_if(is_outside_vim, "j", "CTRL", act.ActivatePaneDirection("Down")),
