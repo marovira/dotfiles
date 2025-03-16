@@ -239,4 +239,15 @@ return {
             },
         },
     },
+    {
+        "folke/zen-mode.nvim",
+        opts = {},
+        keys = {
+            {
+                "<leader>zm",
+                function() require("zen-mode").toggle() end,
+                desc = "Toggle Zen mode",
+            },
+        },
+    },
 }
