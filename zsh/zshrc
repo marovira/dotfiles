@@ -53,11 +53,6 @@ alias grep='grep --color'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
-# Alias for wezterm (Linux only)
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
-    alias wezterm="flatpak run org.wezfurlong.wezterm"
-fi
-
 # Emulates Apple's open. Only applies to Linux (linux-gnu) and Windows (msys).
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias open='xdg-open'
