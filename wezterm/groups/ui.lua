@@ -26,6 +26,8 @@ cfg.macos_window_background_blur = 20
 cfg.use_fancy_tab_bar = true
 cfg.hide_tab_bar_if_only_one_tab = true
 
+cfg.window_decorations = common.is_linux() and "NONE" or "TITLE | RESIZE"
+
 -- Scrollbar/scrollback
 cfg.scrollback_lines = 10000
 cfg.enable_scroll_bar = true
