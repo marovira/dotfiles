@@ -25,6 +25,7 @@ cfg.macos_window_background_blur = 20
 -- Tab settings
 cfg.use_fancy_tab_bar = true
 cfg.hide_tab_bar_if_only_one_tab = true
+cfg.tab_bar_at_bottom = true
 
 cfg.window_decorations = common.is_linux() and "NONE" or "TITLE | RESIZE"
 

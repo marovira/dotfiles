@@ -2,30 +2,19 @@ local common = require("common")
 local wezterm = require("wezterm")
 local act = wezterm.action
 
---- Return true if the cursor is inside (n)vim, false otherwise.
+--- Check if the foreground process matches the given pattern.
+---@param pattern string
 ---@return boolean
-local function is_inside_vim(pane)
-    if not common.is_windows() then
-        local tty = pane:get_tty_name()
-        if tty == nil then return false end
-
-        local success, _, _ = wezterm.run_child_process({
-            "sh",
-            "-c",
-            "ps -o state= -o comm= -t"
-                .. wezterm.shell_quote_arg(tty)
-                .. " | "
-                .. "grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|l?n?vi?m?x?)(diff)?$'",
-        })
-
-        return success
-    end
-    return pane:get_foreground_process_name():find("n?vim?") ~= nil
-        or pane:get_title():find("n?vim?") ~= nil
-        or pane:get_title():find("ts?a?") ~= nil
+local function is_foreground_proc(pattern, pane)
+    return pane:get_foreground_process_name():find(pattern) ~= nil
+        or pane:get_title():find(pattern) ~= nil
 end
 
-local function is_outside_vim(pane) return not is_inside_vim(pane) end
+local function is_inside_shared_poc(pane)
+    return is_foreground_proc("n?vim?", pane) or is_foreground_proc("^ta?s?$", pane)
+end
+
+local function is_outside_shared_proc(pane) return not is_inside_shared_poc(pane) end
 
 local function bind_if(cond, key, mods, action)
     local function callback(win, pane)
@@ -157,14 +146,14 @@ cfg.keys = {
         mods = "ALT",
         action = act.ActivatePaneDirection("Right"),
     },
-    bind_if(is_outside_vim, "h", "CTRL", act.ActivatePaneDirection("Left")),
-    bind_if(is_outside_vim, "j", "CTRL", act.ActivatePaneDirection("Down")),
-    bind_if(is_outside_vim, "k", "CTRL", act.ActivatePaneDirection("Up")),
-    bind_if(is_outside_vim, "l", "CTRL", act.ActivatePaneDirection("Right")),
-    bind_if(is_outside_vim, "b", "CTRL", act.ScrollByPage(-1)),
-    bind_if(is_outside_vim, "f", "CTRL", act.ScrollByPage(1)),
-    bind_if(is_outside_vim, "u", "CTRL", act.ScrollByPage(-0.5)),
-    bind_if(is_outside_vim, "d", "CTRL", act.ScrollByPage(0.5)),
+    bind_if(is_outside_shared_proc, "h", "CTRL", act.ActivatePaneDirection("Left")),
+    bind_if(is_outside_shared_proc, "j", "CTRL", act.ActivatePaneDirection("Down")),
+    bind_if(is_outside_shared_proc, "k", "CTRL", act.ActivatePaneDirection("Up")),
+    bind_if(is_outside_shared_proc, "l", "CTRL", act.ActivatePaneDirection("Right")),
+    bind_if(is_outside_shared_proc, "b", "CTRL", act.ScrollByPage(-1)),
+    bind_if(is_outside_shared_proc, "f", "CTRL", act.ScrollByPage(1)),
+    bind_if(is_outside_shared_proc, "u", "CTRL", act.ScrollByPage(-0.5)),
+    bind_if(is_outside_shared_proc, "d", "CTRL", act.ScrollByPage(0.5)),
 }
 
 return cfg
