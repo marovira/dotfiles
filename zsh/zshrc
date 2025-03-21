@@ -89,6 +89,18 @@ autoload -U $FORGIT_INSTALL_DIR/completions/_git-forgit
 if type "uv" > /dev/null; then
     eval "$(uv generate-shell-completion zsh)"
     eval "$(uvx --generate-shell-completion zsh)"
+
+    # Fix completion for uv run on Windows. This seems to work fine on Linux.
+    if [[ "$OSTYPE" == "msys" ]]; then
+        _uv_run_mod() {
+            if [[ "$words[2]" == "run" && "$words[CURRENT]" != -* ]]; then
+                _arguments '*:filename:_files'
+            else
+                _uv "$@"
+            fi
+        }
+        compdef _uv_run_mod uv
+    fi
 fi
 
 PATH="$PATH:$FORGIT_INSTALL_DIR/bin"
