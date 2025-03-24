@@ -222,7 +222,6 @@ return {
         dependencies = { "MunifTanjim/nui.nvim" },
         opts = {
             disable_mouse = false,
-            disabled_filetype = { "startify" },
             hints = {
                 ["[dcyvV][ia][%(%)]"] = {
                     message = function(keys)
