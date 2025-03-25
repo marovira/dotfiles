@@ -39,6 +39,13 @@ function M.get_mode()
     return nil
 end
 
+---@param t table | string
+---@return boolean
+function M.is_buffer_filetype(t)
+    if type(t) == "string" then return vim.bo.filetype == t end
+    return vim.tbl_contains(t, vim.bo.filetype)
+end
+
 ---@return boolean
 function M.is_insert_mode() return M.get_mode() == "i" end
 

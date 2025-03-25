@@ -13,7 +13,7 @@ local defaults = {
 ---@return boolean
 local function enable_in_context()
     return common.in_treesitter_capture("spell")
-        or common.has_value({ "markdown", "gitcommit", "tex", "text" }, vim.bo.filetype)
+        or common.is_buffer_filetype({ "markdown", "gitcommit", "tex", "text" })
 end
 
 ---@param len integer
