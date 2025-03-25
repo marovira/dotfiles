@@ -83,6 +83,7 @@ function source:adjust_case(input, items)
             local text = case(raw:sub(1, 1)) .. raw:sub(2)
             modified = text
             item.label = text
+            item.insertText = text
         end
         if not seen[modified] then
             seen[modified] = true
