@@ -11,7 +11,7 @@ local function is_foreground_proc(pattern, pane)
 end
 
 local function is_inside_shared_poc(pane)
-    return is_foreground_proc("n?vim?", pane) or is_foreground_proc("^ta?s?$", pane)
+    return is_foreground_proc("^n?vim?$", pane) or is_foreground_proc("^ta?s?$", pane)
 end
 
 local function is_outside_shared_proc(pane) return not is_inside_shared_poc(pane) end
