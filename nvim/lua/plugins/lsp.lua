@@ -214,7 +214,7 @@ return {
                     },
                     omni = {
                         name = "Omni",
-                        module = "blink.cmp.sources.complete_func",
+                        module = "blink.cmp.sources.omni",
                         opts = { disable_omnifuncs = { "v:lua.vim.lsp.omnifunc" } },
                         enabled = function()
                             return common.has_value({ "tex" }, vim.bo.filetype)
