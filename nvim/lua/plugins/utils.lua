@@ -20,6 +20,7 @@ return {
     },
     {
         "Konfekt/FastFold",
+        enabled = false,
         init = function()
             vim.g.fastfold_savehook = true
             vim.g.markdown_folding = true
