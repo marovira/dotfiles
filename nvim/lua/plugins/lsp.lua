@@ -118,6 +118,7 @@ return {
             },
         },
         opts = {
+            enabled = function() return not common.is_buffer_filetype("dap-repl") end,
             keymap = { preset = "default" },
             appearance = {
                 use_nvim_cmp_as_default = true,
@@ -214,7 +215,7 @@ return {
                     },
                     omni = {
                         name = "Omni",
-                        module = "blink.cmp.sources.omni",
+                        module = "blink.cmp.sources.complete_func",
                         opts = { disable_omnifuncs = { "v:lua.vim.lsp.omnifunc" } },
                         enabled = function()
                             return common.has_value({ "tex" }, vim.bo.filetype)
