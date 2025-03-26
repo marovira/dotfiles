@@ -151,8 +151,12 @@ return {
     },
     {
         "ibhagwan/fzf-lua",
+        lazy = false,
         dependencies = { "nvim-tree/nvim-web-devicons" },
-        config = true,
+        config = function()
+            require("fzf-lua").setup()
+            vim.ui.select = require("fzf-lua.providers.ui_select").ui_select
+        end,
         keys = {
             {
                 "<leader>ff",
