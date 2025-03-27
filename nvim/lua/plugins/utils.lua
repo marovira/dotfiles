@@ -1,4 +1,5 @@
 local common = require("common")
+local noice_enabled = true
 
 return {
     {
@@ -17,15 +18,6 @@ return {
                 desc = "Toggle checkbox",
             },
         },
-    },
-    {
-        "Konfekt/FastFold",
-        enabled = false,
-        init = function()
-            vim.g.fastfold_savehook = true
-            vim.g.markdown_folding = true
-            vim.g.tex_fold_enabled = true
-        end,
     },
     {
         "numToStr/Navigator.nvim",
@@ -164,17 +156,6 @@ return {
         enabled = vim.fn.has("nvim-0.10.0") == 1,
     },
     {
-        "j-hui/fidget.nvim",
-        version = "*",
-        opts = {
-            notification = {
-                window = {
-                    winblend = 0,
-                },
-            },
-        },
-    },
-    {
         "folke/flash.nvim",
         event = "VeryLazy",
         opts = {
@@ -236,6 +217,70 @@ return {
                     end,
                     length = 3,
                 },
+            },
+        },
+    },
+    {
+        "folke/noice.nvim",
+        dependencies = {
+            { "MunifTanjim/nui.nvim", event = "VeryLazy" },
+            {
+                "rcarriga/nvim-notify",
+                event = "VeryLazy",
+                opts = { background_colour = "#000000" },
+            },
+        },
+        event = "VeryLazy",
+        opts = {
+            routes = {
+                {
+                    -- Show @recording messages as a notify message
+                    view = "notify",
+                    filter = { event = "msg_showmode" },
+                },
+            },
+            lsp = {
+                override = {
+                    ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                    ["vim.lsp.util.stylize_markdown"] = true,
+                },
+            },
+            presets = {
+                bottom_search = true,
+                command_palette = true,
+                long_message_to_split = true,
+                inc_rename = false,
+                lsp_doc_border = false,
+            },
+        },
+        keys = {
+            {
+                "<leader>nl",
+                function() require("noice").cmd("last") end,
+                desc = "Noice last message",
+            },
+            {
+                "<leader>nh",
+                function() require("noice").cmd("history") end,
+                desc = "Noice message history",
+            },
+            {
+                "<leader>fm",
+                function() require("noice").cmd("fzf") end,
+                desc = "Find noice messages",
+            },
+            {
+                "<leader>nt",
+                function()
+                    if noice_enabled then
+                        require("noice").cmd("disable")
+                        noice_enabled = false
+                    else
+                        require("noice").cmd("enable")
+                        noice_enabled = true
+                    end
+                end,
+                desc = "Toggle noice",
             },
         },
     },

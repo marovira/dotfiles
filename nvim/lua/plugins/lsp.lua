@@ -25,6 +25,10 @@ return {
             vim.g.ale_use_neovim_diagnostics_api = true
             vim.g.ale_open_list = true
             vim.g.ale_fix_on_save = true
+
+            -- Disable cursor messages.
+            vim.g.ale_echo_cursor = 0
+            vim.g.ale_cursor_detail = 0
         end,
     },
     {
@@ -121,7 +125,7 @@ return {
             enabled = function() return not common.is_buffer_filetype("dap-repl") end,
             keymap = { preset = "default" },
             appearance = {
-                use_nvim_cmp_as_default = true,
+                use_nvim_cmp_as_default = false,
                 nerd_font_variant = "normal",
             },
             completion = {
@@ -131,6 +135,7 @@ return {
                         columns = {
                             { "kind_icon" },
                             { "label", "label_description", gap = 1 },
+                            -- {"kind"}, -- <- Useful for debugging highlights/completion types.
                             -- { "source_name" }, -- <- Useful for debugging sources.
                         },
                         components = {

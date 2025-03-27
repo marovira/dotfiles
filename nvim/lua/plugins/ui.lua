@@ -59,7 +59,7 @@ return {
                 },
                 lualine_c = { "filename" },
                 lualine_x = { "encoding", "fileformat", "filetype" },
-                lualine_y = { "progress", "selectioncount", "searchcount" },
+                lualine_y = { "progress", "selectioncount" },
                 lualine_z = { "location" },
             },
             inactive_sections = {
@@ -187,6 +187,21 @@ return {
                 "<leader>fs",
                 "<cmd>FzfLua lsp_document_symbols<cr>",
                 desc = "FZF LSP document symbols",
+            },
+            {
+                "<leader>fS",
+                "<cmd>FzfLua lsp_workspace_symbols<cr>",
+                desc = "FZF LSP workspace symbols",
+            },
+            {
+                "<leader>fl",
+                "<cmd>FzfLua lsp_finder<cr>",
+                desc = "FZF LSP finder",
+            },
+            {
+                "<leader>fdv",
+                "<cmd>FzfLua dap_variables<cr>",
+                desc = "FZF DAP active session variables",
             },
         },
     },
