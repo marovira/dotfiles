@@ -34,23 +34,22 @@ return {
     {
         "williamboman/mason.nvim",
         lazy = false,
-        config = true,
+        opts = {},
         build = function() pcall(vim.api.nvim_command, "MasonUpdate") end,
     },
     {
-        "neovim/nvim-lspconfig",
+        "williamboman/mason-lspconfig.nvim",
         cmd = { "LspInfo", "LspInstall", "LspStart" },
         event = { "BufReadPre", "BufNewFile" },
         dependencies = {
-            { "williamboman/mason-lspconfig.nvim" },
+            { "neovim/nvim-lspconfig" },
             { "saghen/blink.cmp" },
         },
-        config = function()
+        opts = function()
             local lspconfig = require("lspconfig")
-            local mason_lsp = require("mason-lspconfig")
-            local lsp_capabilities = require("blink.cmp").get_lsp_capabilities()
-            ---@diagnostic disable:missing-fields
-            mason_lsp.setup({
+            local capabilities = require("blink.cmp").get_lsp_capabilities()
+
+            return {
                 ensure_installed = {
                     "lua_ls",
                     "clangd",
@@ -59,14 +58,11 @@ return {
                 },
                 handlers = {
                     function(server_name)
-                        lspconfig[server_name].setup({
-                            capabilities = lsp_capabilities,
-                        })
+                        lspconfig[server_name].setup({ capabilities = capabilities })
                     end,
-
                     lua_ls = function()
                         lspconfig.lua_ls.setup({
-                            capabilities = lsp_capabilities,
+                            capabilities = capabilities,
                             settings = {
                                 Lua = {
                                     runtime = {
@@ -76,10 +72,9 @@ return {
                             },
                         })
                     end,
-
                     pylsp = function()
                         lspconfig.pylsp.setup({
-                            capabilities = lsp_capabilities,
+                            capabilities = capabilities,
                             settings = {
                                 pylsp = {
                                     plugins = {
@@ -95,8 +90,14 @@ return {
                             },
                         })
                     end,
+                    clangd = function()
+                        lspconfig.clangd.setup({
+                            capabilities = capabilities,
+                            cmd = { "clangd", "--header-insertion=never" },
+                        })
+                    end,
                 },
-            })
+            }
         end,
     },
     {
