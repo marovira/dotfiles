@@ -19,23 +19,23 @@ return {
         cond = function() return common.is_windows() end,
         ft = "cpp",
         config = function()
-            vim.cmd([[
-                call SingleCompile#SetCompilerTemplate("cpp", "clang++", "LLVM Clang", "clang++", "-std=c++20 -Wall -Wextra --pedantic -Werror -g -O0 -DDEBUG -o $(FILE_EXEC)$", "$(FILE_RUN)$")
-                call SingleCompile#SetOutfile('cpp', 'clang++', '$(FILE_RUN)$')
-            ]])
-
             vim.g.SingleCompile_alwayscompile = false
             vim.g.SingleCompile_showquickfixiferror = true
             vim.g.SingleCompile_showquickfixifwarning = true
             vim.g.SingleCompile_showresultafterrun = true
 
-            vim.keymap.set(
-                "n",
-                "<leader>sc",
-                ":SCCompileRun<CR>",
-                { desc = "Run Single-Compile" }
-            )
+            vim.cmd([[
+                call SingleCompile#SetCompilerTemplate("cpp", "clang++", "LLVM Clang", "clang++", "-std=c++20 -Wall -Wextra --pedantic -Werror -g -O0 -DDEBUG -o $(FILE_EXEC)$", "$(FILE_RUN)$")
+                call SingleCompile#SetOutfile('cpp', 'clang++', '$(FILE_RUN)$')
+            ]])
         end,
+        keys = {
+            {
+                "<leader>sc",
+                "<cmd>SCCompileRun<cr>",
+                desc = "Run Single-Compile",
+            },
+        },
     },
     {
         "p00f/clangd_extensions.nvim",
