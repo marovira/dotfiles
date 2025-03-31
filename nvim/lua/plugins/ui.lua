@@ -165,8 +165,13 @@ return {
             },
             {
                 "<leader>fg",
-                "<cmd>FzfLua grep<cr><cr>",
+                "<cmd>FzfLua live grep<cr>",
                 desc = "FZF live grep",
+            },
+            {
+                "<leader>fG",
+                "<cmd>FzfLua live_grep_resume<cr>",
+                desc = "FZF resume live grep",
             },
             {
                 "<leader>fb",
