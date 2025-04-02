@@ -165,7 +165,7 @@ return {
             },
             {
                 "<leader>fg",
-                "<cmd>FzfLua live grep<cr>",
+                "<cmd>FzfLua live_grep<cr>",
                 desc = "FZF live grep",
             },
             {
