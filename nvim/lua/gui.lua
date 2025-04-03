@@ -3,7 +3,7 @@ local common = require("common")
 if vim.g.neovide then
     if common.is_windows() then vim.o.guifont = "FiraCode Nerd Font:h11" end
 
-    vim.g.neovide_transparency = 0.9
+    vim.g.neovide_opacity = 0.9
     vim.g.neovide_floating_blur_amount_x = 2.0
     vim.g.neovide_floating_blur_amount_y = 2.0
     vim.g.neovide_cursor_animation_length = 0
