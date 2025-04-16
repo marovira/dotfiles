@@ -1,0 +1,32 @@
+#!/bin/zsh
+
+local -r dir=${1}
+
+find_dir() {
+    if [ ! -z ${dir} ]; then
+        fd -t d . "$dir" | awk '{print $1}'
+    else
+        fd -t d | awk '{print $1}'
+    fi
+}
+
+local selection=$(find_dir | fzf --multi --height=80% --border=rounded \
+--preview="tree -C {}" --preview-window="45%,border-rounded" \
+--prompt="Dirs > " \
+--bind="del:execute(rm -ri {+})" \
+--bind="?:toggle-preview" \
+--bind="ctrl-a:select-all" \
+--bind="ctrl-x:deselect-all" \
+--header "
+CTRL-a to select all | CTRL-x to deselect all
+ENTER to switch | DEL to delete
+CTRL-q to exit
+? to toggle preview
+"
+)
+
+if [ -z "$selection" ]; then
+    return
+fi
+
+cd "$selection" || exit
