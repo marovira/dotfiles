@@ -66,6 +66,7 @@ Once `pacman` is correctly installed, open another admin terminal and install:
 * `zsh`
 * `util-linux`
 * `pv`
+* `tree`
 
 > [!NOTE]
 > Errors during install referring to `man` are normal as it is not actually installed.

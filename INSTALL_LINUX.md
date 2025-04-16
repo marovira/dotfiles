@@ -10,11 +10,12 @@ Using the package manager, install the following:
 * Python 3
 * tmux
 * bat
-* fd `sudo apth install fd-find`
+* fd `sudo apt install fd-find`
 * ripgrep
 * python<ver>-venv (where <ver> is the version of Python installed. For example, for
   Python 3.10.xx, the package is python3.10-venv)
 * delta
+* tree
 
 ## Installing dotfiles
 
