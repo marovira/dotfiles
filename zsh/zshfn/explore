@@ -4,9 +4,9 @@ local -r dir=${1}
 
 find_dir() {
     if [ ! -z ${dir} ]; then
-        fd -t d . "$dir" | awk '{print $1}'
+        fd -L -t d . "$dir" | awk '{print $1}'
     else
-        fd -t d | awk '{print $1}'
+        fd -L -t d | awk '{print $1}'
     fi
 }
 
