@@ -1,11 +1,13 @@
 package.path = package.path .. ";../../lua;"
 local common = require("common")
 
--- No linting (I would have to figure out which settings I want for a clang-tidy file, and
--- I honestly don't think it's worth it), but keep formatting.
-vim.b.ale_linters = { "clangd" }
+vim.b.ale_linters = { "clangtidy" }
 vim.b.ale_fixers = { "clang-format" }
 vim.b.ale_linters_explicit = true
+vim.b.ale_lint_on_text_changed = false
+vim.b.ale_lint_on_insert_leave = true
+vim.b.ale_lint_on_save = true
+vim.b.ale_lint_on_enter = true
 
 -- Linux naming conventions for clang are different than on Windows (shocking) so let's
 -- set them up correctly. Assume Clang 18.

@@ -93,7 +93,10 @@ return {
                     clangd = function()
                         lspconfig.clangd.setup({
                             capabilities = capabilities,
-                            cmd = { "clangd", "--header-insertion=never" },
+                            cmd = {
+                                "clangd",
+                                "--header-insertion=never",
+                            },
                         })
                     end,
                 },
