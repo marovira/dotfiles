@@ -1,0 +1,10 @@
+---
+Checks: >
+  clang-diagnostic-*,
+  clang-analyzer-*,
+  cppcoreguidelines-*,
+  modernize-*,
+  bugprone-*,
+  misc-*,
+  -modernize-use-trailing-return-type,
+HeaderFilterRegex: ""

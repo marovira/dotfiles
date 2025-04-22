@@ -1,3 +1,4 @@
+# Requires minimum of clang-format 20.
 Language: Cpp
 Standard: c++20
 
@@ -35,10 +36,10 @@ AllowShortFunctionsOnASingleLine: None
 AllowShortIfStatementsOnASingleLine: Never
 AllowShortLambdasOnASingleLine: Empty
 AllowShortLoopsOnASingleLine: false
-AlwaysBreakAfterReturnType: None
 AlwaysBreakBeforeMultilineStrings: false
 AlwaysBreakTemplateDeclarations: Yes
 AllowShortCompoundRequirementOnASingleLine: true
+AllowShortNamespacesOnASingleLine: false
 
 # Bin pack argument/parameter settings
 BinPackArguments: false
@@ -47,22 +48,22 @@ BinPackParameters: false
 # Brace settings
 BreakBeforeBraces: Custom
 BraceWrapping:
-    AfterCaseLabel: true
-    AfterClass: true
-    AfterControlStatement: Always
-    AfterEnum: true
-    AfterFunction: true
-    AfterNamespace: true
-    AfterStruct: true
-    AfterUnion: true
-    AfterExternBlock: true
-    BeforeCatch: true
-    BeforeElse: true
-    BeforeLambdaBody: false
-    BeforeWhile: true
-    SplitEmptyFunction: false
-    SplitEmptyRecord: false
-    SplitEmptyNamespace: false
+  AfterCaseLabel: true
+  AfterClass: true
+  AfterControlStatement: Always
+  AfterEnum: true
+  AfterFunction: true
+  AfterNamespace: true
+  AfterStruct: true
+  AfterUnion: true
+  AfterExternBlock: true
+  BeforeCatch: true
+  BeforeElse: true
+  BeforeLambdaBody: false
+  BeforeWhile: true
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
 
 # Break settings
 BreakAfterAttributes: Always
@@ -72,6 +73,18 @@ BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: AfterColon
 BreakInheritanceList: AfterColon
 BreakStringLiterals: true
+AllowBreakBeforeNoexceptSpecifier: Always
+BreakAdjacentStringLiterals: true
+BreakAfterReturnType: Automatic
+BreakFunctionDefinitionParameters: false
+BreakTemplateDeclarations: Yes
+BreakBinaryOperations: OnePerLine
+
+# Keep empty lines
+KeepEmptyLines:
+  AtEndOfFile: false
+  AtStartOfBlock: false
+  AtStartOfFile: false
 
 # Indentation settings
 IndentAccessModifiers: false
@@ -82,6 +95,7 @@ IndentGotoLabels: false
 IndentPPDirectives: AfterHash
 IndentRequires: false
 IndentWrappedFunctionNames: false
+IndentExportBlock: true
 
 # Space settings
 SpaceAfterCStyleCast: false
@@ -114,13 +128,13 @@ SpacesInParens: Never
 # Space before parenthesis settings
 SpaceBeforeParens: Custom
 SpaceBeforeParensOptions:
-    AfterControlStatements: true
-    AfterFunctionDeclarationName: false
-    AfterFunctionDefinitionName: false
-    AfterOverloadedOperator: false
-    AfterRequiresInClause: false
-    AfterRequiresInExpression: false
-    BeforeNonEmptyParentheses: false
+  AfterControlStatements: true
+  AfterFunctionDeclarationName: false
+  AfterFunctionDefinitionName: false
+  AfterOverloadedOperator: false
+  AfterRequiresInClause: false
+  AfterRequiresInExpression: false
+  BeforeNonEmptyParentheses: false
 
 # Integer literal separators settings
 IntegerLiteralSeparator:
@@ -161,3 +175,6 @@ SeparateDefinitionBlocks: Always
 ShortNamespaceLines: 0
 SortIncludes: CaseInsensitive
 SortUsingDeclarations: true
+MainIncludeChar: Quote
+RemoveEmptyLinesInUnwrappedLines: true
+WrapNamespaceBodyWithEmptyLines: Never
