@@ -72,3 +72,14 @@ vim.keymap.set("n", "`s", function()
     vim.cmd("normal! `s")
     vim.cmd.nohlsearch()
 end)
+
+-- P4 commands
+vim.keymap.set("n", "<leader>pe", function()
+    local p4 = require("extra.p4").new()
+    p4:edit()
+end, { desc = "Checkout file for edit in Perforce" })
+
+vim.keymap.set("n", "<leader>pr", function()
+    local p4 = require("extra.p4").new()
+    p4:revert()
+end, { desc = "Revert file in Perforce" })
