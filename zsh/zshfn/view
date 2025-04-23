@@ -11,7 +11,7 @@ find_file() {
 }
 
 local selection=$(find_file | fzf --multi --height=80% --border=rounded \
---preview="bat {}" --preview-window="45%,border-rounded" \
+--preview="bat --color=always {}" --preview-window="45%,border-rounded" \
 --prompt="Dirs > " \
 --bind="del:execute(rm -ri {+})" \
 --bind="?:toggle-preview" \
