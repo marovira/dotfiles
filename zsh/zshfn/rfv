@@ -1,0 +1,20 @@
+#!/bin/zsh
+
+local selection=$(rg --color=always --line-number --no-heading --smart-case "${*:-}" |
+fzf --no-multi --ansi --height=80% --border=rounded \
+--color "hl:-1:underline,hl+:-1:underline:reverse" \
+--delimiter : \
+--preview 'bat --color=always {1} --highlight-line {2}' \
+--preview-window '45%,border-rounded,+{2}+3/3,~3' \
+--header "
+ENTER to edit
+? to toggle preview
+"
+)
+
+if [ -z "$selection" ]; then
+    return
+fi
+
+local parts=(${(s/:/)selection})
+eval $EDITOR +$parts[2] $parts[1]
