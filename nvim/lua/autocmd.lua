@@ -9,6 +9,8 @@ local function is_large_file()
     return false
 end
 
+local common = require("common")
+
 -- Autocommands
 -- =======================
 local augroup = vim.api.nvim_create_augroup("vimrc", { clear = true })
@@ -62,6 +64,22 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = { "*.json", "*.md" },
     group = augroup,
     command = "silent! :set nofoldenable",
+})
+
+-- Disable text width in DAP buffers.
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+    pattern = { "*" },
+    group = augroup,
+    callback = function(opts)
+        if
+            common.has_value(
+                { "dap-repl", "dapui_watches", "dap-terminal" },
+                vim.bo[opts.buf].filetype
+            )
+        then
+            vim.opt_local.textwidth = 0
+        end
+    end,
 })
 
 -- Switch to absolute line numbers in insert mode.
