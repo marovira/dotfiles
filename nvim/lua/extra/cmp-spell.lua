@@ -103,17 +103,22 @@ function source:candidates(input)
     local offset
     local loglen
     local kind = vim.lsp.protocol.CompletionItemKind.Text
-    if self.preselect_correct_word and vim.tbl_isempty(vim.spell.check(input)) then
-        offset = 1
-        loglen = len_to_loglen(#entries + offset)
+    if vim.tbl_isempty(vim.spell.check(input)) then
+        if self.preselect_correct_word then
+            offset = 1
+            loglen = len_to_loglen(#entries + offset)
 
-        items[offset] = {
-            label = input,
-            filterText = input,
-            kind = kind,
-            sortText = number_to_text(input, offset, loglen),
-            preselct = true,
-        }
+            items[offset] = {
+                label = input,
+                filterText = input,
+                kind = kind,
+                sortText = number_to_text(input, offset, loglen),
+                preselect = true,
+            }
+        else
+            offset = 0
+            loglen = len_to_loglen(#entries + offset)
+        end
         if not self.keep_all_entries then return items end
     else
         offset = 0
