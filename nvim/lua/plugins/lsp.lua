@@ -1,6 +1,8 @@
 local common = require("common")
 local spell = require("extra.cmp-spell")
 
+---@module "blink.cmp"
+
 ---@param ctx blink.cmp.DrawItemContext
 ---@return string
 local function blink_highlight(ctx)
@@ -25,6 +27,7 @@ return {
             vim.g.ale_use_neovim_diagnostics_api = true
             vim.g.ale_open_list = true
             vim.g.ale_fix_on_save = true
+            vim.g.ale_disable_lsp = true
 
             -- Disable cursor messages.
             vim.g.ale_echo_cursor = 0
@@ -32,76 +35,25 @@ return {
         end,
     },
     {
-        "williamboman/mason.nvim",
+        "mason-org/mason.nvim",
+        version = "*",
         lazy = false,
         opts = {},
-        build = function() pcall(vim.api.nvim_command, "MasonUpdate") end,
     },
     {
-        "williamboman/mason-lspconfig.nvim",
-        cmd = { "LspInfo", "LspInstall", "LspStart" },
-        event = { "BufReadPre", "BufNewFile" },
+        "mason-org/mason-lspconfig.nvim",
+        version = "*",
         dependencies = {
-            { "neovim/nvim-lspconfig" },
-            { "saghen/blink.cmp" },
+            { "neovim/nvim-lspconfig", version = "*" },
         },
-        opts = function()
-            local lspconfig = require("lspconfig")
-            local capabilities = require("blink.cmp").get_lsp_capabilities()
-
-            return {
-                ensure_installed = {
-                    "lua_ls",
-                    "clangd",
-                    "pylsp",
-                    "cmake",
-                },
-                handlers = {
-                    function(server_name)
-                        lspconfig[server_name].setup({ capabilities = capabilities })
-                    end,
-                    lua_ls = function()
-                        lspconfig.lua_ls.setup({
-                            capabilities = capabilities,
-                            settings = {
-                                Lua = {
-                                    runtime = {
-                                        version = "LuaJIT",
-                                    },
-                                },
-                            },
-                        })
-                    end,
-                    pylsp = function()
-                        lspconfig.pylsp.setup({
-                            capabilities = capabilities,
-                            settings = {
-                                pylsp = {
-                                    plugins = {
-                                        autopep8 = { enabled = false },
-                                        flake8 = { enabled = false },
-                                        mccabe = { enabled = false },
-                                        pycodestyle = { enabled = false },
-                                        pydocstyle = { enabled = false },
-                                        pyflakes = { enabled = false },
-                                        pylint = { enabled = false },
-                                    },
-                                },
-                            },
-                        })
-                    end,
-                    clangd = function()
-                        lspconfig.clangd.setup({
-                            capabilities = capabilities,
-                            cmd = {
-                                "clangd",
-                                "--header-insertion=never",
-                            },
-                        })
-                    end,
-                },
-            }
-        end,
+        opts = {
+            ensure_installed = {
+                "lua_ls",
+                "clangd",
+                "pylsp",
+                "cmake",
+            },
+        },
     },
     {
         "folke/lazydev.nvim",
