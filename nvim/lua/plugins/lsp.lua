@@ -52,6 +52,7 @@ return {
                 "clangd",
                 "pylsp",
                 "cmake",
+                "marksman",
             },
         },
     },
