@@ -1,6 +1,8 @@
 return {
-    cmd = {
-        "clangd",
-        "--header-insertion=never",
+    settings = {
+        cmd = {
+            "clangd",
+            "--header-insertion=never",
+        },
     },
 }
