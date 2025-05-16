@@ -284,4 +284,18 @@ return {
             },
         },
     },
+    {
+        "martineausimon/nvim-lilypond-suite",
+        ft = "lilypond",
+        opts = {
+            lilypond = {
+                mappings = {
+                    compile = "<leader>lm",
+                },
+            },
+            options = {
+                pitches_language = "espanol",
+            },
+        },
+    },
 }

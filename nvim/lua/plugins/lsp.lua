@@ -70,11 +70,17 @@ return {
         version = "*",
         dependencies = {
             { "rafamadriz/friendly-snippets" },
+            { "Kaiser-Yang/blink-cmp-dictionary" },
             { "MeanderingProgrammer/render-markdown.nvim" },
             {
                 "onsails/lspkind.nvim",
                 opts = {
-                    symbol_map = { spell = "󰓆", cmdline = "", markdown = "" },
+                    symbol_map = {
+                        spell = "󰓆",
+                        cmdline = "",
+                        markdown = "",
+                        Dict = "",
+                    },
                 },
             },
         },
@@ -110,10 +116,12 @@ return {
                                         if dev_icon then icon = dev_icon end
                                     else
                                         if
-                                            vim.tbl_contains(
-                                                { "spell", "cmdline", "markdown" },
-                                                ctx.source_name
-                                            )
+                                            vim.tbl_contains({
+                                                "spell",
+                                                "cmdline",
+                                                "markdown",
+                                                "Dict",
+                                            }, ctx.source_name)
                                         then
                                             icon = lspkind.symbolic(
                                                 ctx.source_name,
@@ -151,6 +159,7 @@ return {
                     "lazydev",
                     "lsp",
                     "omni",
+                    "dictionary",
                     "buffer",
                     "path",
                     "spell",
@@ -161,6 +170,26 @@ return {
                         transform_items = function(a, items)
                             return spell:adjust_case(a.get_keyword(), items)
                         end,
+                    },
+                    dictionary = {
+                        name = "Dict",
+                        module = "blink-cmp-dictionary",
+                        min_keyword_length = 3,
+                        max_items = 8,
+                        enabled = function()
+                            return common.has_value({ "lilypond" }, vim.bo.filetype)
+                        end,
+                        opts = {
+                            dictionary_files = function()
+                                if vim.bo.filetype == "lilypond" then
+                                    return vim.fn.glob(
+                                        vim.fn.expand("$LILYDICTPATH") .. "/*",
+                                        true,
+                                        true
+                                    )
+                                end
+                            end,
+                        },
                     },
                     lsp = {
                         fallbacks = {},
