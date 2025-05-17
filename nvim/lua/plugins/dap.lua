@@ -134,7 +134,8 @@ return {
                         nil,
                         vim.fn.input("Log point message: ")
                     )
-                end
+                end,
+                { desc = "DAP set breakpoint with message" }
             )
         end,
     },
