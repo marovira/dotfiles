@@ -202,6 +202,7 @@ return {
     {
         "m4xshen/hardtime.nvim",
         dependencies = { "MunifTanjim/nui.nvim" },
+        version = "*",
         opts = {
             disable_mouse = false,
             hints = {
