@@ -156,6 +156,24 @@ return {
         enabled = vim.fn.has("nvim-0.10.0") == 1,
     },
     {
+        "folke/todo-comments.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        opts = {
+            highlight = { keyword = "fg" },
+        },
+    },
+    {
+        "folke/snacks.nvim",
+        priority = 1000,
+        lazy = false,
+        opts = {
+            bigfile = {
+                enabled = true,
+                size = 100 * 1024 * 1024, -- 100MB for big files
+            },
+        },
+    },
+    {
         "folke/flash.nvim",
         event = "VeryLazy",
         opts = {
