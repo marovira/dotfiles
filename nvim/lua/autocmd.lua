@@ -163,6 +163,12 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
         )
         vim.keymap.set(
             "n",
+            "gO",
+            "<cmd>lua vim.lsp.buf.document_symbol()<cr>",
+            { buffer = event.buf, desc = "LSP go to document symbol" }
+        )
+        vim.keymap.set(
+            "n",
             "gs",
             "<cmd>lua vim.lsp.buf.signature_help()<cr>",
             { buffer = event.buf, desc = "LSP signature help" }

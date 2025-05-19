@@ -1,7 +1,7 @@
 vim.keymap.set("i", "jk", "<ESC>", { desc = "Remap ESC to jk" })
 
 local number_mode = false
-vim.keymap.set("n", "<C-n>", function()
+vim.keymap.set("n", "<leader>tn", function()
     if number_mode then
         vim.opt.number = true
         vim.opt.relativenumber = true
