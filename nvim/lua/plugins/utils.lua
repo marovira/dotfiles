@@ -61,6 +61,7 @@ return {
         opts = {
             cmake_build_directory = "build",
         },
+        ft = "cpp",
         keys = {
             {
                 "<leader>mg",
@@ -77,23 +78,6 @@ return {
                 "<cmd>CMakeRun<cr>",
                 desc = "CMake run",
             },
-        },
-    },
-    {
-        "akinsho/toggleterm.nvim",
-        opts = {
-            shell = function()
-                -- Force the shell to be bash on windows.
-                if common.is_windows() then
-                    return "bash"
-                else
-                    return vim.o.shell
-                end
-            end,
-            open_mapping = "<C-\\>",
-            start_in_insert = true,
-            direction = "float",
-            close_on_exit = true,
         },
     },
     {
@@ -125,28 +109,6 @@ return {
         config = function(_, opts)
             require("telescope").setup(opts)
             require("telescope").load_extension("undo")
-        end,
-    },
-    {
-        "da-moon/telescope-toggleterm.nvim",
-        event = "TermOpen",
-        dependencies = {
-            { "akinsho/nvim-toggleterm.lua" },
-            { "nvim-telescope/telescope.nvim" },
-            { "nvim-lua/popup.nvim" },
-            { "nvim-lua/plenary.nvim" },
-        },
-        keys = {
-            {
-                "<leader>ft",
-                "<cmd>Telescope toggleterm<cr>",
-                desc = "Telescope toggleterm",
-            },
-        },
-        opts = {},
-        config = function(_, opts)
-            require("telescope").setup(opts)
-            require("telescope").load_extension("toggleterm")
         end,
     },
     {
