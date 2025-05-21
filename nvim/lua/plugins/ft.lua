@@ -15,6 +15,18 @@ return {
         opts = {},
     },
     {
+        "opdavies/toggle-checkbox.nvim",
+        keys = {
+            {
+                "<leader>tc",
+                function() require("toggle-checkbox").toggle() end,
+                mode = "n",
+                ft = "markdown",
+                desc = "Toggle checkbox",
+            },
+        },
+    },
+    {
         "xuhdev/SingleCompile",
         cond = function() return common.is_windows() end,
         ft = "cpp",
@@ -56,6 +68,40 @@ return {
                 "<leader>ct",
                 "<cmd>ClangdTypeHierarchy<cr>",
                 desc = "Clagnd show type hierarchy",
+            },
+            {
+                "<leader>ca",
+                "<cmd>ClangdAST<cr>",
+                desc = "Clangd AST viewer",
+            },
+        },
+    },
+    {
+        "Civitasv/cmake-tools.nvim",
+        dependencies = {
+            { "nvim-lua/plenary.nvim" },
+            { "mfussenegger/nvim-dap" },
+            { "akinsho/toggleterm.nvim" },
+        },
+        opts = {
+            cmake_build_directory = "build",
+        },
+        ft = "cpp",
+        keys = {
+            {
+                "<leader>mg",
+                "<cmd>CMakeGenerate<cr>",
+                desc = "CMake generate",
+            },
+            {
+                "<leader>mb",
+                "<cmd>CMakeBuild<cr>",
+                desc = "CMake build",
+            },
+            {
+                "<leader>mr",
+                "<cmd>CMakeRun<cr>",
+                desc = "CMake run",
             },
         },
     },

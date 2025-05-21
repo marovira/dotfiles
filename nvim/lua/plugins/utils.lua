@@ -1,4 +1,3 @@
-local common = require("common")
 local noice_enabled = true
 
 return {
@@ -6,18 +5,6 @@ return {
         "windwp/nvim-autopairs",
         event = "InsertEnter",
         opts = {},
-    },
-    {
-        "opdavies/toggle-checkbox.nvim",
-        keys = {
-            {
-                "<leader>tc",
-                function() require("toggle-checkbox").toggle() end,
-                mode = "n",
-                ft = "markdown",
-                desc = "Toggle checkbox",
-            },
-        },
     },
     {
         "numToStr/Navigator.nvim",
@@ -48,35 +35,6 @@ return {
                 "<cmd>NavigatorRight<cr>",
                 mode = "n",
                 desc = "Navigate right",
-            },
-        },
-    },
-    {
-        "Civitasv/cmake-tools.nvim",
-        dependencies = {
-            { "nvim-lua/plenary.nvim" },
-            { "mfussenegger/nvim-dap" },
-            { "akinsho/toggleterm.nvim" },
-        },
-        opts = {
-            cmake_build_directory = "build",
-        },
-        ft = "cpp",
-        keys = {
-            {
-                "<leader>mg",
-                "<cmd>CMakeGenerate<cr>",
-                desc = "CMake generate",
-            },
-            {
-                "<leader>mb",
-                "<cmd>CMakeBuild<cr>",
-                desc = "CMake build",
-            },
-            {
-                "<leader>mr",
-                "<cmd>CMakeRun<cr>",
-                desc = "CMake run",
             },
         },
     },
