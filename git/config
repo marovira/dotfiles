@@ -126,7 +126,7 @@
     #==============================#
     ps = push
     psf = push -f
-    psu = psh -u
+    psu = push -u
     pso = push origin
     psof = push -f origin
 
