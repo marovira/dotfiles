@@ -31,6 +31,7 @@ use the following options:
 Open a terminal (doesn't matter which) run `scoop bucket add extras`. Then, using `scoop
 install`, install the following packages:
 
+* `bat`
 * `cmake`
 * `delta`
 * `fd`

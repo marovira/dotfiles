@@ -32,9 +32,12 @@ del %USERPROFILE%\.zshrc
 del %USERPROFILE%\.zsh_plugins.txt
 del %USERPROFILE%\.p10k.zsh
 rmdir %USERPROFILE%\.zshfn
-rmdir %APPDATA%\bat
 
-:: Setup Wezterm
+:: Bat
+del %USERPROFILE%\scoop\apps\bat\current\config
+del %USERPROFILE%\scoop\apps\bat\themes\tokyonight_moon.tmTheme
+
+:: Wezterm
 rmdir %LOCALAPPDATA%\wezterm
 
 echo Clean finished successfully

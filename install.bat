@@ -35,7 +35,10 @@ mklink %USERPROFILE%\.zshrc %CURDIR%zsh\zshrc
 mklink %USERPROFILE%\.zsh_plugins.txt %CURDIR%zsh\zsh_plugins
 mklink %USERPROFILE%\.p10k.zsh %CURDIR%zsh\p10k.zsh
 mklink /D %USERPROFILE%\.zshfn %CURDIR%zsh\zshfn
-mklink /D %APPDATA%\bat %CURDIR%bat
+
+:: Setup bat
+mklink %USERPROFILE%\scoop\apps\bat\current\config %CURDIR%bat\config
+mklink %USERPROFILE%\scoop\apps\bat\current\themes\tokyonight_moon.tmTheme %CURDIR%bat\tokyonight_moon.tmTheme
 
 :: Setup Wezterm
 mklink /D %LOCALAPPDATA%\wezterm %CURDIR%wezterm
