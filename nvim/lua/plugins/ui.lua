@@ -94,7 +94,22 @@ return {
         dependencies = {
             { "nvim-tree/nvim-web-devicons" },
         },
-        opts = {},
+        opts = {
+            on_attach = function(bufnr)
+                local api = require("nvim-tree.api")
+
+                api.config.mappings.default_on_attach(bufnr)
+
+                vim.keymap.set("n", "<C-s>", api.node.open.horizontal, {
+                    desc = "Open: Horizontal Split",
+                    buffer = bufnr,
+                    noremap = true,
+                    silent = true,
+                    nowait = true,
+                })
+                vim.keymap.del("n", "<C-x>", { buffer = bufnr })
+            end,
+        },
         keys = {
             {
 
