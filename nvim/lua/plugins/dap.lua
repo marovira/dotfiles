@@ -94,40 +94,35 @@ return {
             dap.listeners.before.launch.dapui_config = function() dapui.open() end
             dap.listeners.before.event_terminated.dapui_config = function() dapui.close() end
             dap.listeners.before.event_exited.dapui_config = function() dapui.close() end
-
-            vim.keymap.set(
-                "n",
+        end,
+        keys = {
+            {
                 "<F5>",
                 function() require("dap").continue() end,
-                { desc = "Launch DAP" }
-            )
-            vim.keymap.set(
-                "n",
+                desc = "DAP start/continue",
+            },
+            {
                 "<F10>",
                 function() require("dap").step_over() end,
-                { desc = "DAP step over" }
-            )
-            vim.keymap.set(
-                "n",
+                desc = "DAP step over",
+            },
+            {
                 "<F11>",
                 function() require("dap").step_into() end,
-                { desc = "DAP step into" }
-            )
-            vim.keymap.set(
-                "n",
+                desc = "DAP step into",
+            },
+            {
                 "<S-F11>",
                 function() require("dap").step_out() end,
-                { desc = "DAP step out" }
-            )
-            vim.keymap.set(
-                "n",
-                "<Leader>b",
+                desc = "DAP step out",
+            },
+            {
+                "<leader>db",
                 function() require("dap").toggle_breakpoint() end,
-                { desc = "DAP toggle breakpoint" }
-            )
-            vim.keymap.set(
-                "n",
-                "<Leader>lp",
+                desc = "DAP toggle breakpoint",
+            },
+            {
+                "<leader>dl",
                 function()
                     require("dap").set_breakpoint(
                         nil,
@@ -135,9 +130,9 @@ return {
                         vim.fn.input("Log point message: ")
                     )
                 end,
-                { desc = "DAP set breakpoint with message" }
-            )
-        end,
+                desc = "DAP breakpoint with message",
+            },
+        },
     },
     {
         "mfussenegger/nvim-dap-python",
