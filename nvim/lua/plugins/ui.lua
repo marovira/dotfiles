@@ -5,7 +5,7 @@ return {
         priority = 1000,
         opts = {
             style = "moon",
-            transparent = true,
+            transparent = not vim.g.neovide,
             styles = {
                 floats = "transparent",
                 sidebars = "transparent",
