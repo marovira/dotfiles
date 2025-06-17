@@ -25,6 +25,19 @@ vim.opt.showmode = false                                        -- Disable showi
 vim.opt.showcmd = false                                         -- Disable showing commands
 -- stylua: ignore end
 
+-- Diagnostic options
+vim.diagnostic.config({
+    virtual_text = true,
+    signs = {
+        text = {
+            [vim.diagnostic.severity.ERROR] = "",
+            [vim.diagnostic.severity.WARN] = "",
+            [vim.diagnostic.severity.INFO] = "",
+            [vim.diagnostic.severity.HINT] = "",
+        },
+    },
+})
+
 -- Diff options
 vim.opt.diffopt = "filler,internal,closeoff,algorithm:histogram,context:5,linematch:60"
 
