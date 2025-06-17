@@ -1,12 +1,30 @@
 return {
     {
-        "dracula/vim",
+        "folke/tokyonight.nvim",
         lazy = false,
         priority = 1000,
-        init = function()
-            vim.g.dracula_colorterm = false
-            vim.cmd("colorscheme dracula")
-        end,
+        opts = {
+            style = "moon",
+            transparent = true,
+            styles = {
+                floats = "transparent",
+                sidebars = "transparent",
+            },
+            dim_inactive = true,
+            luanline_bold = true,
+            on_highlights = function(hl, c)
+                hl.LineNrAbove = {
+                    fg = c.dark5,
+                }
+                hl.LineNrBelow = {
+                    fg = c.dark5,
+                }
+                hl.SpellBad = {
+                    fg = c.red,
+                }
+            end,
+        },
+        init = function() vim.cmd("colorscheme tokyonight") end,
     },
     {
         "lukas-reineke/indent-blankline.nvim",
@@ -25,7 +43,6 @@ return {
                     "TelescopePrompt",
                     "TelescopeResults",
                     "",
-                    "startify",
                 },
             },
         },
@@ -37,12 +54,11 @@ return {
         },
         opts = {
             options = {
-                theme = "dracula",
+                theme = "tokyonight",
                 disabled_filetypes = {
                     statusline = {
                         "NvimTree",
                         "Trouble",
-                        "startify",
                         "gitcommit",
                     },
                 },
@@ -71,13 +87,6 @@ return {
                 lualine_z = {},
             },
         },
-    },
-    {
-        "mhinz/vim-startify",
-        init = function()
-            vim.g.startify_skiplist = { "COMMIT_EDITMSG" }
-            vim.g.startify_change_to_dir = false
-        end,
     },
     {
         "nvim-tree/nvim-tree.lua",
@@ -153,8 +162,12 @@ return {
         "ibhagwan/fzf-lua",
         lazy = false,
         dependencies = { "nvim-tree/nvim-web-devicons" },
-        config = function()
-            require("fzf-lua").setup()
+        opts = {
+            "default",
+            hls = { backdrop = nil },
+        },
+        config = function(_, opts)
+            require("fzf-lua").setup(opts)
             vim.ui.select = require("fzf-lua.providers.ui_select").ui_select
         end,
         keys = {
@@ -184,7 +197,7 @@ return {
                 desc = "FZF help tags",
             },
             {
-                "gr",
+                "fr",
                 "<cmd>FzfLua lsp_references<cr>",
                 desc = "FZF find references",
             },

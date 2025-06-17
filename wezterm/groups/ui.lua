@@ -5,7 +5,7 @@ local mux = wezterm.mux
 local cfg = {}
 
 -- Colour scheme
-cfg.color_scheme = "Dracula (Official)"
+cfg.color_scheme = "tokyonight_moon"
 
 -- Font settings
 cfg.font = wezterm.font("FiraCode Nerd Font")

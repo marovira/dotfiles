@@ -39,37 +39,6 @@ return {
         },
     },
     {
-        "debugloop/telescope-undo.nvim",
-        dependencies = {
-            { "nvim-telescope/telescope.nvim" },
-            { "nvim-lua/plenary.nvim" },
-        },
-        keys = {
-            {
-                "<leader>fu",
-                "<cmd>Telescope undo<cr>",
-                desc = "Telescope undo",
-            },
-        },
-        opts = {
-            extensions = {
-                undo = {
-                    use_delta = true,
-                    side_by_side = true,
-                    vim_diff_opts = { ctxlen = 10 },
-                    layout_strategy = "vertical",
-                    layout_config = {
-                        preview_height = 0.8,
-                    },
-                },
-            },
-        },
-        config = function(_, opts)
-            require("telescope").setup(opts)
-            require("telescope").load_extension("undo")
-        end,
-    },
-    {
         "folke/ts-comments.nvim",
         opts = {},
         event = "VeryLazy",
@@ -78,19 +47,81 @@ return {
     {
         "folke/todo-comments.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
-        opts = {
-            highlight = { keyword = "fg" },
-        },
+        opts = {},
     },
     {
         "folke/snacks.nvim",
         priority = 1000,
         lazy = false,
+        keys = {
+            {
+                "<leader>fu",
+                function() require("snacks").picker.undo() end,
+                desc = "Find undo",
+            },
+        },
         opts = {
             bigfile = {
-                enabled = true,
                 size = 100 * 1024 * 1024, -- 100MB for big files
             },
+            dashboard = {
+                preset = {
+                    keys = {
+                        {
+                            icon = " ",
+                            key = "f",
+                            desc = "Find File",
+                            action = ":FzfLua files",
+                        },
+                        {
+                            icon = " ",
+                            key = "n",
+                            desc = "New File",
+                            action = ":ene | startinsert",
+                        },
+                        {
+                            icon = " ",
+                            key = "g",
+                            desc = "Find Text",
+                            action = ":FzfLua live_grep",
+                        },
+                        {
+                            icon = " ",
+                            key = "r",
+                            desc = "Recent Files",
+                            action = ":FzfLua oldfiles",
+                        },
+                        {
+                            icon = " ",
+                            key = "c",
+                            desc = "Config",
+                            action = ":lua FzfLua.files({cwd = vim.fn.stdpath('config')})",
+                        },
+                        {
+                            icon = "󰒲 ",
+                            key = "L",
+                            desc = "Lazy",
+                            action = ":Lazy",
+                            enabled = package.loaded.lazy ~= nil,
+                        },
+                        { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+                    },
+                },
+                sections = {
+                    { section = "header" },
+                    {
+                        icon = " ",
+                        title = "Keymaps",
+                        section = "keys",
+                        indent = 2,
+                        padding = 1,
+                    },
+                    {
+                        section = "startup",
+                    },
+                },
+            },
+            picker = {},
         },
     },
     {
