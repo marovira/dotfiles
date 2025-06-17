@@ -197,7 +197,7 @@ return {
                 desc = "FZF help tags",
             },
             {
-                "fr",
+                "<leader>fr",
                 "<cmd>FzfLua lsp_references<cr>",
                 desc = "FZF find references",
             },
