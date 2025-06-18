@@ -4,6 +4,12 @@ local common = require("common")
 -- =======================
 local augroup = vim.api.nvim_create_augroup("vimrc", { clear = true })
 
+vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "WinEnter" }, {
+    pattern = "*",
+    group = augroup,
+    callback = function() common.set_wezterm_user_var("IS_NVIM", true) end,
+})
+
 -- Makes it so neovim reloads the file whenever a change has been made externally.
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
     pattern = "*",

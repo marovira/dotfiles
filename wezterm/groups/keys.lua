@@ -2,6 +2,33 @@ local common = require("common")
 local wezterm = require("wezterm")
 local act = wezterm.action
 
+---@return boolean
+local function is_shared_key_proc(pane)
+    if pane:get_user_vars().IS_NVIM == "true" then return true end
+    -- For Windows only: check if we're attaching to TMUX so keybinds get through.
+    if common.is_windows() then
+        return pane:get_foreground_process_name():find("^ta?s?$")
+    end
+
+    -- Fallback for Linux (mainly for the cases where Vim is used)
+    if not common.is_windows() then
+        local tty = pane:get_tty_name()
+        if tty == nil then return false end
+
+        local success, _, _ = wezterm.run_child_process({
+            "sh",
+            "-c",
+            "ps -o state= -o comm= -t"
+                .. wezterm.shell_quote_arg(tty)
+                .. " | "
+                .. "grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|l?n?vim?x?)(diff)?$'",
+        })
+
+        return success
+    end
+    return false
+end
+
 --- Check if the foreground process matches the given pattern.
 ---@param pattern string
 ---@return boolean
@@ -33,7 +60,7 @@ local function is_inside_shared_poc(pane)
     return is_foreground_proc("^n?vim?$", pane) or is_foreground_proc("^ta?s?$", pane)
 end
 
-local function is_outside_shared_proc(pane) return not is_inside_shared_poc(pane) end
+local function is_outside_shared_proc(pane) return not is_shared_key_proc(pane) end
 
 local function bind_if(cond, key, mods, action)
     local function callback(win, pane)
