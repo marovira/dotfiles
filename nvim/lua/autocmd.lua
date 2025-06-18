@@ -9,6 +9,11 @@ vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "WinEnter" }, {
     group = augroup,
     callback = function() common.set_wezterm_user_var("IS_NVIM", true) end,
 })
+vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
+    pattern = "*",
+    group = augroup,
+    callback = function() common.set_wezterm_user_var("IS_NVIM", false) end,
+})
 
 -- Makes it so neovim reloads the file whenever a change has been made externally.
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
