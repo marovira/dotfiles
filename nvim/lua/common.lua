@@ -46,6 +46,14 @@ function M.is_buffer_filetype(t)
     return vim.tbl_contains(t, vim.bo.filetype)
 end
 
+---@param buf integer
+---@param t table | string
+---@return boolean
+function M.is_filetype(buf, t)
+    if type(t) == "string" then return vim.bo[buf] == t end
+    return vim.tbl_contains(t, vim.bo[buf].filetype)
+end
+
 ---@return boolean
 function M.is_insert_mode() return M.get_mode() == "i" end
 
