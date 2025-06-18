@@ -1,4 +1,5 @@
 local noice_enabled = true
+local common = require("common")
 
 return {
     {
@@ -124,7 +125,38 @@ return {
                 },
             },
             picker = {},
+            indent = {
+                filter = function(buf)
+                    return vim.g.snacks_indent ~= false
+                        and vim.b[buf].snacks_indent ~= false
+                        and vim.bo[buf].buftype == ""
+                        and not common.is_filetype(buf, { "gitcommit" })
+                end,
+            },
+            scroll = {},
+            statuscolumn = {},
+            scope = {},
+            words = {},
+            zen = {},
         },
+        init = function()
+            vim.api.nvim_create_autocmd("User", {
+                pattern = "VeryLazy",
+                callback = function()
+                    local Snacks = require("snacks")
+                    _G.dd = function(...) Snacks.debug.inspect(...) end
+                    _G.bt = function() Snacks.debug.backtrace() end
+                    vim.print = _G.dd
+
+                    Snacks.toggle.diagnostics():map("<leader>td")
+                    Snacks.toggle.treesitter():map("<leader>tt")
+                    Snacks.toggle.zen():map("<leader>tz")
+                    Snacks.toggle
+                        .option("relativenumber", { name = "Relative number" })
+                        :map("<leader>tn")
+                end,
+            })
+        end,
     },
     {
         "folke/flash.nvim",

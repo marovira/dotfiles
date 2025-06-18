@@ -27,27 +27,6 @@ return {
         init = function() vim.cmd("colorscheme tokyonight") end,
     },
     {
-        "lukas-reineke/indent-blankline.nvim",
-        main = "ibl",
-        opts = {
-            indent = { char = "│" },
-            scope = { show_end = false },
-            exclude = {
-                filetypes = {
-                    "lspinfo",
-                    "packer",
-                    "checkhealth",
-                    "help",
-                    "man",
-                    "gitcommit",
-                    "TelescopePrompt",
-                    "TelescopeResults",
-                    "",
-                },
-            },
-        },
-    },
-    {
         "nvim-lualine/lualine.nvim",
         dependencies = {
             { "nvim-tree/nvim-web-devicons" },
