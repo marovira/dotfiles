@@ -138,6 +138,9 @@ return {
             scope = {},
             words = {},
             zen = {},
+            notifier = {
+                timeout = 3000,
+            },
         },
         init = function()
             vim.api.nvim_create_autocmd("User", {
