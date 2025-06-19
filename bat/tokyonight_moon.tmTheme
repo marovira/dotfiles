@@ -29,7 +29,7 @@
 				<key>guide</key>
 				<string>#4f4f5e40</string>
 				<key>gutterForeground</key>
-				<string>#3b415caa</string>
+                <string>#575f7f</string>
 				<key>inactiveSelection</key>
 				<string>#282833</string>
 				<key>invisibles</key>
