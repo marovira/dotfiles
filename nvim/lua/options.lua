@@ -41,6 +41,17 @@ vim.diagnostic.config({
 -- Diff options
 vim.opt.diffopt = "filler,internal,closeoff,algorithm:histogram,context:5,linematch:60"
 
+-- List chars
+local space = "."
+vim.opt.listchars:append({
+    tab = "|-",
+    multispace = space,
+    lead = space,
+    trail = "~",
+    nbsp = space,
+    eol = "$",
+})
+
 -- Fold options
 vim.o.foldenable = true
 vim.o.foldmethod = "expr"

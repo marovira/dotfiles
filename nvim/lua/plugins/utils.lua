@@ -157,6 +157,9 @@ return {
                     Snacks.toggle
                         .option("relativenumber", { name = "Relative number" })
                         :map("<leader>tn")
+                    Snacks.toggle
+                        .option("list", { name = "Whitespace characters" })
+                        :map("<leader>tw")
                 end,
             })
         end,
