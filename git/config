@@ -1,30 +1,30 @@
 [user]
-	name = Mauricio A. Rovira Galvez
+    name = Mauricio A. Rovira Galvez
     email = 8482308+marovira@users.noreply.github.com
 
 [core]
-	editor = nvim
-	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
-	excludesfile = ~/.gitignore
+    editor = nvim
+    whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+    excludesfile = ~/.gitignore
     pager = delta --side-by-side --width ${FZF_PREVIEW_COLUMNS-$COLUMNS}
 
 [interactive]
     diffFilter = delta --color-only
 
 [commit]
-	template = ~/.gittemplate.txt
+    template = ~/.gittemplate.txt
 
 [web]
-	browser = firefox
+    browser = firefox
 
 [push]
-	default = matching
+    default = matching
 
 [pull]
     rebase = true
 
 [color]
-	ui = auto
+    ui = auto
 
 [color "status"]
     changed = yellow
@@ -53,24 +53,24 @@
     cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 
 [delta]
-    syntax-theme = Dracula
+    syntax-theme = tokyonight_moon
     decorations = true
     navigate = true
     dark = true
     line-numbers = true
     side-by-side = true
+    minus-style                   = syntax "#3a273a"
+    minus-non-emph-style          = syntax "#3a273a"
+    minus-emph-style              = syntax "#6b2e43"
+    minus-empty-line-marker-style = syntax "#3a273a"
+    line-numbers-minus-style      = "#e26a75"
+    plus-style                    = syntax "#273849"
+    plus-non-emph-style           = syntax "#273849"
+    plus-emph-style               = syntax "#305f6f"
+    plus-empty-line-marker-style  = syntax "#273849"
+    line-numbers-plus-style       = "#b8db87"
+    line-numbers-zero-style       = "#575f7f"
 
-[delta "decorations"]
-    commit-decoration-style = bold yellow box ul
-    file-style = bold yellow ul
-    file-decoration-style = none
-    hunk-header-decoration-style = cyan box ul
-
-[delta "line-numbers"]
-    line-numbers-left-style = cyan
-    line-numbers-right-style = cyan
-    line-numbers-minus-style = 124
-    line-numbers-plus-style = 28
 
 [alias]
     # Add commands
