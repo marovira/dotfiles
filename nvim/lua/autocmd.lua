@@ -4,7 +4,7 @@ local common = require("common")
 -- =======================
 local augroup = vim.api.nvim_create_augroup("vimrc", { clear = true })
 
-vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "WinEnter" }, {
+vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "WinEnter", "VimEnter" }, {
     pattern = "*",
     group = augroup,
     callback = function() common.set_wezterm_user_var("IS_NVIM", true) end,
