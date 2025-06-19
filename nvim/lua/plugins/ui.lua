@@ -16,6 +16,11 @@ return {
                 local util = require("tokyonight.util")
                 colors.fg_gutter = util.lighten(colors.fg_gutter, 0.8)
             end,
+            on_highlights = function(hl, colors)
+                hl.SpellBad = {
+                    fg = colors.red,
+                }
+            end,
         },
         init = function() vim.cmd("colorscheme tokyonight") end,
     },
