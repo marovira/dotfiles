@@ -12,16 +12,9 @@ return {
             },
             dim_inactive = true,
             luanline_bold = true,
-            on_highlights = function(hl, c)
-                hl.LineNrAbove = {
-                    fg = c.dark5,
-                }
-                hl.LineNrBelow = {
-                    fg = c.dark5,
-                }
-                hl.SpellBad = {
-                    fg = c.red,
-                }
+            on_colors = function(colors)
+                local util = require("tokyonight.util")
+                colors.fg_gutter = util.lighten(colors.fg_gutter, 0.8)
             end,
         },
         init = function() vim.cmd("colorscheme tokyonight") end,
