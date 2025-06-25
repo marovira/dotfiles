@@ -151,6 +151,7 @@ return {
 
                     Snacks.toggle.diagnostics():map("<leader>td")
                     Snacks.toggle.treesitter():map("<leader>tt")
+                    Snacks.toggle.animate():map("<leader>ta")
                     Snacks.toggle.zen():map("<leader>tz")
                     Snacks.toggle
                         .option("relativenumber", { name = "Relative number" })
