@@ -2,12 +2,20 @@ local common = require("common")
 local wezterm = require("wezterm")
 local act = wezterm.action
 
+---@param pattern string
+---@return boolean
+local function is_foreground_proc(pattern, pane)
+    return pane:get_foreground_process_name():find(pattern) ~= nil
+        or pane:get_title():find(pattern) ~= nil
+end
+
 ---@return boolean
 local function is_shared_key_proc(pane)
     if pane:get_user_vars().IS_NVIM == "true" then return true end
-    -- For Windows only: check if we're attaching to TMUX so keybinds get through.
+
+    -- Fallback for windows: check the name of the foreground process/title.
     if common.is_windows() then
-        return pane:get_foreground_process_name():find("^ta?s?$")
+        return is_foreground_proc("^n?vim?$", pane) or is_foreground_proc("^ta?s?$", pane)
     end
 
     -- Fallback for Linux (mainly for the cases where Vim is used)
