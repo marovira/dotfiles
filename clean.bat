@@ -32,6 +32,7 @@ del %USERPROFILE%\.zshrc
 del %USERPROFILE%\.zsh_plugins.txt
 del %USERPROFILE%\.p10k.zsh
 rmdir %USERPROFILE%\.zshfn
+rmdir %USERPROFILE%\.zshpy
 
 :: Bat
 del %USERPROFILE%\scoop\apps\bat\current\config

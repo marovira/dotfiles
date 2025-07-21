@@ -35,6 +35,7 @@ mklink %USERPROFILE%\.zshrc %CURDIR%zsh\zshrc
 mklink %USERPROFILE%\.zsh_plugins.txt %CURDIR%zsh\zsh_plugins
 mklink %USERPROFILE%\.p10k.zsh %CURDIR%zsh\p10k.zsh
 mklink /D %USERPROFILE%\.zshfn %CURDIR%zsh\zshfn
+mklink /D %USERPROFILE%\.zshpy %CURDIR%zsh\zshpy
 
 :: Setup bat
 mklink %USERPROFILE%\scoop\apps\bat\current\config %CURDIR%bat\config

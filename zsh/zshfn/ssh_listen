@@ -1,3 +1,0 @@
-#!/bin/zsh
-
-python ~/.zshfn/ssh_listen.py "$@"
