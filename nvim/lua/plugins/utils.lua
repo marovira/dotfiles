@@ -9,6 +9,7 @@ return {
     },
     {
         "numToStr/Navigator.nvim",
+        lazy = false,
         opts = {
             disable_on_zoom = true,
         },

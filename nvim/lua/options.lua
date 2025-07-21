@@ -93,3 +93,6 @@ if common.is_windows() then
 else
     vim.g.python3_host_prog = "~/nvim/bin/python3"
 end
+
+-- Set the IS_NVIM variable so WexTerm knows we're in vim.
+common.set_wezterm_user_var("IS_NVIM", true)
