@@ -26,6 +26,11 @@ cfg.mouse_bindings = {
             end
         ),
     },
+    {
+        event = { Up = { streak = 1, button = "Left" } },
+        mods = "CTRL",
+        action = act.OpenLinkAtMouseCursor,
+    },
 }
 
 return cfg

@@ -37,37 +37,6 @@ local function is_shared_key_proc(pane)
     return false
 end
 
---- Check if the foreground process matches the given pattern.
----@param pattern string
----@return boolean
-local function is_foreground_proc(pattern, pane)
-    return pane:get_foreground_process_name():find(pattern) ~= nil
-        or pane:get_title():find(pattern) ~= nil
-end
-
-local function is_vim_proc(pane)
-    local tty = pane:get_tty_name()
-    if tty == nil then return false end
-
-    local success, _, _ = wezterm.run_child_process({
-        "sh",
-        "-c",
-        "ps -o state= -o comm= -t"
-            .. wezterm.shell_quote_arg(tty)
-            .. " | "
-            .. "grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|l?n?vim?x?)(diff)?$'",
-    })
-
-    return success
-end
-
-local function is_inside_shared_poc(pane)
-    -- In *nix only, identify whether we're running vim through the tty method since it's
-    -- more robust.
-    if not common.is_windows() then return is_vim_proc(pane) end
-    return is_foreground_proc("^n?vim?$", pane) or is_foreground_proc("^ta?s?$", pane)
-end
-
 local function is_outside_shared_proc(pane) return not is_shared_key_proc(pane) end
 
 local function bind_if(cond, key, mods, action)
