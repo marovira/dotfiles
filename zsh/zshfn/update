@@ -23,6 +23,27 @@ update_nvim() {
     mv nvim-linux-x86_64.appimage "$HOME/.local/bin/nvim"
 }
 
+update_neovide() {
+    if [[ "$OSTYPE" == "msys" ]]; then
+        if ! command -v neovide &> /dev/null; then
+            scoop install extras/neovide
+            return
+        else
+            scoop update neovide
+        fi
+        return
+    fi
+
+    # If a previous version of neovide exists, remove it.
+    if [ -f "$HOME/.local/bin/neovide" ]; then
+        rm -R "$HOME/.local/bin/neovide"
+    fi
+
+    curl -LO https://github.com/neovide/neovide/releases/latest/download/neovide.appimage
+    chmod u+x neovide.appimage
+    mv neovide.appimage "$HOME/.local/bin/neovide"
+}
+
 update_delta() {
     if [[ "$OSTYPE" == "msys" ]]; then
         if ! command -v delta &> /dev/null; then
@@ -80,6 +101,8 @@ update_stylua() {
 
 if [[ "${app}" == "nvim" ]]; then
     update_nvim
+elif [[ "${app}" == "neovide" ]]; then
+    update_neovide
 elif [[ "${app}" == "delta" ]]; then
     update_delta ${2}
 elif [[ "${app}" == "fzf" ]]; then
