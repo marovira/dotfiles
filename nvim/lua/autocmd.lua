@@ -54,6 +54,13 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     command = "set filetype=objcpp",
 })
 
+-- Set .tmux files to tmux
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    pattern = { "*.tmux" },
+    group = augroup,
+    command = "set filetype=tmux",
+})
+
 -- Disable folds in JSON and markdown.
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = { "*.json", "*.md" },
