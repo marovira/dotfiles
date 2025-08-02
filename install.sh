@@ -12,8 +12,11 @@ ln --backup -s "$PWD/git/ignore" "$HOME/.gitignore"
 ln --backup -s "$PWD/git/template" "$HOME/.gittemplate.txt"
 ln --backup -s "$PWD/nvim" "$HOME/.config/nvim"
 ln --backup -s "$PWD/cpp/.clang-format" "$HOME/.clang-format"
-ln --backup -s "$PWD/tmux/tmux.conf" "$HOME/.tmux.conf"
 ln --backup -s "$PWD/bat" "$HOME/.config/bat"
 ln --backup -s "$PWD/wezterm" "$HOME/.config/wezterm"
+
+mkdir -p "$HOME/.tmux/"
+ln --backup -s "$PWD/tmux/tmux.conf" "$HOME/.tmux.conf"
+ln --backup -s "$PWD/tmux/themes" "$HOME/.tmux/themes"
 
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
