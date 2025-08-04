@@ -170,57 +170,67 @@ return {
         keys = {
             {
                 "<leader>fe",
-                "<cmd>FzfLua global<cr>",
+                function() require("fzf-lua").global() end,
                 desc = "FZF everything (global)",
             },
             {
                 "<leader>ff",
-                "<cmd>FzfLua files<cr>",
+                function() require("fzf-lua").files() end,
                 desc = "FZF files",
             },
             {
+                "<leader>fF",
+                function() require("fzf-lua").files({ resume = true }) end,
+                desc = "FZF resume files",
+            },
+            {
                 "<leader>fg",
-                "<cmd>FzfLua live_grep<cr>",
+                function() require("fzf-lua").live_grep() end,
                 desc = "FZF live grep",
             },
             {
                 "<leader>fG",
-                "<cmd>FzfLua live_grep_resume<cr>",
+                function() require("fzf-lua").live_grep({ resume = true }) end,
                 desc = "FZF resume live grep",
             },
             {
                 "<leader>fb",
-                "<cmd>FzfLua buffers<cr>",
+                function() require("fzf-lua").buffers() end,
                 desc = "FZF buffers",
             },
             {
                 "<leader>fh",
-                "<cmd>FzfLua helptags<cr>",
+                function() require("fzf-lua").helptags() end,
                 desc = "FZF help tags",
             },
             {
                 "<leader>fr",
-                "<cmd>FzfLua lsp_references<cr>",
+                function() require("fzf-lua").lsp_references() end,
                 desc = "FZF find references",
             },
             {
+                "<leader>fR",
+                function() require("fzf-lua").lsp_references({ resume = true }) end,
+                desc = "FZF resume find references",
+            },
+            {
                 "<leader>fs",
-                "<cmd>FzfLua lsp_document_symbols<cr>",
+                function() require("fzf-lua").lsp_document_symbols() end,
                 desc = "FZF LSP document symbols",
             },
             {
                 "<leader>fS",
-                "<cmd>FzfLua lsp_workspace_symbols<cr>",
+                function() require("fzf-lua").lsp_workspace_symbols() end,
                 desc = "FZF LSP workspace symbols",
             },
             {
                 "<leader>fl",
-                "<cmd>FzfLua lsp_finder<cr>",
+                function() require("fzf-lua").lsp_finder() end,
                 desc = "FZF LSP finder",
             },
             {
                 "<leader>fdv",
-                "<cmd>FzfLua dap_variables<cr>",
+                function() require("fzf-lua").dap_variables() end,
                 desc = "FZF DAP active session variables",
             },
         },
