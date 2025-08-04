@@ -1,8 +1,7 @@
 package.path = package.path .. ";../../lua;"
 local common = require("common")
 
--- No linting (I would have to figure out which settings I want for a clang-tidy file, and
--- I honestly don't think it's worth it), but keep formatting.
+-- Disable linting for Objective-C.
 vim.b.ale_linters = nil
 vim.b.ale_fixers = { "clang-format" }
 vim.b.ale_linters_explicit = true
@@ -12,5 +11,8 @@ vim.b.ale_linters_explicit = true
 if common.is_windows() or common.is_mac() then
     vim.b.ale_c_clangformat_executable = "clang-format"
 else
-    vim.b.ale_c_clangformat_executable = "clang-format-15"
+    vim.b.ale_c_clangformat_executable = "clang-format-18"
 end
+
+vim.g.ale_objcpp_clang_options = "-std=c++20 -Wall --pedantic"
+vim.g.ale_objcpp_clangd_options = "--header-insertion=never"

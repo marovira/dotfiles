@@ -51,7 +51,7 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = "*.mm",
     group = augroup,
-    command = "set filetype=objcpp",
+    command = "set filetype=objc",
 })
 
 -- Set .tmux files to tmux
