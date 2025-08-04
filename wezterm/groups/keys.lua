@@ -9,9 +9,16 @@ local function is_foreground_proc(pattern, pane)
         or pane:get_title():find(pattern) ~= nil
 end
 
+wezterm.on(
+    "user-var-changed",
+    function(window, pane, name, value) wezterm.log_info("var", name, value) end
+)
+
 ---@return boolean
 local function is_shared_key_proc(pane)
     if pane:get_user_vars().IS_NVIM == "true" then return true end
+    print(pane:get_user_vars().IS_EXPLORER)
+    if pane:get_user_vars().IS_EXPLORER == "true" then return true end
 
     -- Fallback for windows: check the name of the foreground process/title.
     if common.is_windows() then
@@ -123,11 +130,6 @@ cfg.keys = {
         key = "p",
         mods = "CTRL|SHIFT",
         action = act.ActivateCommandPalette,
-    },
-    {
-        key = "l",
-        mods = "CTRL|SHIFT",
-        action = act.ShowLauncher,
     },
     {
         key = "Tab",
