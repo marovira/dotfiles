@@ -5,7 +5,7 @@ local -r out=${2:?"error: no output path specified"}
 
 # Disable the usage of PV on Windows. For some weird reason it causes things to slow down
 # incredibly. If this ever changes, remove this.
-if [[ "$OSTYPE" == "msys" ]]; then
+if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
     tar cfv - $input -P | zstd > $out
 else
     tar cf - $input -P | pv -s $(du -sb $input | awk '{print $1}') | zstd > $out
