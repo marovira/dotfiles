@@ -2,31 +2,56 @@
 
 local -r dir=${1}
 
-find_dir() {
-    if [ ! -z ${dir} ]; then
-        fd -L -t d . "$dir" | awk '{print $1}'
-    else
-        fd -L -t d | awk '{print $1}'
-    fi
+    cur_dir=$(pwd)
+if [ -z ${dir} ]; then
+    new_dir=$(pwd)
+else
+    new_dir=${dir}
+fi
+
+function set_user_var() {
+    value=$(echo -n ${2} | base64)
+    printf "\033]1337;SetUserVar=%s=%s\007" ${1} $value
 }
 
-local selection=$(find_dir | fzf --multi --height=80% --border=rounded \
---preview="tree -C {}" --preview-window="45%,border-rounded" \
---prompt="Dirs > " \
---bind="del:execute(rm -ri {+})" \
---bind="?:toggle-preview" \
---bind="ctrl-a:select-all" \
---bind="ctrl-x:deselect-all" \
---header "
-CTRL-a to select all | CTRL-x to deselect all
-ENTER to switch | DEL to delete
-CTRL-q to exit
+set_user_var IS_EXPLORER "true"
+
+cd $new_dir
+
+selection=$(fd -I -L -t d | fzf --multi --height=80% --border=sharp \
+--preview='tree -C {}' --preview-window='45%,border-sharp' \
+--prompt='Dirs > ' \
+--bind='del:execute(rm -ri {+})' \
+--bind='?:toggle-preview' \
+--bind='ctrl-d:change-prompt(Dirs > )' \
+--bind='ctrl-d:+reload(fd -I -L -t d)' \
+--bind='ctrl-d:+change-preview(tree -C {})' \
+--bind='ctrl-d:+refresh-preview' \
+--bind='ctrl-f:change-prompt(Files > )' \
+--bind='ctrl-f:+reload(fd -I -t f)' \
+--bind='ctrl-f:+change-preview(cat {})' \
+--bind='ctrl-f:+refresh-preview' \
+--bind='ctrl-a:select-all' \
+--bind='ctrl-x:deselect-all' \
+--header '
+CTRL-D to display directories | CTRL-F to display files
+CTRL-A to select all | CTRL-x to deselect all
+ENTER to edit | DEL to delete
 ? to toggle preview
-"
+'
 )
 
 if [ -z "$selection" ]; then
+    cd $cur_dir
+    set_user_var IS_EXPLORER "false"
     return
 fi
 
-cd "$selection" || exit
+# Determine what to do depending on the selection
+if [ -d "$selection" ]; then
+    cd "$selection" || exit
+else
+    eval "$EDITOR $selection"
+    cd $cur_dir
+fi
+set_user_var IS_EXPLORER "false"
