@@ -70,7 +70,7 @@ update_fzf() {
     cwd=$(pwd)
     cd "$FZF_PATH"
     git checkout master > /dev/null 2>&1
-    git fetch --tags > /dev/null
+    git fetch --tags > /dev/null 2>&1
     tag=$(git describe --tags "$(git rev-list --tags --max-count=1)")
     echo "Updating to version $tag"
     git checkout $tag > /dev/null 2>&1
