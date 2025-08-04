@@ -169,6 +169,11 @@ return {
         end,
         keys = {
             {
+                "<leader>fe",
+                "<cmd>FzfLua global<cr>",
+                desc = "FZF everything (global)",
+            },
+            {
                 "<leader>ff",
                 "<cmd>FzfLua files<cr>",
                 desc = "FZF files",
