@@ -72,6 +72,11 @@ Once `pacman` is correctly installed, open another admin terminal and install:
 > [!NOTE]
 > Errors during install referring to `man` are normal as it is not actually installed.
 
+> [!NOTE]
+> In newer versions, it is possible for `pacman -Suu` to fail with the following error
+> message: `/etc/inputrc exists in both 'libreadline' and 'mingw-w64-x86_64-git-extra'`.
+> If this happens, run `pacman -Suu --overwrite /etc/inputrc`. 
+
 > [!WARNING]
 > 1. It is possible that conflicts between packages occur on installation. I believe this
 >    is caused by mismatches between whatever git installs and what pacman pulls down. In

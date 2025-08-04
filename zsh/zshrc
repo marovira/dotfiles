@@ -7,13 +7,22 @@ export FZF_PREVIEW_COLUMNS
 # Forgit exports
 export FORGIT_NO_ALIASES=1
 
+# For some reason, it seems that enabling zsh in newer versions of git bash will set
+# OSTYPE to be cygwin instead of msys2. Since I'm not entirely sure what will happen if I
+# attempt to override that flag, instead I'm making a new flag to denote Windows systems
+# so everything continues working as it should.
+if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
+    IS_WIN=1
+else
+    IS_WIN=0
+fi
 
-if [[ "$OSTYPE" == "msys" ]]; then
+if [[ "$IS_WIN" == 1 ]]; then
     unset SHELL
 fi
 
 # Load compinit for Windows (msys) and OSX since they don't enable it by default
-if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "darwin"* ]]; then
+if [[ "$IS_WIN" == 1 || "$OSTYPE" == "darwin"* ]]; then
     autoload -Uz compinit
     compinit
 fi
@@ -44,7 +53,7 @@ alias vim='nvim'
 # On Windows only, override neovide so it opens with the size we want. Also it seems the
 # latest version of Neovide has an issue with forking correctly on git bash, so ensure it
 # doesn't block the terminal when started.
-if [[ "$OSTYPE" == "msys" ]]; then
+if [[ "$IS_WIN" == 1 ]]; then
     alias neovide='(neovide --grid 100x50 &)'
 fi
 
@@ -56,13 +65,13 @@ alias fgrep='fgrep --color=auto'
 # Emulates Apple's open. Only applies to Linux (linux-gnu) and Windows (msys).
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias open='xdg-open'
-elif [[ "$OSTYPE" == "msys" ]]; then
+elif [[ "$IS_WIN" == 1 ]]; then
     alias open='start'
 fi
 
 # Allow Windows to open bash without any settings. This is mainly to address an issue
 # where certain paths don't work in zsh.
-if [[ "$OSTYPE" == "msys" ]]; then
+if [[ "$IS_WIN" == 1 ]]; then
     alias bash='bash --norc --noprofile'
 fi
 
@@ -106,7 +115,7 @@ PATH="$PATH:$FORGIT_INSTALL_DIR/bin"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-if [[ "$OSTYPE" == "msys" ]]; then
+if [[ "$IS_WIN" == 1 ]]; then
     keep_current_path() {
         # printf "\e]9;9;%s\e\\" "$(cygpath -w "$PWD")"
         printf "\033]7;file//$HOST/$PWD\033\\"
