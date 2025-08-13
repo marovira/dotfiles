@@ -58,7 +58,7 @@ fi
 if [ -d "$selection" ]; then
     cd "$selection" || exit
 else
-    eval $EDITOR $(echo $selection | sed -e "s/\x00/ /g")
+    eval "$EDITOR $selection"
 fi
 
 set_user_var IS_EXPLORER "false"
