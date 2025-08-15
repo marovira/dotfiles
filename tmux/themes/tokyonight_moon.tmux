@@ -76,4 +76,4 @@ set -g status-right "#[fg=#575f7f,bg=#1e2030]\
 #[fg=#82aaff,bg=#575f7f]\
 #{ram_fg_color}#{ram_bg_color}  #{ram_percentage} \
 #[fg=#82aaff,bg=#575f7f]\
-#[fg=#1e2131,bg=#82aaff]%d-%d-%Y %H:%M %Z"
+#[fg=#1e2131,bg=#82aaff]%d-%m-%Y %H:%M %Z"
