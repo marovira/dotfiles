@@ -38,5 +38,6 @@
   "trouble.nvim": { "branch": "main", "commit": "3fb3bd737be8866e5f3a170abc70b4da8b5dd45a" },
   "ts-comments.nvim": { "branch": "main", "commit": "1bd9d0ba1d8b336c3db50692ffd0955fe1bb9f0c" },
   "vimtex": { "branch": "master", "commit": "77f31bd02cec678823c8614e6400db97390b5ce7" },
+  "wezterm-types": { "branch": "main", "commit": "542788dbf2a65cee43d65fd2734ca24f315b1693" },
   "which-key.nvim": { "branch": "main", "commit": "370ec46f710e058c9c1646273e6b225acf47cbed" }
 }
