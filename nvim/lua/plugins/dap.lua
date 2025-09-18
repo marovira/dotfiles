@@ -45,55 +45,31 @@ return {
             end,
         },
     },
-    { "mfussenegger/nvim-dap" },
     {
-        "rcarriga/nvim-dap-ui",
-        dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
-        opts = {
-            layouts = {
-                {
-                    elements = {
-                        {
-                            id = "breakpoints",
-                            size = 0.33,
-                        },
-                        {
-                            id = "stacks",
-                            size = 0.33,
-                        },
-                        {
-                            id = "watches",
-                            size = 0.33,
-                        },
-                    },
-                    position = "left",
-                    size = 50,
-                },
-                {
-                    elements = {
-                        {
-                            id = "console",
-                            size = 0.5,
-                        },
-                        {
-                            id = "repl",
-                            size = 0.5,
-                        },
-                    },
-                    position = "bottom",
-                    size = 20,
-                },
-            },
-        },
-        config = function(_, opts)
-            local dap, dapui = require("dap"), require("dapui")
-            dapui.setup(opts)
+        "mfussenegger/nvim-dap",
+        config = function()
+            local dap = require("dap")
             dap.defaults.python.exception_breakpoints = { "raised" }
 
-            dap.listeners.before.attach.dapui_config = function() dapui.open() end
-            dap.listeners.before.launch.dapui_config = function() dapui.open() end
-            dap.listeners.before.event_terminated.dapui_config = function() dapui.close() end
-            dap.listeners.before.event_exited.dapui_config = function() dapui.close() end
+            -- Hide the default terminal so it doesn't interfere with the layout.
+            dap.defaults.fallback.terminal_win_cmd = function()
+                return vim.api.nvim_create_buf(false, false)
+            end
+
+            -- Make sure dap-view starts when DAP is launched
+            local auto_open = { "attach", "launch" }
+            for _, listener in ipairs(auto_open) do
+                dap.listeners.before[listener]["dap-view"] = function()
+                    require("dap-view").open()
+                end
+            end
+
+            local auto_close = { "event_terminated", "event_exited" }
+            for _, listener in ipairs(auto_close) do
+                dap.listeners.before[listener]["dap-view"] = function()
+                    require("dap-view").close(true)
+                end
+            end
         end,
         keys = {
             {
@@ -131,6 +107,31 @@ return {
                     )
                 end,
                 desc = "DAP breakpoint with message",
+            },
+        },
+    },
+    {
+        "igorlfs/nvim-dap-view",
+        opts = {
+            winbar = {
+                show = true,
+                sections = { "watches", "scopes", "exceptions", "breakpoints", "repl" },
+                default_section = "repl",
+                controls = { enabled = true },
+            },
+            windows = {
+                position = "below",
+                terminal = {
+                    position = "right",
+                },
+            },
+            auto_toggle = true,
+        },
+        keys = {
+            {
+                "<leader>dv",
+                function() require("dap-view").toggle() end,
+                desc = "DAP toggle view",
             },
         },
     },
