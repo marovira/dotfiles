@@ -3,6 +3,7 @@ local common = require("common")
 return {
     {
         "jay-babu/mason-nvim-dap.nvim",
+        lazy = true,
         dependencies = {
             { "williamboman/mason.nvim" },
             { "mfussenegger/nvim-dap" },
@@ -137,6 +138,7 @@ return {
     },
     {
         "mfussenegger/nvim-dap-python",
+        lazy = true,
         dependencies = { "mfussenegger/nvim-dap" },
         config = function()
             local path = vim.fs.joinpath(

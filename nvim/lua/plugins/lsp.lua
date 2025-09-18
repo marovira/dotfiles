@@ -18,6 +18,7 @@ end
 return {
     {
         "dense-analysis/ale",
+        event = { "BufReadPre", "BufNewFile" },
         init = function()
             vim.cmd([[
                 let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
@@ -35,17 +36,24 @@ return {
         end,
     },
     {
+        "neovim/nvim-lspconfig",
+        version = "*",
+        dependencies = {
+            "mason-org/mason.nvim",
+            "mason-org/mason-lspconfig.nvim",
+        },
+        event = { "BufReadPre", "BufNewFile", "BufWritePre" },
+    },
+    {
         "mason-org/mason.nvim",
         version = "*",
-        lazy = false,
+        lazy = true,
         opts = {},
     },
     {
         "mason-org/mason-lspconfig.nvim",
         version = "*",
-        dependencies = {
-            { "neovim/nvim-lspconfig", version = "*" },
-        },
+        lazy = true,
         opts = {
             ensure_installed = {
                 "lua_ls",
@@ -70,7 +78,6 @@ return {
         version = "*",
         dependencies = {
             { "rafamadriz/friendly-snippets" },
-            { "MeanderingProgrammer/render-markdown.nvim" },
             {
                 "onsails/lspkind.nvim",
                 opts = {

@@ -26,6 +26,7 @@ return {
     },
     {
         "nvim-lualine/lualine.nvim",
+        event = { "BufReadPre", "BufNewFile" },
         dependencies = {
             { "nvim-tree/nvim-web-devicons" },
         },
@@ -67,7 +68,6 @@ return {
     },
     {
         "nvim-tree/nvim-tree.lua",
-        lazy = false,
         dependencies = {
             { "nvim-tree/nvim-web-devicons" },
         },
@@ -157,7 +157,6 @@ return {
     },
     {
         "ibhagwan/fzf-lua",
-        lazy = false,
         dependencies = { "nvim-tree/nvim-web-devicons" },
         opts = {
             "default",
@@ -167,6 +166,7 @@ return {
             require("fzf-lua").setup(opts)
             vim.ui.select = require("fzf-lua.providers.ui_select").ui_select
         end,
+        cmd = { "FzfLua" },
         keys = {
             {
                 "<leader>fe",
