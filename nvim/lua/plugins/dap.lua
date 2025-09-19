@@ -6,7 +6,6 @@ return {
         lazy = true,
         dependencies = {
             { "williamboman/mason.nvim" },
-            { "mfussenegger/nvim-dap" },
         },
         opts = {
             automatic_setup = true,
@@ -48,6 +47,9 @@ return {
     },
     {
         "mfussenegger/nvim-dap",
+        dependencies = {
+            { "jay-babu/mason-nvim-dap.nvim" },
+        },
         config = function()
             local dap = require("dap")
             dap.defaults.python.exception_breakpoints = { "raised" }
@@ -138,7 +140,7 @@ return {
     },
     {
         "mfussenegger/nvim-dap-python",
-        lazy = true,
+        ft = "python",
         dependencies = { "mfussenegger/nvim-dap" },
         config = function()
             local path = vim.fs.joinpath(
@@ -156,8 +158,68 @@ return {
             end
 
             local dap_py = require("dap-python")
-            dap_py.setup(path)
+            dap_py.setup(path, { include_configs = false })
             dap_py.test_runner = "pytest"
+
+            local dap = require("dap")
+
+            local get_args = function()
+                local args_string = vim.fn.input("Arguments: ")
+                local utils = require("dap.utils")
+                return utils.splitstr(args_string)
+            end
+
+            dap.configurations.python = {
+                {
+                    type = "python",
+                    request = "launch",
+                    name = "file",
+                    program = "${file}",
+                    console = "integratedTerminal",
+                    justMyCode = true,
+                    pythonPath = nil,
+                },
+                {
+                    type = "python",
+                    request = "launch",
+                    name = "sys:file",
+                    program = "${file}",
+                    console = "integratedTerminal",
+                    justMyCode = false,
+                    pythonPath = nil,
+                },
+                {
+                    type = "python",
+                    request = "launch",
+                    name = "file:args",
+                    program = "${file}",
+                    args = get_args,
+                    console = "integratedTerminal",
+                    justMyCode = true,
+                    pythonPath = nil,
+                },
+                {
+                    type = "python",
+                    request = "launch",
+                    name = "sys:file:args",
+                    program = "${file}",
+                    args = get_args,
+                    console = "integratedTerminal",
+                    justMyCode = false,
+                    pythonPath = nil,
+                },
+                {
+                    type = "python",
+                    request = "attach",
+                    name = "attach",
+                    connect = function()
+                        local host = vim.fn.input("Host [127.0.0.1]: ")
+                        host = host ~= "" and host or "127.0.0.1"
+                        local port = tonumber(vim.fn.input("Port [5678]: ")) or 5678
+                        return { host = host, port = port }
+                    end,
+                },
+            }
         end,
     },
 }
