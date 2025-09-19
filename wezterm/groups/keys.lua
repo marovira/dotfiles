@@ -1,7 +1,10 @@
-local common = require("common")
+---@type Wezterm
 local wezterm = require("wezterm")
 local act = wezterm.action
 
+local common = require("utils")
+
+---@param pane Pane
 ---@param pattern string
 ---@return boolean
 local function is_foreground_proc(pattern, pane)
@@ -11,9 +14,10 @@ end
 
 wezterm.on(
     "user-var-changed",
-    function(window, pane, name, value) wezterm.log_info("var", name, value) end
+    function(_, _, name, value) wezterm.log_info("var", name, value) end
 )
 
+---@param pane Pane
 ---@return boolean
 local function is_shared_key_proc(pane)
     if pane:get_user_vars().IS_NVIM == "true" then return true end
@@ -44,8 +48,14 @@ local function is_shared_key_proc(pane)
     return false
 end
 
+---@param pane Pane
+---@return boolean
 local function is_outside_shared_proc(pane) return not is_shared_key_proc(pane) end
 
+---@param cond function
+---@param key string
+---@param mods string
+---@param action Action
 local function bind_if(cond, key, mods, action)
     local function callback(win, pane)
         if cond(pane) then

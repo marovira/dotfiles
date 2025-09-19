@@ -1,12 +1,14 @@
-local common = require("common")
+---@type Wezterm
 local wezterm = require("wezterm")
+
+local utils = require("utils")
 
 local M = {}
 
 ---@param launch_menu table
 ---@return table
 function M.add_vs_launch(launch_menu)
-    if not common.is_windows() then return launch_menu end
+    if not utils.is_windows() then return launch_menu end
 
     for _, vsvers in
         ipairs(wezterm.glob("Microsoft Visual Studio/20*", "C:/Program Files"))
