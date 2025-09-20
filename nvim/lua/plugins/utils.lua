@@ -210,8 +210,8 @@ return {
     },
     {
         "m4xshen/hardtime.nvim",
-        event = { "BufNewFile", "BufReadPre" },
         dependencies = { "MunifTanjim/nui.nvim" },
+        event = "VeryLazy",
         version = "*",
         opts = {
             disable_mouse = false,

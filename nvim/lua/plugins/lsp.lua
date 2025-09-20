@@ -18,7 +18,7 @@ end
 return {
     {
         "dense-analysis/ale",
-        event = { "BufReadPre", "BufNewFile" },
+        event = "VeryLazy",
         init = function()
             vim.cmd([[
                 let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
@@ -39,21 +39,21 @@ return {
         "neovim/nvim-lspconfig",
         version = "*",
         dependencies = {
-            "mason-org/mason.nvim",
-            "mason-org/mason-lspconfig.nvim",
+            { "mason-org/mason-lspconfig.nvim" },
         },
         event = { "BufReadPre", "BufNewFile", "BufWritePre" },
     },
     {
         "mason-org/mason.nvim",
         version = "*",
-        lazy = true,
         opts = {},
     },
     {
         "mason-org/mason-lspconfig.nvim",
+        dependencies = {
+            { "mason-org/mason.nvim" },
+        },
         version = "*",
-        lazy = true,
         opts = {
             ensure_installed = {
                 "lua_ls",

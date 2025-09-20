@@ -16,6 +16,7 @@ return {
     },
     {
         "opdavies/toggle-checkbox.nvim",
+        ft = "markdown",
         keys = {
             {
                 "<leader>tc",

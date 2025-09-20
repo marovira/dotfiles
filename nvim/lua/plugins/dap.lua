@@ -118,7 +118,14 @@ return {
         opts = {
             winbar = {
                 show = true,
-                sections = { "watches", "scopes", "exceptions", "breakpoints", "repl" },
+                sections = {
+                    "watches",
+                    "scopes",
+                    "exceptions",
+                    "breakpoints",
+                    "repl",
+                    "threads",
+                },
                 default_section = "repl",
                 controls = { enabled = true },
             },
@@ -177,7 +184,6 @@ return {
                     program = "${file}",
                     console = "integratedTerminal",
                     justMyCode = true,
-                    pythonPath = nil,
                 },
                 {
                     type = "python",
@@ -186,7 +192,6 @@ return {
                     program = "${file}",
                     console = "integratedTerminal",
                     justMyCode = false,
-                    pythonPath = nil,
                 },
                 {
                     type = "python",
@@ -196,7 +201,6 @@ return {
                     args = get_args,
                     console = "integratedTerminal",
                     justMyCode = true,
-                    pythonPath = nil,
                 },
                 {
                     type = "python",
@@ -206,7 +210,6 @@ return {
                     args = get_args,
                     console = "integratedTerminal",
                     justMyCode = false,
-                    pythonPath = nil,
                 },
                 {
                     type = "python",
