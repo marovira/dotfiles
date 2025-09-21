@@ -41,6 +41,63 @@ return {
         },
     },
     {
+        "mrjones2014/smart-splits.nvim",
+        version = "*",
+        opts = {
+            multiplexer_integartion = false,
+        },
+        keys = {
+            {
+                "<C-S-h>",
+                function() require("smart-splits").resize_left(5) end,
+                mode = "n",
+                desc = "Resize split left",
+            },
+            {
+                "<C-S-j>",
+                function() require("smart-splits").resize_down(5) end,
+                mode = "n",
+                desc = "Resize split down",
+            },
+            {
+                "<C-S-k>",
+                function() require("smart-splits").resize_up(5) end,
+                mode = "n",
+                desc = "Resize split up",
+            },
+            {
+                "<C-S-l>",
+                function() require("smart-splits").resize_right(5) end,
+                mode = "n",
+                desc = "Resize split right",
+            },
+            {
+                "<leader><leader>h",
+                function() require("smart-splits").swap_buf_left() end,
+                mode = "n",
+                desc = "Swap buffer left",
+            },
+            {
+                "<leader><leader>j",
+                function() require("smart-splits").swap_buf_down() end,
+                mode = "n",
+                desc = "Swap buffer left",
+            },
+            {
+                "<leader><leader>k",
+                function() require("smart-splits").swap_buf_up() end,
+                mode = "n",
+                desc = "Swap buffer left",
+            },
+            {
+                "<leader><leader>l",
+                function() require("smart-splits").swap_buf_right() end,
+                mode = "n",
+                desc = "Swap buffer left",
+            },
+        },
+    },
+    {
         "folke/ts-comments.nvim",
         opts = {},
         event = "VeryLazy",
