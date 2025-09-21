@@ -116,7 +116,17 @@ return {
     {
         "theHamsta/nvim-dap-virtual-text",
         lazy = true,
-        opts = {},
+        opts = {
+            enabled = false,
+            virt_text_pos = "eol",
+        },
+        keys = {
+            {
+                "<leader>dt",
+                function() require("nvim-dap-virtual-text").toggle() end,
+                desc = "DAP toggle virtual text",
+            },
+        },
     },
     {
         "igorlfs/nvim-dap-view",
