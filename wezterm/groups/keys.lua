@@ -12,45 +12,30 @@ local function is_foreground_proc(pattern, pane)
         or pane:get_title():find(pattern) ~= nil
 end
 
-wezterm.on(
-    "user-var-changed",
-    function(_, _, name, value) wezterm.log_info("var", name, value) end
-)
+-- Useful for debugging user vars.
+-- wezterm.on(
+--     "user-var-changed",
+--     function(_, _, name, value) wezterm.log_info("var", name, value) end
+-- )
 
 ---@param pane Pane
 ---@return boolean
 local function is_shared_key_proc(pane)
-    if pane:get_user_vars().IS_NVIM == "true" then return true end
-    print(pane:get_user_vars().IS_EXPLORER)
-    if pane:get_user_vars().IS_EXPLORER == "true" then return true end
-
-    -- Fallback for windows: check the name of the foreground process/title.
-    if common.is_windows() then
-        return is_foreground_proc("^n?vim?$", pane) or is_foreground_proc("^ta?s?$", pane)
+    for _, key in ipairs({ "IS_NVIM", "IS_EXPLORER" }) do
+        if pane:get_user_vars()[key] == "true" then return true end
     end
 
-    -- Fallback for Linux (mainly for the cases where Vim is used)
-    if not common.is_windows() then
-        local tty = pane:get_tty_name()
-        if tty == nil then return false end
-
-        local success, _, _ = wezterm.run_child_process({
-            "sh",
-            "-c",
-            "ps -o state= -o comm= -t"
-                .. wezterm.shell_quote_arg(tty)
-                .. " | "
-                .. "grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|l?n?vim?x?)(diff)?$'",
-        })
-
-        return success
+    -- Fallback: check if the foreground process is one we care about.
+    for _, pattern in ipairs({ "^n?vim?$", "^ta?s?$", "bat" }) do
+        if is_foreground_proc(pattern, pane) then return true end
     end
+
     return false
 end
 
 ---@param pane Pane
 ---@return boolean
-local function is_outside_shared_proc(pane) return not is_shared_key_proc(pane) end
+local function outside_shared_proc(pane) return not is_shared_key_proc(pane) end
 
 ---@param cond function
 ---@param key string
@@ -95,32 +80,12 @@ cfg.keys = {
         action = act.SplitVertical({ domain = "CurrentPaneDomain" }),
     },
     {
-        key = "h",
-        mods = "CTRL|SHIFT",
-        action = act.AdjustPaneSize({ "Left", 5 }),
-    },
-    {
-        key = "l",
-        mods = "CTRL|SHIFT",
-        action = act.AdjustPaneSize({ "Right", 5 }),
-    },
-    {
-        key = "j",
-        mods = "CTRL|SHIFT",
-        action = act.AdjustPaneSize({ "Down", 5 }),
-    },
-    {
-        key = "k",
-        mods = "CTRL|SHIFT",
-        action = act.AdjustPaneSize({ "Up", 5 }),
-    },
-    {
         key = "m",
         mods = "LEADER",
         action = act.TogglePaneZoomState,
     },
     {
-        key = "L",
+        key = "D",
         mods = "CTRL",
         action = act.ShowDebugOverlay,
     },
@@ -162,33 +127,37 @@ cfg.keys = {
         action = act.Search({ CaseSensitiveString = "" }),
     },
     {
-        key = "LeftArrow",
+        key = "h",
         mods = "ALT",
         action = act.ActivatePaneDirection("Left"),
     },
     {
-        key = "DownArrow",
+        key = "j",
         mods = "ALT",
         action = act.ActivatePaneDirection("Down"),
     },
     {
-        key = "UpArrow",
+        key = "k",
         mods = "ALT",
         action = act.ActivatePaneDirection("Up"),
     },
     {
-        key = "RightArrow",
+        key = "l",
         mods = "ALT",
         action = act.ActivatePaneDirection("Right"),
     },
-    bind_if(is_outside_shared_proc, "h", "CTRL", act.ActivatePaneDirection("Left")),
-    bind_if(is_outside_shared_proc, "j", "CTRL", act.ActivatePaneDirection("Down")),
-    bind_if(is_outside_shared_proc, "k", "CTRL", act.ActivatePaneDirection("Up")),
-    bind_if(is_outside_shared_proc, "l", "CTRL", act.ActivatePaneDirection("Right")),
-    bind_if(is_outside_shared_proc, "b", "CTRL", act.ScrollByPage(-1)),
-    bind_if(is_outside_shared_proc, "f", "CTRL", act.ScrollByPage(1)),
-    bind_if(is_outside_shared_proc, "u", "CTRL", act.ScrollByPage(-0.5)),
-    bind_if(is_outside_shared_proc, "d", "CTRL", act.ScrollByPage(0.5)),
+    bind_if(outside_shared_proc, "h", "CTRL", act.ActivatePaneDirection("Left")),
+    bind_if(outside_shared_proc, "j", "CTRL", act.ActivatePaneDirection("Down")),
+    bind_if(outside_shared_proc, "k", "CTRL", act.ActivatePaneDirection("Up")),
+    bind_if(outside_shared_proc, "l", "CTRL", act.ActivatePaneDirection("Right")),
+    bind_if(outside_shared_proc, "b", "CTRL", act.ScrollByPage(-1)),
+    bind_if(outside_shared_proc, "f", "CTRL", act.ScrollByPage(1)),
+    bind_if(outside_shared_proc, "u", "CTRL", act.ScrollByPage(-0.5)),
+    bind_if(outside_shared_proc, "d", "CTRL", act.ScrollByPage(0.5)),
+    bind_if(outside_shared_proc, "h", "CTRL|SHIFT", act.AdjustPaneSize({ "Left", 5 })),
+    bind_if(outside_shared_proc, "j", "CTRL|SHIFT", act.AdjustPaneSize({ "Down", 5 })),
+    bind_if(outside_shared_proc, "k", "CTRL|SHIFT", act.AdjustPaneSize({ "Up", 5 })),
+    bind_if(outside_shared_proc, "l", "CTRL|SHIFT", act.AdjustPaneSize({ "Right", 5 })),
 }
 
 return cfg

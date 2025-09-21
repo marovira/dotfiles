@@ -14,7 +14,7 @@ cfg.mouse_bindings = {
                 window:perform_action(act.CopyTo("ClipboardAndPrimarySelection"), pane)
                 window:perform_action(act.ClearSelection, pane)
             else
-                window:perform_action(act({ PasteFrom = "Clipboard" }), pane)
+                window:perform_action(act.PasteFrom("Clipboard"), pane)
             end
         end),
     },
@@ -22,9 +22,7 @@ cfg.mouse_bindings = {
         event = { Down = { streak = 1, button = "Right" } },
         mods = "SHIFT",
         action = wezterm.action_callback(
-            function(window, pane)
-                window:perform_action(act({ PasteFrom = "Clipboard" }), pane)
-            end
+            function(window, pane) window:perform_action(act.PasteFrom("Clipboard"), pane) end
         ),
     },
     {
