@@ -36,14 +36,6 @@ return {
         end,
     },
     {
-        "neovim/nvim-lspconfig",
-        version = "*",
-        dependencies = {
-            { "mason-org/mason-lspconfig.nvim" },
-        },
-        event = { "BufReadPre", "BufNewFile", "BufWritePre" },
-    },
-    {
         "mason-org/mason.nvim",
         version = "*",
         opts = {},
@@ -52,6 +44,7 @@ return {
         "mason-org/mason-lspconfig.nvim",
         dependencies = {
             { "mason-org/mason.nvim" },
+            { "neovim/nvim-lspconfig", version = "*" },
         },
         version = "*",
         opts = {

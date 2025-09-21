@@ -114,7 +114,15 @@ return {
         },
     },
     {
+        "theHamsta/nvim-dap-virtual-text",
+        lazy = true,
+        opts = {},
+    },
+    {
         "igorlfs/nvim-dap-view",
+        dependencies = {
+            { "theHamsta/nvim-dap-virtual-text" },
+        },
         opts = {
             winbar = {
                 show = true,

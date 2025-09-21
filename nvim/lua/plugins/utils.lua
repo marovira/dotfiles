@@ -8,7 +8,7 @@ return {
         opts = {},
     },
     {
-        "numToStr/Navigator.nvim",
+        "marovira/Navigator.nvim",
         lazy = false,
         opts = {
             disable_on_zoom = true,
