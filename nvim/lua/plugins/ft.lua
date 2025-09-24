@@ -68,7 +68,7 @@ return {
             {
                 "<leader>ct",
                 "<cmd>ClangdTypeHierarchy<cr>",
-                desc = "Clagnd show type hierarchy",
+                desc = "Clangd show type hierarchy",
             },
             {
                 "<leader>ca",

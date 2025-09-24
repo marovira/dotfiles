@@ -81,19 +81,19 @@ return {
                 "<leader><leader>j",
                 function() require("smart-splits").swap_buf_down() end,
                 mode = "n",
-                desc = "Swap buffer left",
+                desc = "Swap buffer down",
             },
             {
                 "<leader><leader>k",
                 function() require("smart-splits").swap_buf_up() end,
                 mode = "n",
-                desc = "Swap buffer left",
+                desc = "Swap buffer up",
             },
             {
                 "<leader><leader>l",
                 function() require("smart-splits").swap_buf_right() end,
                 mode = "n",
-                desc = "Swap buffer left",
+                desc = "Swap buffer right",
             },
         },
     },
@@ -211,6 +211,7 @@ return {
                     Snacks.toggle.treesitter():map("<leader>tt")
                     Snacks.toggle.animate():map("<leader>ta")
                     Snacks.toggle.zen():map("<leader>tz")
+                    Snacks.toggle.dim():map("<leader>th")
                     Snacks.toggle
                         .option("relativenumber", { name = "Relative number" })
                         :map("<leader>tn")

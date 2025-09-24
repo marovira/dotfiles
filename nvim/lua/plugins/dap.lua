@@ -242,5 +242,22 @@ return {
                 },
             }
         end,
+        keys = {
+            {
+                "<leader>dpm",
+                function() require("dap-python").test_method() end,
+                desc = "DAP Python test method",
+            },
+            {
+                "<leader>dpc",
+                function() require("dap-python").test_class() end,
+                desc = "DAP Python test class",
+            },
+            {
+                "<leader>dps",
+                function() require("dap-python").debug_selection() end,
+                desc = "DAP Python selection",
+            },
+        },
     },
 }

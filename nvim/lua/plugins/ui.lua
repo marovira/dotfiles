@@ -93,7 +93,7 @@ return {
                 "<F7>",
                 function() require("nvim-tree.api").tree.toggle() end,
                 mode = "n",
-                desc = "Toggle NVimTree",
+                desc = "NVimTree explorer",
             },
         },
     },
@@ -147,6 +147,24 @@ return {
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
+        opts = {
+            icons = {
+                rules = {
+                    { pattern = "nvimtree", icon = "󰙅" },
+                    { pattern = "dap", icon = "" },
+                    { pattern = "cmake", icon = "" },
+                    { pattern = "clang", icon = "" },
+                    { pattern = "files", icon = "" },
+                    { pattern = "todo", icon = "" },
+                    { pattern = "help", icon = "󰋖" },
+                    { pattern = "buffer", icon = "" },
+                    { pattern = "grep", icon = "" },
+                    { pattern = "global", icon = "󱢎" },
+                    { pattern = "lsp", icon = "" },
+                    { pattern = "symbol", icon = "" },
+                },
+            },
+        },
         keys = {
             {
                 "<leader>?",
