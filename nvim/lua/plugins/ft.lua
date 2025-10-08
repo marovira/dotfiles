@@ -42,13 +42,6 @@ return {
                 call SingleCompile#SetOutfile('cpp', 'clang++', '$(FILE_RUN)$')
             ]])
         end,
-        keys = {
-            {
-                "<leader>sc",
-                "<cmd>SCCompileRun<cr>",
-                desc = "Run Single-Compile",
-            },
-        },
     },
     {
         "p00f/clangd_extensions.nvim",

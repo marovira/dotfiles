@@ -1,4 +1,3 @@
-local noice_enabled = true
 local common = require("common")
 
 return {
@@ -113,10 +112,182 @@ return {
         priority = 1000,
         lazy = false,
         keys = {
+            -- Global pickers.
             {
-                "<leader>fu",
-                function() require("snacks").picker.undo() end,
-                desc = "Find undo",
+                "<F7>",
+                ---@diagnostic disable-next-line:missing-fields
+                function() Snacks.explorer({ hidden = true }) end,
+                desc = "Snacks explorer",
+            },
+            -- Find...
+            {
+                "<leader>fb",
+                function() Snacks.picker.buffers() end,
+                desc = "Find buffers",
+            },
+            {
+                "<leader>ff",
+                function() Snacks.picker.files({ hidden = true }) end,
+                desc = "Find files",
+            },
+            {
+                "<leader>fc",
+                function()
+                    Snacks.picker.files({ cwd = vim.fn.stdpath("config"), hidden = true })
+                end,
+                desc = "Find Config File",
+            },
+            {
+                "<leader>fr",
+                function() Snacks.picker.recent() end,
+                desc = "Recent",
+            },
+            {
+                "<leader>fs",
+                function() Snacks.picker.smart() end,
+                desc = "Smart Find Files",
+            },
+            -- Grep
+            {
+                "<leader>sb",
+                function() Snacks.picker.lines() end,
+                desc = "Buffer Lines",
+            },
+            {
+                "<leader>sB",
+                function() Snacks.picker.grep_buffers() end,
+                desc = "Grep Open Buffers",
+            },
+            {
+                "<leader>sg",
+                function() Snacks.picker.grep() end,
+                desc = "Grep",
+            },
+            {
+                "<leader>sw",
+                function() Snacks.picker.grep_word() end,
+                desc = "Visual selection or word",
+                mode = { "n", "x" },
+            },
+            -- Search
+            {
+                '<leader>s"',
+                function() Snacks.picker.registers() end,
+                desc = "Registers",
+            },
+            {
+                "<leader>s/",
+                function() Snacks.picker.search_history() end,
+                desc = "Search History",
+            },
+            {
+                "<leader>sa",
+                function() Snacks.picker.autocmds() end,
+                desc = "Autocmds",
+            },
+            {
+                "<leader>sc",
+                function() Snacks.picker.command_history() end,
+                desc = "Command History",
+            },
+            {
+                "<leader>sC",
+                function() Snacks.picker.commands() end,
+                desc = "Commands",
+            },
+            {
+                "<leader>sd",
+                function() Snacks.picker.diagnostics() end,
+                desc = "Diagnostics",
+            },
+            {
+                "<leader>sD",
+                function() Snacks.picker.diagnostics_buffer() end,
+                desc = "Buffer Diagnostics",
+            },
+            {
+                "<leader>sh",
+                function() Snacks.picker.help() end,
+                desc = "Help Pages",
+            },
+            {
+                "<leader>sH",
+                function() Snacks.picker.highlights() end,
+                desc = "Highlights",
+            },
+            {
+                "<leader>si",
+                function() Snacks.picker.icons() end,
+                desc = "Icons",
+            },
+            {
+                "<leader>sj",
+                function() Snacks.picker.jumps() end,
+                desc = "Jumps",
+            },
+            {
+                "<leader>sk",
+                function() Snacks.picker.keymaps() end,
+                desc = "Keymaps",
+            },
+            {
+                "<leader>sm",
+                function() Snacks.picker.marks() end,
+                desc = "Marks",
+            },
+            {
+                "<leader>sn",
+                ---@diagnostic disable-next-line:undefined-field
+                function() Snacks.picker.noice() end,
+                desc = "Noice",
+            },
+            {
+                "<leader>st",
+                ---@diagnostic disable-next-line:undefined-field
+                function() Snacks.picker.todo_comments() end,
+                desc = "Todo",
+            },
+            {
+                "<leader>su",
+                function() Snacks.picker.undo() end,
+                desc = "Undo History",
+            },
+            -- LSP
+            {
+                "gd",
+                function() Snacks.picker.lsp_definitions() end,
+                desc = "Goto Definition",
+            },
+            {
+                "gD",
+                function() Snacks.picker.lsp_declarations() end,
+                desc = "Goto Declaration",
+            },
+            {
+                "gr",
+                function() Snacks.picker.lsp_references() end,
+                nowait = true,
+                desc = "References",
+            },
+            {
+                "gi",
+                function() Snacks.picker.lsp_implementations() end,
+                desc = "Goto Implementation",
+            },
+            {
+                "gy",
+                function() Snacks.picker.lsp_type_definitions() end,
+                desc = "Goto T[y]pe Definition",
+            },
+            {
+                "<leader>ss",
+                function() Snacks.picker.lsp_symbols() end,
+                desc = "LSP Symbols",
+            },
+            {
+                "<leader>sS",
+                function() Snacks.picker.lsp_workspace_symbols() end,
+                desc = "LSP Workspace Symbols",
             },
         },
         opts = {
@@ -130,7 +301,7 @@ return {
                             icon = " ",
                             key = "f",
                             desc = "Find File",
-                            action = ":FzfLua files",
+                            action = ":lua Snacks.dashboard.pick('files', {hidden = true})",
                         },
                         {
                             icon = " ",
@@ -142,19 +313,19 @@ return {
                             icon = " ",
                             key = "g",
                             desc = "Find Text",
-                            action = ":FzfLua live_grep",
+                            action = ":lua Snacks.dashboard.pick('live_grep')",
                         },
                         {
                             icon = " ",
                             key = "r",
                             desc = "Recent Files",
-                            action = ":FzfLua oldfiles",
+                            action = ":lua Snacks.dashboard.pick('oldfiles')",
                         },
                         {
                             icon = " ",
                             key = "c",
                             desc = "Config",
-                            action = ":lua FzfLua.files({cwd = vim.fn.stdpath('config')})",
+                            action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config'})",
                         },
                         {
                             icon = "󰒲 ",
@@ -180,7 +351,21 @@ return {
                     },
                 },
             },
-            picker = {},
+            picker = {
+                formatters = {
+                    file = {
+                        filename_first = true,
+                        truncate = 100,
+                    },
+                },
+                win = {
+                    input = {
+                        keys = {
+                            ["O"] = { { "pick_win", "jump" }, mode = "n" },
+                        },
+                    },
+                },
+            },
             indent = {
                 filter = function(buf)
                     return vim.g.snacks_indent ~= false
@@ -194,6 +379,7 @@ return {
             scope = {},
             words = {},
             zen = {},
+            image = {},
             notifier = {
                 timeout = 3000,
             },
@@ -218,6 +404,31 @@ return {
                     Snacks.toggle
                         .option("list", { name = "Whitespace characters" })
                         :map("<leader>tw")
+
+                    Snacks.toggle
+                        .new({
+                            id = "noice_toggle",
+                            name = "Noice",
+                            get = function() return require("noice.config")._running end,
+                            set = function(state)
+                                if state then
+                                    require("noice").enable()
+                                else
+                                    require("noice").disable()
+                                end
+                            end,
+                        })
+                        :map("<leader>tm")
+                end,
+            })
+
+            vim.api.nvim_create_autocmd("VimEnter", {
+                callback = function()
+                    Snacks.util.set_hl({
+                        PickerDir = { link = "Comment" },
+                        PickerPathHidden = { link = "Text" },
+                        PickerPathIgnored = { link = "Comment" },
+                    }, { prefix = "Snacks" })
                 end,
             })
         end,
@@ -332,24 +543,6 @@ return {
                 "<leader>nh",
                 function() require("noice").cmd("history") end,
                 desc = "Noice message history",
-            },
-            {
-                "<leader>fm",
-                function() require("noice").cmd("fzf") end,
-                desc = "Find noice messages",
-            },
-            {
-                "<leader>nt",
-                function()
-                    if noice_enabled then
-                        require("noice").cmd("disable")
-                        noice_enabled = false
-                    else
-                        require("noice").cmd("enable")
-                        noice_enabled = true
-                    end
-                end,
-                desc = "Toggle noice",
             },
         },
     },

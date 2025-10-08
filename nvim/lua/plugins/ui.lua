@@ -67,37 +67,6 @@ return {
         },
     },
     {
-        "nvim-tree/nvim-tree.lua",
-        dependencies = {
-            { "nvim-tree/nvim-web-devicons" },
-        },
-        opts = {
-            on_attach = function(bufnr)
-                local api = require("nvim-tree.api")
-
-                api.config.mappings.default_on_attach(bufnr)
-
-                vim.keymap.set("n", "<C-s>", api.node.open.horizontal, {
-                    desc = "Open: Horizontal Split",
-                    buffer = bufnr,
-                    noremap = true,
-                    silent = true,
-                    nowait = true,
-                })
-                vim.keymap.del("n", "<C-x>", { buffer = bufnr })
-            end,
-        },
-        keys = {
-            {
-
-                "<F7>",
-                function() require("nvim-tree.api").tree.toggle() end,
-                mode = "n",
-                desc = "NVimTree explorer",
-            },
-        },
-    },
-    {
         "folke/trouble.nvim",
         dependencies = {
             { "nvim-tree/nvim-web-devicons" },
@@ -118,16 +87,6 @@ return {
                 desc = "Trouble buffer diagnostics",
             },
             {
-                "<leader>xs",
-                "<cmd>Trouble symbols toggle focus=false<cr>",
-                desc = "Trouble symbols",
-            },
-            {
-                "<leader>xl",
-                "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-                desc = "Trouble LSP definitions / references",
-            },
-            {
                 "<leader>xL",
                 "<cmd>Trouble loclist toggle<cr>",
                 desc = "Trouble loclist",
@@ -137,11 +96,6 @@ return {
                 "<cmd>Trouble qflist toggle<cr>",
                 desc = "Trouble quickfix",
             },
-            {
-                "<leader>xt",
-                "<cmd>Trouble todo<cr>",
-                desc = "Trouble TODO",
-            },
         },
     },
     {
@@ -150,18 +104,32 @@ return {
         opts = {
             icons = {
                 rules = {
-                    { pattern = "nvimtree", icon = "󰙅" },
+                    { pattern = "explorer", icon = "󰙅" },
+                    { pattern = "command", icon = "" },
+                    { pattern = "autocmds", icon = "" },
                     { pattern = "dap", icon = "" },
                     { pattern = "cmake", icon = "" },
                     { pattern = "clang", icon = "" },
+                    { pattern = "smart", icon = "" },
                     { pattern = "files", icon = "" },
                     { pattern = "todo", icon = "" },
                     { pattern = "help", icon = "󰋖" },
+                    { pattern = "diagnostics", icon = "󱖫" },
                     { pattern = "buffer", icon = "" },
                     { pattern = "grep", icon = "" },
                     { pattern = "global", icon = "󱢎" },
                     { pattern = "lsp", icon = "" },
                     { pattern = "symbol", icon = "" },
+                    { pattern = "icons", icon = "" },
+                    { pattern = "keymaps", icon = "" },
+                    { pattern = "undo", icon = "" },
+                    { pattern = "history", icon = "" },
+                    { pattern = "noice", icon = "󰈸", color = "orange" },
+                    { pattern = "config", icon = " " },
+                    { pattern = "marks", icon = "" },
+                    { pattern = "jumps", icon = "󰓾" },
+                    { pattern = "word", icon = "" },
+                    {pattern = "recent", icon = ""},
                 },
             },
         },
@@ -170,86 +138,6 @@ return {
                 "<leader>?",
                 function() require("which-key").show({ global = false }) end,
                 desc = "Buffer Local Keymaps (which-key)",
-            },
-        },
-    },
-    {
-        "ibhagwan/fzf-lua",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        opts = {
-            "default",
-            hls = { backdrop = nil },
-        },
-        config = function(_, opts)
-            require("fzf-lua").setup(opts)
-            vim.ui.select = require("fzf-lua.providers.ui_select").ui_select
-        end,
-        cmd = { "FzfLua" },
-        keys = {
-            {
-                "<leader>fe",
-                function() require("fzf-lua").global() end,
-                desc = "FZF everything (global)",
-            },
-            {
-                "<leader>ff",
-                function() require("fzf-lua").files() end,
-                desc = "FZF files",
-            },
-            {
-                "<leader>fF",
-                function() require("fzf-lua").files({ resume = true }) end,
-                desc = "FZF resume files",
-            },
-            {
-                "<leader>fg",
-                function() require("fzf-lua").live_grep() end,
-                desc = "FZF live grep",
-            },
-            {
-                "<leader>fG",
-                function() require("fzf-lua").live_grep({ resume = true }) end,
-                desc = "FZF resume live grep",
-            },
-            {
-                "<leader>fb",
-                function() require("fzf-lua").buffers() end,
-                desc = "FZF buffers",
-            },
-            {
-                "<leader>fh",
-                function() require("fzf-lua").helptags() end,
-                desc = "FZF help tags",
-            },
-            {
-                "<leader>fr",
-                function() require("fzf-lua").lsp_references() end,
-                desc = "FZF find references",
-            },
-            {
-                "<leader>fR",
-                function() require("fzf-lua").lsp_references({ resume = true }) end,
-                desc = "FZF resume find references",
-            },
-            {
-                "<leader>fs",
-                function() require("fzf-lua").lsp_document_symbols() end,
-                desc = "FZF LSP document symbols",
-            },
-            {
-                "<leader>fS",
-                function() require("fzf-lua").lsp_workspace_symbols() end,
-                desc = "FZF LSP workspace symbols",
-            },
-            {
-                "<leader>fl",
-                function() require("fzf-lua").lsp_finder() end,
-                desc = "FZF LSP finder",
-            },
-            {
-                "<leader>fdv",
-                function() require("fzf-lua").dap_variables() end,
-                desc = "FZF DAP active session variables",
             },
         },
     },

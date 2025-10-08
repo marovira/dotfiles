@@ -88,14 +88,23 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
 vim.api.nvim_create_autocmd({ "InsertEnter" }, {
     pattern = "*",
     group = augroup,
-    command = "silent! :set nornu number",
+    callback = function()
+        -- Don't mess with the line numbers in the snacks pickers.
+        if common.is_buffer_filetype({ "snacks_picker_list" }) then return end
+        vim.opt.relativenumber = false
+        vim.opt.number = true
+    end,
 })
 
 -- Switch back to relative numbers in normal mode.
 vim.api.nvim_create_autocmd({ "InsertLeave", "BufNewFile", "VimEnter" }, {
     pattern = "*",
     group = augroup,
-    command = "silent! :set rnu number",
+    callback = function()
+        if common.is_buffer_filetype({ "snacks_picker_list" }) then return end
+        vim.opt.number = true
+        vim.opt.relativenumber = true
+    end,
 })
 
 -- LSP autocmd
@@ -108,36 +117,6 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
             "K",
             "<cmd>lua vim.lsp.buf.hover()<cr>",
             { buffer = event.buf, desc = "LSP hover" }
-        )
-        vim.keymap.set(
-            "n",
-            "gd",
-            "<cmd>lua vim.lsp.buf.definition()<cr>",
-            { buffer = event.buf, desc = "LSP go to definition" }
-        )
-        vim.keymap.set(
-            "n",
-            "gD",
-            "<cmd>lua vim.lsp.buf.declaration()<cr>",
-            { buffer = event.buf, desc = "LSP go to declaration" }
-        )
-        vim.keymap.set(
-            "n",
-            "gi",
-            "<cmd>lua vim.lsp.buf.implementation()<cr>",
-            { buffer = event.buf, desc = "LSP go to implementation" }
-        )
-        vim.keymap.set(
-            "n",
-            "go",
-            "<cmd>lua vim.lsp.buf.type_definition()<cr>",
-            { buffer = event.buf, desc = "LSP go to type definition" }
-        )
-        vim.keymap.set(
-            "n",
-            "gO",
-            "<cmd>lua vim.lsp.buf.document_symbol()<cr>",
-            { buffer = event.buf, desc = "LSP go to document symbol" }
         )
         vim.keymap.set(
             "n",
