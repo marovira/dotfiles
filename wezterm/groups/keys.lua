@@ -60,6 +60,11 @@ cfg.leader = { key = "Space", mods = "ALT", timeout_miliseconds = 2000 }
 
 cfg.keys = {
     {
+        key = "Enter",
+        mods = "SHIFT",
+        action = act.SendString("\x1b[13;2u")
+    },
+    {
         key = "C",
         mods = "CTRL|SHIFT",
         action = act.CopyTo("Clipboard"),
