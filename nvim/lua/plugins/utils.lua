@@ -237,8 +237,7 @@ return {
             },
             {
                 "<leader>sn",
-                ---@diagnostic disable-next-line:undefined-field
-                function() Snacks.picker.noice() end,
+                function() Snacks.picker.notifications() end,
                 desc = "Noice",
             },
             {
