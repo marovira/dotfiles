@@ -28,8 +28,12 @@ return {
         "nvim-lualine/lualine.nvim",
         event = { "BufReadPre", "BufNewFile" },
         dependencies = {
-            { "nvim-tree/nvim-web-devicons" },
+            { "nvim-mini/mini.nvim" },
         },
+        config = function(_, opts)
+            require("mini.icons").mock_nvim_web_devicons()
+            require("lualine").setup(opts)
+        end,
         opts = {
             options = {
                 theme = "tokyonight",
@@ -69,7 +73,7 @@ return {
     {
         "folke/trouble.nvim",
         dependencies = {
-            { "nvim-tree/nvim-web-devicons" },
+            { "nvim-mini/mini.nvim" },
         },
         opts = {
             auto_close = true,
@@ -129,7 +133,7 @@ return {
                     { pattern = "marks", icon = "" },
                     { pattern = "jumps", icon = "󰓾" },
                     { pattern = "word", icon = "" },
-                    {pattern = "recent", icon = ""},
+                    { pattern = "recent", icon = "" },
                 },
             },
         },

@@ -1,5 +1,3 @@
-local common = require("common")
-
 return {
     {
         "lervag/vimtex",
@@ -9,39 +7,10 @@ return {
         "MeanderingProgrammer/render-markdown.nvim",
         dependencies = {
             { "nvim-treesitter/nvim-treesitter" },
-            { "nvim-tree/nvim-web-devicons" },
+            { "nvim-mini/mini.nvim" },
         },
         ft = "markdown",
         opts = {},
-    },
-    {
-        "opdavies/toggle-checkbox.nvim",
-        ft = "markdown",
-        keys = {
-            {
-                "<leader>tc",
-                function() require("toggle-checkbox").toggle() end,
-                mode = "n",
-                ft = "markdown",
-                desc = "Toggle checkbox",
-            },
-        },
-    },
-    {
-        "xuhdev/SingleCompile",
-        cond = function() return common.is_windows() end,
-        ft = "cpp",
-        config = function()
-            vim.g.SingleCompile_alwayscompile = false
-            vim.g.SingleCompile_showquickfixiferror = true
-            vim.g.SingleCompile_showquickfixifwarning = true
-            vim.g.SingleCompile_showresultafterrun = true
-
-            vim.cmd([[
-                call SingleCompile#SetCompilerTemplate("cpp", "clang++", "LLVM Clang", "clang++", "-std=c++20 -Wall -Wextra --pedantic -Werror -g -O0 -DDEBUG -o $(FILE_EXEC)$", "$(FILE_RUN)$")
-                call SingleCompile#SetOutfile('cpp', 'clang++', '$(FILE_RUN)$')
-            ]])
-        end,
     },
     {
         "p00f/clangd_extensions.nvim",
@@ -75,7 +44,6 @@ return {
         dependencies = {
             { "nvim-lua/plenary.nvim" },
             { "mfussenegger/nvim-dap" },
-            { "akinsho/toggleterm.nvim" },
         },
         opts = {
             cmake_build_directory = "build",

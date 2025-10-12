@@ -2,11 +2,6 @@ local common = require("common")
 
 return {
     {
-        "windwp/nvim-autopairs",
-        event = "InsertEnter",
-        opts = {},
-    },
-    {
         "marovira/Navigator.nvim",
         lazy = false,
         opts = {
@@ -544,5 +539,14 @@ return {
                 desc = "Noice message history",
             },
         },
+    },
+    {
+        "nvim-mini/mini.nvim",
+        version = false,
+        config = function()
+            require("mini.pairs").setup({})
+            require("mini.surround").setup({})
+            require("mini.icons").setup({})
+        end,
     },
 }
