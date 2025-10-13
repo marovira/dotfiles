@@ -1,3 +1,4 @@
+local foo = ""
 return {
     {
         "folke/tokyonight.nvim",
@@ -39,23 +40,41 @@ return {
                 theme = "tokyonight",
                 disabled_filetypes = {
                     statusline = {
-                        "NvimTree",
                         "Trouble",
                         "gitcommit",
+                        "snacks_picker_list",
                     },
                 },
             },
             sections = {
                 lualine_a = { "mode" },
                 lualine_b = {
-                    "branch",
-                    "diff",
+                    { "branch", icon = "" },
+                    {
+                        "diff",
+                        symbols = {
+                            added = " ",
+                            modified = " ",
+                            removed = " ",
+                        },
+                    },
                     {
                         "diagnostics",
                         sources = { "nvim_diagnostic", "ale" },
                     },
                 },
-                lualine_c = { "filename" },
+                lualine_c = {
+                    {
+                        "filename",
+                        path = 1,
+                        symbols = {
+                            modified = "",
+                            readonly = "",
+                            unnamed = "",
+                            newfile = "",
+                        },
+                    },
+                },
                 lualine_x = { "encoding", "fileformat", "filetype" },
                 lualine_y = { "progress", "selectioncount" },
                 lualine_z = { "location" },
