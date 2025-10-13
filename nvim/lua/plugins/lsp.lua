@@ -1,6 +1,61 @@
 local common = require("common")
-local icons = require("extra.blink-icons")
 local spell = require("extra.cmp-spell")
+
+---@param kind string
+---@return string
+local function fs_kind_to_mini_category(kind)
+    local category = "default"
+    if kind == "Folder" then
+        category = "directory"
+    elseif kind == "File" then
+        category = "file"
+    end
+
+    return category
+end
+
+---@module "blink.cmp"
+---@param ctx blink.cmp.DrawItemContext
+---@return string
+local function get_blink_text(ctx)
+    local icon = ctx.kind_icon
+    local mini = require("mini.icons")
+    local lspkind = require("lspkind")
+
+    if vim.tbl_contains({ "LSP" }, ctx.source_name) then
+        local mini_icon, _, _ = mini.get("lsp", ctx.kind)
+        if mini_icon then icon = mini_icon end
+    elseif vim.tbl_contains({ "Path" }, ctx.source_name) then
+        local mini_icon = mini.get(fs_kind_to_mini_category(ctx.kind), ctx.label)
+        if mini_icon then icon = mini_icon end
+    elseif
+        vim.tbl_contains({ "spell", "cmdline", "markdown", "Dict" }, ctx.source_name)
+    then
+        local lsp_icon = lspkind.symbolic(ctx.source_name, { mode = "symbol" })
+        if lsp_icon then icon = lsp_icon end
+    end
+    return icon
+end
+
+---@param ctx blink.cmp.DrawItemContext
+---@return string
+local function get_blink_hl(ctx)
+    local hl = "BlinkCmpKind" .. ctx.kind
+        or require("blink.cmp.completion.windows.render.tailwind").get_hl(ctx)
+
+    local mini = require("mini.icons")
+
+    if vim.tbl_contains({ "LSP" }, ctx.source_name) then
+        local mini_icon, mini_hl, _ = mini.get("lsp", ctx.kind)
+        if mini_icon then hl = mini_hl end
+    elseif vim.tbl_contains({ "Path" }, ctx.source_name) then
+        local mini_icon, mini_hl, _ =
+            mini.get(fs_kind_to_mini_category(ctx.kind), ctx.label)
+        if mini_icon then hl = mini_hl end
+    end
+
+    return hl
+end
 
 return {
     {
@@ -93,11 +148,17 @@ return {
                         components = {
                             kind_icon = {
                                 ellipsis = false,
-                                text = function(ctx) return icons.get_text(ctx) end,
-                                highlight = function(ctx) return icons.get_highlight(ctx) end,
+                                text = function(ctx)
+                                    return get_blink_text(ctx)
+                                end,
+                                highlight = function(ctx)
+                                    return get_blink_hl(ctx)
+                                end,
                             },
                             kind = {
-                                highlight = function(ctx) return icons.get_highlight(ctx) end,
+                                highlight = function(ctx)
+                                    return get_blink_hl(ctx)
+                                end,
                             },
                         },
                     },
