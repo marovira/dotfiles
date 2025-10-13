@@ -352,6 +352,18 @@ return {
                         truncate = 100,
                     },
                 },
+                sources = {
+                    explorer = {
+                        win = {
+                            list = {
+                                keys = {
+                                    ["<c-s>"] = { { "pick_win", "edit_split" } },
+                                    ["<c-v>"] = { { "pick_win", "edit_vsplit" } },
+                                },
+                            },
+                        },
+                    },
+                },
                 win = {
                     input = {
                         keys = {
