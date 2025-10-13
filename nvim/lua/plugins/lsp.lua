@@ -148,17 +148,11 @@ return {
                         components = {
                             kind_icon = {
                                 ellipsis = false,
-                                text = function(ctx)
-                                    return get_blink_text(ctx)
-                                end,
-                                highlight = function(ctx)
-                                    return get_blink_hl(ctx)
-                                end,
+                                text = function(ctx) return get_blink_text(ctx) end,
+                                highlight = function(ctx) return get_blink_hl(ctx) end,
                             },
                             kind = {
-                                highlight = function(ctx)
-                                    return get_blink_hl(ctx)
-                                end,
+                                highlight = function(ctx) return get_blink_hl(ctx) end,
                             },
                         },
                     },
@@ -191,6 +185,11 @@ return {
                     },
                     lsp = {
                         fallbacks = {},
+                    },
+                    path = {
+                        opts = {
+                            show_hidden_files_by_default = true,
+                        },
                     },
                     lazydev = {
                         name = "LazyDev",
