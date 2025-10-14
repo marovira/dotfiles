@@ -558,7 +558,19 @@ return {
         config = function()
             require("mini.pairs").setup({})
             require("mini.surround").setup({})
-            require("mini.icons").setup({})
+
+            local icons = require("mini.icons")
+            icons.setup({
+                file = {
+                    [".pre-commit-config.yaml"] = { glyph = "󰛢" },
+                    [".clang-format"] = { glyph = "" },
+                    [".clang-tidy"] = { glyph = "" },
+                },
+                filetype = {
+                    cmake = { glyph = "" },
+                },
+            })
+            icons.mock_nvim_web_devicons()
         end,
     },
 }
