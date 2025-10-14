@@ -17,6 +17,12 @@ else
     IS_WIN=0
 fi
 
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    IS_DARWIN=1
+else
+    IS_DARWIN=0
+fi
+
 if [[ "$IS_WIN" == 1 ]]; then
     unset SHELL
 fi
@@ -55,6 +61,12 @@ alias vim='nvim'
 # doesn't block the terminal when started.
 if [[ "$IS_WIN" == 1 ]]; then
     alias neovide='(neovide --grid 100x50 &)'
+fi
+
+# On macOS only, ensure that python3 gets overwritten to the location of the version we
+# install with homebrew.
+if [[ "$IS_DARWIN" == 1 ]]; then
+    alias python3=/opt/homebrew/bin/python3
 fi
 
 # Grep aliases
