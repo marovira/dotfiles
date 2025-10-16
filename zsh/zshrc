@@ -1,34 +1,48 @@
-# Export variables.
-export EDITOR='nvim'
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-export COLUMNS
-export FZF_PREVIEW_COLUMNS
+# Setup platform identification
+uname=($(uname -srm))
 
-# Forgit exports
-export FORGIT_NO_ALIASES=1
+get_os() {
+    case "${uname[0]}" in
+        "Linux") os="Linux";;
+        "Darwin") os="Darwin";;
+        "CYGWIN"*) os="Windows";;
+        "MINGW"*) os="Windows";;
+        "GNU"*) os="Linux";;
+        *) printf "%s\n" "Unknown OS found: ${uname[0]}"; exit 1;;
+    esac
+}
 
-# For some reason, it seems that enabling zsh in newer versions of git bash will set
-# OSTYPE to be cygwin instead of msys2. Since I'm not entirely sure what will happen if I
-# attempt to override that flag, instead I'm making a new flag to denote Windows systems
-# so everything continues working as it should.
-if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
-    IS_WIN=1
-else
-    IS_WIN=0
-fi
+check_brew() {
+    has_brew=false
+    if [[ "$os" == "Darwin" ]]; then
+        if command -v brew > /dev/null 2>&1; then
+            has_brew=true
+        fi
+    fi
+}
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    IS_DARWIN=1
-else
-    IS_DARWIN=0
-fi
+check_brew_python() {
+    if $has_brew; then
+        has_python3=false
+        # Check every possible version of Python we know of.
+        if brew ls --versions python@3.12 > /dev/null; then
+            has_python3=true
+        elif brew ls --versions python@3.13 > /dev/null; then
+            has_python3=true
+        fi
+    fi
+}
 
-if [[ "$IS_WIN" == 1 ]]; then
+# On Windows, ensure that zshenv and zprofile are manually loaded. Also unset SHELL as
+# this causes issues with other commands.
+if [[ "$os" == "Windows" ]]; then
+    source "$HOME/.zshenv"
+    source "$HOME/.zprofile"
     unset SHELL
 fi
 
-# Load compinit for Windows (msys) and OSX since they don't enable it by default
-if [[ "$IS_WIN" == 1 || "$OSTYPE" == "darwin"* ]]; then
+# Load compinit for Windows and macOS since they don't enable it by default
+if [[ "$os" == "Windows" || "$os" == "Darwin" ]]; then
     autoload -Uz compinit
     compinit
 fi
@@ -51,21 +65,22 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-
-# Vim aliases.
-alias vi='nvim'
-alias vim='nvim'
+# Alias NeoVim to Vim
+if command -v nvim > /dev/null 2>&1; then
+    alias vi='nvim'
+    alias vim='nvim'
+fi
 
 # On Windows only, override neovide so it opens with the size we want. Also it seems the
 # latest version of Neovide has an issue with forking correctly on git bash, so ensure it
 # doesn't block the terminal when started.
-if [[ "$IS_WIN" == 1 ]]; then
+if [[ "$os" == "Windows" ]]; then
     alias neovide='(neovide --grid 100x50 &)'
 fi
 
 # On macOS only, ensure that python3 gets overwritten to the location of the version we
 # install with homebrew.
-if [[ "$IS_DARWIN" == 1 ]]; then
+if $has_brew && $has_python3; then
     alias python3=/opt/homebrew/bin/python3
 fi
 
@@ -75,19 +90,19 @@ alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
 # Emulates Apple's open. Only applies to Linux (linux-gnu) and Windows (msys).
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
+if [[ "$os" == "Linux" ]]; then
     alias open='xdg-open'
-elif [[ "$IS_WIN" == 1 ]]; then
+elif [[ "$os" == "Windows" ]]; then
     alias open='start'
 fi
 
 # Allow Windows to open bash without any settings. This is mainly to address an issue
 # where certain paths don't work in zsh.
-if [[ "$IS_WIN" == 1 ]]; then
+if [[ "$os" == "Windows" ]]; then
     alias bash='bash --norc --noprofile'
 fi
 
-# Directory listings.
+# Director listings.
 alias ls='ls -1 -hF --color=auto'
 alias la='ls -A'
 
@@ -95,8 +110,6 @@ alias la='ls -A'
 alias rsync='rsync -aP'
 
 bindkey '^[[Z' autosuggest-accept
-
-export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 
 # Automatically load all zshfn files.
 fpath+=(~/.zshfn)
@@ -127,9 +140,8 @@ PATH="$PATH:$FORGIT_INSTALL_DIR/bin"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-if [[ "$IS_WIN" == 1 ]]; then
+if [[ "$os" == "Windows" ]]; then
     keep_current_path() {
-        # printf "\e]9;9;%s\e\\" "$(cygpath -w "$PWD")"
         printf "\033]7;file//$HOST/$PWD\033\\"
     }
     precmd_functions+=(keep_current_path)

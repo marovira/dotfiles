@@ -1,10 +1,11 @@
 #!/bin/sh
 
 rm "$HOME/.zshrc"
+rm "$HOME/.zprofile"
+rm "$HOME/.zshenv"
 rm "$HOME/.zsh_plugins.txt"
 rm "$HOME/.zsh_plugins.zsh"
 rm "$HOME/.p10k.zsh"
-rm "$HOME/.zlogin"
 rm "$HOME/.zshfn"
 rm "$HOME/.zshpy"
 rm "$HOME/.gitconfig"

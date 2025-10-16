@@ -32,6 +32,8 @@ mklink %USERPROFILE%\.clang-format %CURDIR%cpp\.clang-format
 :: Setup ZSH
 mklink %USERPROFILE%\.bashrc %CURDIR%bash\bashrc_win_zsh
 mklink %USERPROFILE%\.zshrc %CURDIR%zsh\zshrc
+mklink %USERPROFILE%\.zprofile %CURDIR%zsh\zprofile
+mklink %USERPROFILE%\.zshenv %CURDIR%zsh\zshenv
 mklink %USERPROFILE%\.zsh_plugins.txt %CURDIR%zsh\zsh_plugins
 mklink %USERPROFILE%\.p10k.zsh %CURDIR%zsh\p10k.zsh
 mklink /D %USERPROFILE%\.zshfn %CURDIR%zsh\zshfn

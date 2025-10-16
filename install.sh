@@ -2,9 +2,10 @@
 #vim:set et sw=2 ts=4 tw=84:
 
 ln --backup -s "$PWD/zsh/zshrc" "$HOME/.zshrc"
+ln --backup -s "$PWD/zsh/zprofile" "$HOME/.zprofile"
+ln --backup -s "$PWD/zsh/zshenv" "$HOME/.zshenv"
 ln --backup -s "$PWD/zsh/zsh_plugins" "$HOME/.zsh_plugins.txt"
 ln --backup -s "$PWD/zsh/p10k.zsh" "$HOME/.p10k.zsh"
-ln --backup -s "$PWD/zsh/zlogin" "$HOME/.zlogin"
 ln --backup -s "$PWD/zsh/zshfn" "$HOME/.zshfn"
 ln --backup -s "$PWD/zsh/zshpy" "$HOME/.zshpy"
 ln --backup -s "$PWD/git/config" "$HOME/.gitconfig"

@@ -29,6 +29,8 @@ del %USERPROFILE%\.clang-format
 :: ZSH
 del %USERPROFILE%\.bashrc
 del %USERPROFILE%\.zshrc
+del %USERPROFILE%\.zprofile
+del %USERPROFILE%\.zshenv
 del %USERPROFILE%\.zsh_plugins.txt
 del %USERPROFILE%\.p10k.zsh
 rmdir %USERPROFILE%\.zshfn

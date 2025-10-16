@@ -1,0 +1,19 @@
+export PATH="$HOME/.local/bin:$PATH"
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+export COLUMNS
+export FZF_PREVIEW_COLUMNS
+export FORGIT_NO_ALIASES=1
+
+os=$(uname)
+
+# On macOS only, replace the built-in version of clang with one installed from homebrew
+# (if available) so that clang-tidy works properly.
+if [[ "$os" == "Darwin" ]]; then
+    if command -v brew > /dev/null 2>&1 && brew ls --versions llvm > /dev/null; then
+        export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+        export CC="/opt/homebrew/opt/llvm/bin/clang"
+        export CXX="/opt/homebrew/opt/llvm/bin/clang++"
+        export LDFLAGS="$LDFLAGS -L/opt/homebrew/opt/llvm/lib"
+        export CPPFLAGS="$CPPFLAGS -I/opt/homebrew/opt/llvm/include"
+    fi
+fi
