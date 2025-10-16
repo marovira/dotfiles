@@ -139,6 +139,7 @@
     #==============================#
     lo = forgit log
     rl = forgit reflog
+    lg = "! f() { git log --no-color --no-decorate | bat -n -l 'Git log' ; }; f"
 
     # Stash commands
     #==============================#
