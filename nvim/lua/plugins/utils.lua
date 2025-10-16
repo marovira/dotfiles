@@ -490,6 +490,9 @@ return {
         version = "*",
         opts = {
             disable_mouse = false,
+            disabled_filetypes = {
+                ["dap*"] = true,
+            },
             hints = {
                 ["[dcyvV][ia][%(%)]"] = {
                     message = function(keys)
