@@ -1,48 +1,42 @@
 # Setup platform identification
-uname=($(uname -srm))
+local _uname=$(uname)
+case "$_uname" in
+    "Linux") _current_platform="Linux";;
+    "Darwin") _current_platform="Darwin";;
+    "CYGWIN"*) _current_platform="Windows";;
+    "MINGW"*) _current_platform="Windows";;
+    "MSYS"*) _current_platform="Windows";;
+    "GNU"*) _current_platform="Linux";;
+    *) printf "%s\n" "Unknown OS found: $_uname"; exit 1;;
+esac
 
-get_os() {
-    case "${uname[0]}" in
-        "Linux") os="Linux";;
-        "Darwin") os="Darwin";;
-        "CYGWIN"*) os="Windows";;
-        "MINGW"*) os="Windows";;
-        "GNU"*) os="Linux";;
-        *) printf "%s\n" "Unknown OS found: ${uname[0]}"; exit 1;;
-    esac
-}
-
-check_brew() {
-    has_brew=false
-    if [[ "$os" == "Darwin" ]]; then
-        if command -v brew > /dev/null 2>&1; then
-            has_brew=true
-        fi
+_has_brew=false
+if [[ "$_current_platform" == "Darwin" ]]; then
+    if command -v brew > /dev/null 2>&1; then
+        _has_brew=true
     fi
-}
+fi
 
-check_brew_python() {
-    if $has_brew; then
-        has_python3=false
-        # Check every possible version of Python we know of.
-        if brew ls --versions python@3.12 > /dev/null; then
-            has_python3=true
-        elif brew ls --versions python@3.13 > /dev/null; then
-            has_python3=true
-        fi
+_has_brew_python3=false
+if $_has_brew; then
+    # Check every possible version of Python we know of.
+    if brew ls --versions python@3.12 > /dev/null; then
+        _has_brew_python3=true
+    elif brew ls --versions python@3.13 > /dev/null; then
+        _has_brew_python3=true
     fi
-}
+fi
 
 # On Windows, ensure that zshenv and zprofile are manually loaded. Also unset SHELL as
 # this causes issues with other commands.
-if [[ "$os" == "Windows" ]]; then
+if [[ "$_current_platform" = "Windows" ]]; then
+    unset SHELL
     source "$HOME/.zshenv"
     source "$HOME/.zprofile"
-    unset SHELL
 fi
 
 # Load compinit for Windows and macOS since they don't enable it by default
-if [[ "$os" == "Windows" || "$os" == "Darwin" ]]; then
+if [[ "$_current_platform" = "Windows" || "$os" = "Darwin" ]]; then
     autoload -Uz compinit
     compinit
 fi
@@ -74,13 +68,13 @@ fi
 # On Windows only, override neovide so it opens with the size we want. Also it seems the
 # latest version of Neovide has an issue with forking correctly on git bash, so ensure it
 # doesn't block the terminal when started.
-if [[ "$os" == "Windows" ]]; then
+if [[ "$_current_platform" == "Windows" ]]; then
     alias neovide='(neovide --grid 100x50 &)'
 fi
 
 # On macOS only, ensure that python3 gets overwritten to the location of the version we
 # install with homebrew.
-if $has_brew && $has_python3; then
+if $_has_brew && $_has_brew_python3; then
     alias python3=/opt/homebrew/bin/python3
 fi
 
@@ -90,15 +84,15 @@ alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
 # Emulates Apple's open. Only applies to Linux (linux-gnu) and Windows (msys).
-if [[ "$os" == "Linux" ]]; then
+if [[ "$_current_platform" == "Linux" ]]; then
     alias open='xdg-open'
-elif [[ "$os" == "Windows" ]]; then
+elif [[ "$_current_platform" == "Windows" ]]; then
     alias open='start'
 fi
 
 # Allow Windows to open bash without any settings. This is mainly to address an issue
 # where certain paths don't work in zsh.
-if [[ "$os" == "Windows" ]]; then
+if [[ "$_current_platform" == "Windows" ]]; then
     alias bash='bash --norc --noprofile'
 fi
 
@@ -140,7 +134,7 @@ PATH="$PATH:$FORGIT_INSTALL_DIR/bin"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-if [[ "$os" == "Windows" ]]; then
+if [[ "$_current_platform" == "Windows" ]]; then
     keep_current_path() {
         printf "\033]7;file//$HOST/$PWD\033\\"
     }
