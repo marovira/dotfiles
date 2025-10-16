@@ -2,7 +2,7 @@ setopt EXTENDED_HISTORY
 setopt inc_append_history_time
 
 # Setup platform identification
-local _uname=$(uname)
+_uname=$(uname)
 case "$_uname" in
     "Linux") _current_platform="Linux";;
     "Darwin") _current_platform="Darwin";;
@@ -149,3 +149,8 @@ if [[ "$_current_platform" == "Windows" ]]; then
     }
     precmd_functions+=(keep_current_path)
 fi
+
+unset -v _uname
+unset -v _has_brew
+unset -v _has_brew_python3
+unset -v _current_platform
