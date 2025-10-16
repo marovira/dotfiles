@@ -1,3 +1,6 @@
+setopt EXTENDED_HISTORY
+setopt inc_append_history_time
+
 # Setup platform identification
 local _uname=$(uname)
 case "$_uname" in
@@ -41,9 +44,6 @@ if [[ "$_current_platform" == "Windows" || "$_current_platform" == "Darwin" ]]; 
     compinit
 fi
 
-setopt EXTENDED_HISTORY
-setopt inc_append_history_time
-
 # Install antidote if necessary
 ANTIDOTE=~/.antidote
 if [ ! -d $ANTIDOTE ]; then
@@ -52,10 +52,7 @@ if [ ! -d $ANTIDOTE ]; then
 fi
 
 source $ANTIDOTE/antidote.zsh
-
 antidote load
-
-eval "$(fzf --zsh| sed -e '/zmodload/s/perl/perl_off/' -e '/selected/s/fc -rl/fc -rlt "%F %T"/')"
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -87,6 +84,13 @@ fi
 alias grep='grep --color'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
+
+# Better history
+if command -v bat > /dev/null 2>&1; then
+    alias history='fc -rli 1 | bat -n -l zsh'
+else
+    alias history='fc -rli 1 | less'
+fi
 
 # Emulates Apple's open. Only applies to Linux (linux-gnu) and Windows (msys).
 if [[ "$_current_platform" == "Linux" ]]; then
