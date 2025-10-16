@@ -2,7 +2,7 @@ function () {
     local cur_os=$(uname)
 
     # Ensure XDG directories are always consistent
-    if [[ "$cur_os" == "Darwin" || "$os" == "Linux" ]]; then
+    if [[ "$cur_os" == "Darwin" || "$cur_os" == "Linux" ]]; then
         export XDG_CONFIG_HOME="$HOME/.config"
         export XDG_DATA_HOME="$HOME/.local/share"
         export XDG_STATE_HOME="$HOME/.local/state"

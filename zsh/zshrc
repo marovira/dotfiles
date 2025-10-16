@@ -29,14 +29,14 @@ fi
 
 # On Windows, ensure that zshenv and zprofile are manually loaded. Also unset SHELL as
 # this causes issues with other commands.
-if [[ "$_current_platform" = "Windows" ]]; then
+if [[ "$_current_platform" == "Windows" ]]; then
     unset SHELL
     source "$HOME/.zshenv"
     source "$HOME/.zprofile"
 fi
 
 # Load compinit for Windows and macOS since they don't enable it by default
-if [[ "$_current_platform" = "Windows" || "$os" = "Darwin" ]]; then
+if [[ "$_current_platform" == "Windows" || "$_current_platform" == "Darwin" ]]; then
     autoload -Uz compinit
     compinit
 fi
