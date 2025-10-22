@@ -572,6 +572,10 @@ return {
                 filetype = {
                     cmake = { glyph = "" },
                 },
+                extension = {
+                    ["pth"] = { glyph = "", hl = "MiniIconsOrange" },
+                    ["pt"] = { glyph = "", hl = "MiniIconsOrange" },
+                },
             })
             icons.mock_nvim_web_devicons()
         end,
