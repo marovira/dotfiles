@@ -57,8 +57,6 @@
     decorations = true
     navigate = true
     dark = true
-    line-numbers = true
-    side-by-side = true
     minus-style                   = syntax "#3a273a"
     minus-non-emph-style          = syntax "#3a273a"
     minus-emph-style              = syntax "#6b2e43"
@@ -140,6 +138,7 @@
     lo = forgit log
     rl = forgit reflog
     lg = "! f() { git log --no-color --no-decorate | bat -n -l 'Git log' ; }; f"
+    lf = "! f() { cd \"${GIT_PREFIX:-.}\"; FORGIT_LOG_GRAPH_ENABLE=false git forgit log --follow \"$1\" ; }; f"
 
     # Stash commands
     #==============================#
