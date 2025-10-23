@@ -380,7 +380,6 @@ return {
             scope = { enabled = true },
             words = { enabled = true },
             zen = { enabled = true },
-            image = { enabled = true },
             notifier = {
                 enabled = true,
                 timeout = 3000,
