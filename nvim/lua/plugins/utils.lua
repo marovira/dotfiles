@@ -112,18 +112,18 @@ return {
                 "<F7>",
                 ---@diagnostic disable-next-line:missing-fields
                 function() Snacks.explorer({ hidden = true }) end,
-                desc = "Snacks explorer",
+                desc = "Snacks Explorer",
             },
             -- Find...
             {
                 "<leader>fb",
                 function() Snacks.picker.buffers() end,
-                desc = "Find buffers",
+                desc = "Find Buffers",
             },
             {
                 "<leader>ff",
                 function() Snacks.picker.files({ hidden = true }) end,
-                desc = "Find files",
+                desc = "Find Files",
             },
             {
                 "<leader>fc",
@@ -142,7 +142,7 @@ return {
                 function() Snacks.picker.smart() end,
                 desc = "Smart Find Files",
             },
-            -- Grep
+            -- Search...
             {
                 "<leader>sb",
                 function() Snacks.picker.lines() end,
@@ -164,7 +164,6 @@ return {
                 desc = "Visual selection or word",
                 mode = { "n", "x" },
             },
-            -- Search
             {
                 '<leader>s"',
                 function() Snacks.picker.registers() end,
@@ -313,7 +312,7 @@ return {
                             icon = " ",
                             key = "r",
                             desc = "Recent Files",
-                            action = ":lua Snacks.dashboard.pick('oldfiles')",
+                            action = ":lua Snacks.dashboard.pick('oldfiles', {hidden = true, filter = {cwd = true}})",
                         },
                         {
                             icon = " ",
@@ -352,6 +351,9 @@ return {
                         truncate = 100,
                     },
                 },
+                previewers = {
+                    diff = { builtin = false },
+                },
                 sources = {
                     explorer = {
                         win = {
@@ -364,13 +366,6 @@ return {
                         },
                     },
                 },
-                win = {
-                    input = {
-                        keys = {
-                            ["O"] = { { "pick_win", "jump" }, mode = "n" },
-                        },
-                    },
-                },
             },
             indent = {
                 filter = function(buf)
@@ -380,13 +375,14 @@ return {
                         and not common.is_filetype(buf, { "gitcommit" })
                 end,
             },
-            scroll = {},
-            statuscolumn = {},
-            scope = {},
-            words = {},
-            zen = {},
-            image = {},
+            scroll = { enabled = true },
+            statuscolumn = { enabled = true },
+            scope = { enabled = true },
+            words = { enabled = true },
+            zen = { enabled = true },
+            image = { enabled = true },
             notifier = {
+                enabled = true,
                 timeout = 3000,
             },
         },
