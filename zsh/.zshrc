@@ -54,6 +54,7 @@ if [ ! -d $ANTIDOTE ]; then
     git clone --depth=1 https://github.com/mattmc3/antidote.git $ANTIDOTE
 fi
 
+zstyle ":antidote:bundle" use-friendly-names "yes"
 source $ANTIDOTE/antidote.zsh
 antidote load
 
