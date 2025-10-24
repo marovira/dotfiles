@@ -31,7 +31,8 @@ _update_delta() {
         | grep "git-delta_.*_amd64" \
         | cut -d : -f 2,3 \
         | tr -d \" \
-        | wget -qi - > delta.deb
+        | tail -n 1 \
+        | wget -qi - -O delta.deb
 
     sudo dpkg -i "delta.deb"
     rm "delta.deb"
@@ -46,7 +47,8 @@ _update_fzf() {
         | grep "linux_amd64" \
         | cut -d : -f 2,3 \
         | tr -d \" \
-        | wget -qi - > fzf.tar.gz
+        | tail -n 1 \
+        | wget -qi - -O fzf.tar.gz
     tar -xzf "fzf.tar.gz"
     mv fzf "$HOME/.local/bin"
     rm "fzf.tar.gz"
