@@ -1,3 +1,4 @@
+# vi: ft=gitconfig
 [user]
     name = Mauricio A. Rovira Galvez
     email = 8482308+marovira@users.noreply.github.com
@@ -36,7 +37,6 @@
 
 [difftool]
     prompt = false
-    trustExitCode = true
 
 [difftool "nvim"]
     cmd = nvim -d $LOCAL $REMOTE
