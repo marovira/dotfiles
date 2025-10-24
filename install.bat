@@ -16,8 +16,6 @@ set CURDIR=%~dp0
 
 :: Set environment variables
 setx XDG_CONFIG_HOME %LOCALAPPDATA%
-setx XDG_DATA_HOME %LOCALAPPDATA%
-setx XDG_CACHE_HOME %TEMP%
 
 :: Make sure the .config folder exists
 if not exist "%USERPROFILE%\.config\" mkdir %USERPROFILE%\.config
