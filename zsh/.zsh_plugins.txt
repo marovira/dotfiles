@@ -4,6 +4,7 @@ ohmyzsh/ohmyzsh path:plugins/pip
 ohmyzsh/ohmyzsh path:plugins/command-not-found
 ohmyzsh/ohmyzsh path:plugins/ssh-agent
 ohmyzsh/ohmyzsh path:plugins/vi-mode
+ohmyzsh/ohmyzsh path:plugins/tmux conditional:_is_linux
 
 # ZSH users.
 zsh-users/zsh-syntax-highlighting

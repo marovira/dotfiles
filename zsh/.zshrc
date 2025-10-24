@@ -1,3 +1,4 @@
+HISTFILE=${ZDOTDIR}/.zsh_history
 setopt EXTENDED_HISTORY
 setopt inc_append_history_time
 
@@ -30,6 +31,10 @@ if $_has_brew; then
     fi
 fi
 
+_is_linux() {
+    [[ "$_uname" == "Linux" ]]
+}
+
 # On Windows, ensure that zshenv and zprofile are manually loaded. Also unset SHELL as
 # this causes issues with other commands.
 if [[ "$_current_platform" == "Windows" ]]; then
@@ -43,7 +48,7 @@ if [[ "$_current_platform" == "Windows" || "$_current_platform" == "Darwin" ]]; 
 fi
 
 # Install antidote if necessary
-ANTIDOTE=~/.antidote
+ANTIDOTE=${ZDOTDIR}/.antidote
 if [ ! -d $ANTIDOTE ]; then
     echo "Downloading antidote"
     git clone --depth=1 https://github.com/mattmc3/antidote.git $ANTIDOTE
@@ -113,7 +118,7 @@ alias rsync='rsync -aP'
 bindkey '^[[Z' autosuggest-accept
 
 # Automatically load all zshfn files.
-fpath+=(~/.zshfn)
+fpath+=(${ZDOTDIR}/zshfn)
 autoload -U $fpath[-1]/*(.:t)
 
 # Add forgit to path for completions
@@ -139,7 +144,7 @@ fi
 PATH="$PATH:$FORGIT_INSTALL_DIR/bin"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ ! -f ${ZDOTDIR}/.p10k.zsh ]] || source ${ZDOTDIR}/.p10k.zsh
 
 if [[ "$_current_platform" == "Windows" ]]; then
     keep_current_path() {
@@ -152,3 +157,4 @@ unset -v _uname
 unset -v _has_brew
 unset -v _has_brew_python3
 unset -v _current_platform
+unset -v _is_linux
