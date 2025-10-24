@@ -2,12 +2,12 @@
 
 local -r dir=${1}
 
-function set_user_var() {
+function _set_user_var() {
     value=$(echo -n ${2} | base64)
     printf "\033]1337;SetUserVar=%s=%s\007" ${1} $value
 }
 
-find_file() {
+function _find_file() {
     if [ ! -z ${dir} ]; then
         fd -I -t f . "$dir" | awk '{print $1}'
     else
@@ -15,7 +15,7 @@ find_file() {
     fi
 }
 
-find_dir() {
+function _find_dir() {
     if [ ! -z ${dir} ]; then
         fd -I -L -t d . "$dir" | awk '{print $1}'
     else
@@ -23,22 +23,22 @@ find_dir() {
     fi
 }
 
-export FIND_FILE=$(functions find_file)
-export FIND_DIR=$(functions find_dir)
+export FIND_FILE=$(functions _find_file)
+export FIND_DIR=$(functions _find_dir)
 
-set_user_var IS_EXPLORER "true"
+_set_user_var IS_EXPLORER "true"
 
-selection=$(find_dir | fzf --with-shell="zsh -c" --multi --height=80% --border=rounded \
+selection=$(_find_dir | fzf --with-shell="zsh -c" --multi --height=80% --border=rounded \
 --preview="tree -C {}" --preview-window="45%,border-rounded" \
 --prompt="Dirs > " \
 --bind="del:execute(rm -ri {+})" \
 --bind="?:toggle-preview" \
 --bind="ctrl-d:change-prompt(Dirs > )" \
---bind="ctrl-d:+reload(eval $FIND_DIR && find_dir)" \
+--bind="ctrl-d:+reload(eval $FIND_DIR && _find_dir)" \
 --bind="ctrl-d:+change-preview(tree -C {})" \
 --bind="ctrl-d:+refresh-preview" \
 --bind="ctrl-f:change-prompt(Files > )" \
---bind="ctrl-f:+reload(eval $FIND_FILE && find_file)" \
+--bind="ctrl-f:+reload(eval $FIND_FILE && _find_file)" \
 --bind="ctrl-f:+change-preview(bat --color=always {})" \
 --bind="ctrl-f:+refresh-preview" \
 --bind="ctrl-a:select-all" \
@@ -51,7 +51,7 @@ ENTER to edit | DEL to delete
 ")
 
 if [ -z "$selection" ]; then
-    set_user_var IS_EXPLORER "false"
+    _set_user_var IS_EXPLORER "false"
     return
 fi
 
@@ -61,4 +61,8 @@ else
     eval "$EDITOR $selection"
 fi
 
-set_user_var IS_EXPLORER "false"
+_set_user_var IS_EXPLORER "false"
+
+unset -f _set_user_var
+unset -f _find_file
+unset -f _find_dir
