@@ -12,7 +12,9 @@ if %errorLevel% == 0 (
 )
 
 :: Environment variables
-setx -m XDG_CONFIG_HOME ""
+setx XDG_CONFIG_HOME ""
+setx XDG_DATA_HOME ""
+setx XDG_CACHE_HOME ""
 
 :: Neovim
 rmdir %LOCALAPPDATA%\nvim
@@ -28,13 +30,8 @@ del %USERPROFILE%\.clang-format
 
 :: ZSH
 del %USERPROFILE%\.bashrc
-del %USERPROFILE%\.zshrc
-del %USERPROFILE%\.zprofile
 del %USERPROFILE%\.zshenv
-del %USERPROFILE%\.zsh_plugins.txt
-del %USERPROFILE%\.p10k.zsh
-rmdir %USERPROFILE%\.zshfn
-rmdir %USERPROFILE%\.zshpy
+rmdir %USERPROFILE%\.config\zsh
 
 :: Bat
 del %USERPROFILE%\scoop\apps\bat\current\config

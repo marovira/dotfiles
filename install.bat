@@ -16,6 +16,11 @@ set CURDIR=%~dp0
 
 :: Set environment variables
 setx XDG_CONFIG_HOME %LOCALAPPDATA%
+setx XDG_DATA_HOME %LOCALAPPDATA%
+setx XDG_CACHE_HOME %TEMP%
+
+:: Make sure the .config folder exists
+if not exist "%USERPROFILE%\.config\" mkdir %USERPROFILE%\.config
 
 :: Setup nvim
 mklink /D %LOCALAPPDATA%\nvim %CURDIR%nvim
@@ -31,13 +36,8 @@ mklink %USERPROFILE%\.clang-format %CURDIR%cpp\.clang-format
 
 :: Setup ZSH
 mklink %USERPROFILE%\.bashrc %CURDIR%bash\bashrc_win_zsh
-mklink %USERPROFILE%\.zshrc %CURDIR%zsh\zshrc
-mklink %USERPROFILE%\.zprofile %CURDIR%zsh\zprofile
 mklink %USERPROFILE%\.zshenv %CURDIR%zsh\zshenv
-mklink %USERPROFILE%\.zsh_plugins.txt %CURDIR%zsh\zsh_plugins
-mklink %USERPROFILE%\.p10k.zsh %CURDIR%zsh\p10k.zsh
-mklink /D %USERPROFILE%\.zshfn %CURDIR%zsh\zshfn
-mklink /D %USERPROFILE%\.zshpy %CURDIR%zsh\zshpy
+mklink /D %USERPROFILE%\.config\zsh %CURDIR%zsh
 
 :: Setup bat
 mklink %USERPROFILE%\scoop\apps\bat\current\config %CURDIR%bat\config

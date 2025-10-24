@@ -1,23 +1,44 @@
 #!/bin/sh
-#vim:set et sw=2 ts=4 tw=84:
 
-ln --backup -s "$PWD/zsh/zshrc" "$HOME/.zshrc"
-ln --backup -s "$PWD/zsh/zprofile" "$HOME/.zprofile"
-ln --backup -s "$PWD/zsh/zshenv" "$HOME/.zshenv"
-ln --backup -s "$PWD/zsh/zsh_plugins" "$HOME/.zsh_plugins.txt"
-ln --backup -s "$PWD/zsh/p10k.zsh" "$HOME/.p10k.zsh"
-ln --backup -s "$PWD/zsh/zshfn" "$HOME/.zshfn"
-ln --backup -s "$PWD/zsh/zshpy" "$HOME/.zshpy"
-ln --backup -s "$PWD/git/config" "$HOME/.gitconfig"
-ln --backup -s "$PWD/git/ignore" "$HOME/.gitignore"
-ln --backup -s "$PWD/git/template" "$HOME/.gittemplate.txt"
-ln --backup -s "$PWD/nvim" "$HOME/.config/nvim"
-ln --backup -s "$PWD/cpp/.clang-format" "$HOME/.clang-format"
-ln --backup -s "$PWD/bat" "$HOME/.config/bat"
-ln --backup -s "$PWD/wezterm" "$HOME/.config/wezterm"
+cur_os=$(uname)
 
-mkdir -p "$HOME/.tmux/"
-ln --backup -s "$PWD/tmux/tmux.conf" "$HOME/.tmux.conf"
-ln --backup -s "$PWD/tmux/themes" "$HOME/.tmux/themes"
+mklink() {
+    if [[ "$cur_os" == "Darwin" ]]; then
+        ln -s $@
+    else
+        ln --backup -s $@
+    fi
+}
 
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+# Ensure that .config exists
+mkdir -p "$HOME/.config"
+
+# ZSH
+mklink "$PWD/zsh/zshenv" "$HOME/.zshenv"
+mklink "$PWD/zsh" "$HOME/.config/zsh"
+
+# Git
+mklink "$PWD/git/config" "$HOME/.gitconfig"
+mklink "$PWD/git/ignore" "$HOME/.gitignore"
+mklink "$PWD/git/template" "$HOME/.gittemplate.txt"
+
+# Nvim
+mklink "$PWD/nvim" "$HOME/.config/nvim"
+
+# Language files
+mklink "$PWD/cpp/.clang-format" "$HOME/.clang-format"
+
+# Bat
+mklink "$PWD/bat" "$HOME/.config/bat"
+
+# Wezterm
+mklink "$PWD/wezterm" "$HOME/.config/wezterm"
+
+# TMUX (Linux only)
+if [[ "$cur_os" != "Darwin" ]]; then
+    mkdir -p "$HOME/.tmux/"
+    ln --backup -s "$PWD/tmux/tmux.conf" "$HOME/.tmux.conf"
+    ln --backup -s "$PWD/tmux/themes" "$HOME/.tmux/themes"
+
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
