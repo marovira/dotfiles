@@ -6,8 +6,3 @@ export XDG_CACHE_HOME="${$XDG_CACHE_HOME:-$HOME/.cache}"
 
 export EDITOR="nvim"
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
-
-# Source cargo (if available).
-if [ -f "$HOME/.cargo/env" ]; then
-    . "$HOME/.cargo/env"
-fi

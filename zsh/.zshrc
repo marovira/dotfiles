@@ -141,6 +141,16 @@ if type "uv" > /dev/null; then
     compdef _uv_run_mod uv
 fi
 
+# Source cargo (if available).
+if [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
+fi
+
+# Wire in FZF (if available).
+if type "fzf" > /dev/null; then
+    source ${ZDOTDIR}/fzf.zsh
+fi
+
 PATH="$PATH:$FORGIT_INSTALL_DIR/bin"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -157,4 +167,4 @@ unset -v _uname
 unset -v _has_brew
 unset -v _has_brew_python3
 unset -v _current_platform
-unset -v _is_linux
+unset -f _is_linux

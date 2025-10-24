@@ -15,9 +15,7 @@ zsh-users/zsh-history-substring-search
 # Theme
 romkatv/powerlevel10k
 
-# Faster navigation
-agkozak/zsh-z
-unixorn/fzf-zsh-plugin
+# Auto-complete with FZF
 Aloxaf/fzf-tab
 
 # Git
