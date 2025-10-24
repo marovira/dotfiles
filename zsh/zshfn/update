@@ -1,18 +1,6 @@
 #!/bin/zsh
 
-local -r app=${1:?"error: no app to update has been specified"}
-
-update_nvim() {
-    if [[ "$OSTYPE" == "msys" ]]; then
-        if ! command -v nvim &> /dev/null; then
-            scoop install main/neovim
-            return
-        else
-            scoop update neovim
-        fi
-        return
-    fi
-
+_update_nvim() {
     # If a previous installation of nvim exists, remove it.
     if [ -f "$HOME/.local/bin/nvim" ]; then
         rm -R "$HOME/.local/bin/nvim"
@@ -23,17 +11,7 @@ update_nvim() {
     mv nvim-linux-x86_64.appimage "$HOME/.local/bin/nvim"
 }
 
-update_neovide() {
-    if [[ "$OSTYPE" == "msys" ]]; then
-        if ! command -v neovide &> /dev/null; then
-            scoop install extras/neovide
-            return
-        else
-            scoop update neovide
-        fi
-        return
-    fi
-
+_update_neovide() {
     # If a previous version of neovide exists, remove it.
     if [ -f "$HOME/.local/bin/neovide" ]; then
         rm -R "$HOME/.local/bin/neovide"
@@ -44,52 +22,37 @@ update_neovide() {
     mv neovide.appimage "$HOME/.local/bin/neovide"
 }
 
-update_delta() {
-    if [[ "$OSTYPE" == "msys" ]]; then
-        if ! command -v delta &> /dev/null; then
-            scoop install main/delta
-            return
-        else
-            scoop update delta
-        fi
-        return
-    fi
-
-    local -r version=${1:?"error: a version number is required"}
-
+_update_delta() {
     if command -v delta &> /dev/null; then
         sudo dpkg -r git-delta
     fi
 
-    curl -LO "https://github.com/dandavison/delta/releases/download/${version}/git-delta_${version}_amd64.deb"
-    sudo dpkg -i "git-delta_${version}_amd64.deb"
-    rm "git-delta_${version}_amd64.deb"
+    curl -s "https://api.github.com/repos/dandavison/delta/releases/latest" \
+        | grep "git-delta_.*_amd64" \
+        | cut -d : -f 2,3 \
+        | tr -d \" \
+        | wget -qi - > delta.deb
+
+    sudo dpkg -i "delta.deb"
+    rm "delta.deb"
 }
 
-update_fzf() {
-    cwd=$(pwd)
-    cd "$FZF_PATH"
-    git checkout master > /dev/null 2>&1
-    git fetch --tags > /dev/null 2>&1
-    tag=$(git describe --tags "$(git rev-list --tags --max-count=1)")
-    echo "Updating to version $tag"
-    git checkout $tag > /dev/null 2>&1
-    cd "$cwd"
-
-    $FZF_PATH/install --bin
-}
-
-update_stylua() {
-    if [[ "$OSTYPE" == "msys" ]]; then
-        if ! command -v stylua &> /dev/null; then
-            scoop install main/stylua
-            return
-        else
-            scoop update stylua
-        fi
-        return
+_update_fzf() {
+    if [ -f "$HOME/.local/bin/fzf" ]; then
+        rm -R "$HOME/.local/bin/fzf"
     fi
 
+    curl -s "https://api.github.com/repos/junegunn/fzf/releases/latest" \
+        | grep "linux_amd64" \
+        | cut -d : -f 2,3 \
+        | tr -d \" \
+        | wget -qi - > fzf.tar.gz
+    tar -xzf "fzf.tar.gz"
+    mv fzf "$HOME/.local/bin"
+    rm "fzf.tar.gz"
+}
+
+_update_stylua() {
     if [ -f "$HOME/.local/bin/stylua" ]; then
         rm "$HOME/.local/bin/stylua"
     fi
@@ -99,14 +62,24 @@ update_stylua() {
     rm stylua-linux-x86_64.zip
 }
 
-if [[ "${app}" == "nvim" ]]; then
-    update_nvim
-elif [[ "${app}" == "neovide" ]]; then
-    update_neovide
-elif [[ "${app}" == "delta" ]]; then
-    update_delta ${2}
-elif [[ "${app}" == "fzf" ]]; then
-    update_fzf
-elif [[ "${app}" == "stylua" ]]; then
-    update_stylua
+local cur_os=$(uname)
+if [[ "$cur_os" == "Linux" ]]; then
+    local -r app=${1:?"error: no app to update has been specified"}
+
+    case $app in
+        nvim) _update_nvim;;
+        neovide) _update_neovide;;
+        delta) _update_delta;;
+        fzf) _update_fzf;;
+        *) echo "Unknown app name";;
+    esac
+else
+    echo "The update command is for Linux systems only."
+    echo "For Windows, please use scoop install/update."
+    echo "For macOS, please use brew install/update."
 fi
+
+unset -f _update_nvim
+unset -f _update_neovide
+unset -f _update_delta
+unset -f _update_fzf
