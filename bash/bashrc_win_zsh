@@ -1,5 +1,5 @@
 # Only start zsh if it's installed. This allows clean installs of Git bash to still
 # function normally without having to manually hack this file.
 if [ -x "$(command -v zsh)" ]; then
-    exec zsh
+    exec zsh -i
 fi

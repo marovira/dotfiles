@@ -34,8 +34,6 @@ fi
 # this causes issues with other commands.
 if [[ "$_current_platform" == "Windows" ]]; then
     unset SHELL
-    source "$HOME/.zshenv"
-    source "$HOME/.zprofile"
 fi
 
 # Load compinit for Windows and macOS since they don't enable it by default
