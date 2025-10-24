@@ -24,7 +24,7 @@ _update_neovide() {
 
 _update_delta() {
     if command -v delta &> /dev/null; then
-        sudo dpkg -r git-delta
+        rm -R "$HOME/.local/bin/delta"
     fi
 
     curl -s "https://api.github.com/repos/dandavison/delta/releases/latest" \
@@ -34,8 +34,10 @@ _update_delta() {
         | tail -n 1 \
         | wget -qi - -O delta.deb
 
-    sudo dpkg -i "delta.deb"
+    dpkg -x "delta.deb" delta
+    mv delta/usr/bin/delta "$HOME/.local/bin"
     rm "delta.deb"
+    rm -rf delta
 }
 
 _update_fzf() {
