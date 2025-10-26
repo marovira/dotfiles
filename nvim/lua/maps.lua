@@ -13,19 +13,29 @@ vim.keymap.set("n", "<Space>", "@q", { desc = "Play macro stored in buffer q" })
 vim.keymap.set(
     "n",
     "gl",
-    "<cmd>lua vim.diagnostic.open_float()<cr>",
+    function() vim.diagnostic.open_float() end,
     { desc = "LSP diagnostic open float" }
 )
 vim.keymap.set(
     "n",
     "[d",
-    "<cmd>lua vim.diagnostic.goto_prev()<cr>",
+    function()
+        vim.diagnostic.jump({
+            count = -1,
+            float = false,
+        })
+    end,
     { desc = "LSP go to previous diagnostic" }
 )
 vim.keymap.set(
     "n",
     "]d",
-    "<cmd>lua vim.diagnostic.goto_next()<cr>",
+    function()
+        vim.diagnostic.jump({
+            count = 1,
+            float = false,
+        })
+    end,
     { desc = "LSP go to next diagnostic" }
 )
 

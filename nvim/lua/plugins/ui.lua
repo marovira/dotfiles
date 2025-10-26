@@ -30,9 +30,7 @@ return {
         dependencies = {
             { "nvim-mini/mini.nvim" },
         },
-        config = function(_, opts)
-            require("lualine").setup(opts)
-        end,
+        config = function(_, opts) require("lualine").setup(opts) end,
         opts = {
             options = {
                 theme = "tokyonight",
@@ -192,6 +190,27 @@ return {
                     enable = true,
                     disable = { "gitcommit", "latex" },
                 },
+            })
+        end,
+    },
+    {
+        "rachartier/tiny-inline-diagnostic.nvim",
+        event = "VeryLazy",
+        priority = 1000,
+        opts = {
+            options = {
+                show_source = {
+                    enabled = true,
+                    if_many = true,
+                },
+                use_icons_from_diagnostic = true,
+            },
+        },
+        config = function(_, opts)
+            require("tiny-inline-diagnostic").setup(opts)
+            vim.diagnostic.config({
+                virtual_text = false,
+                float = false,
             })
         end,
     },

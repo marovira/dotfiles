@@ -68,13 +68,14 @@ return {
             vim.g.ale_set_loclist = false
             vim.g.ale_set_quickfix = false
             vim.g.ale_use_neovim_diagnostics_api = true
+            vim.g.ale_virtualtext_cursor = false
             vim.g.ale_open_list = true
             vim.g.ale_fix_on_save = true
             vim.g.ale_disable_lsp = true
 
             -- Disable cursor messages.
-            vim.g.ale_echo_cursor = 0
-            vim.g.ale_cursor_detail = 0
+            vim.g.ale_echo_cursor = false
+            vim.g.ale_cursor_detail = false
         end,
     },
     {
