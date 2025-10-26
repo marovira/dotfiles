@@ -6,7 +6,7 @@ if common.is_windows() then
     local launch_menu = {
         {
             label = "Git Bash",
-            args = { "C:/Program Files/Git/bin/bash.exe" },
+            args = { "bash.exe" },
         },
         {
             label = "Command Prompt",
@@ -20,7 +20,7 @@ if common.is_windows() then
 
     cfg.launch_menu = launch_menu
 
-    cfg.default_prog = { "C:/Program Files/Git/bin/bash.exe" }
+    cfg.default_prog = { "bash.exe" }
     cfg.default_cwd = common.get_default_cwd()
 end
 
