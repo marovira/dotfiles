@@ -10,7 +10,5 @@ follows:
 brew install --cask wezterm
 ```
 
-> [!CAUTION]
-> As of now, tmux will crash on start. I haven't been able to figure out why this happens,
-> but it may just resolve itself eventually. The current workaround is to just use Wezterm
-> instead.
+> [!IMPORTANT]
+> Do not install `tmux`. There's an issue where it crashes on start.

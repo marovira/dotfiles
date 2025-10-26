@@ -2,16 +2,11 @@
 
 The source of all my config files.
 
-## Table of Contents
-
-1. [Installation Instructions](#installation-instructions)
-2. [Clang-format](#clang-format)
-
 ## Installation Instructions
 
 1. [Windows](INSTALL_WINDOWS.md)
-2. [Linux](INSTALL_LINUX.md)
-3. [OSX](INSTALL_OSX.md)
+1. [Linux](INSTALL_LINUX.md)
+1. [OSX](INSTALL_OSX.md)
 
 ## Clang-format
 

@@ -1,40 +1,36 @@
 # Windows Installation
 
 > [!NOTE]
-> If the PC is a work computer, don't add folders to the global path. Instead add them to
-> the user path. This does require logging off and on for the changes to take effect, but
-> it is the more secure option.
+> Always prefer to add to the user path instead of system-wide changes. This is especially
+> important on work computers as this is more secure and negates the need for admin
+> privileges.
 
 ## Initial Setup
 
 Download and install the following software:
 
 1. Download Windows Terminal from the Windows app store.
-2. Install [scoop](https://scoop.sh). Note that this *needs* to be done from a Powershell
+1. Install [scoop](https://scoop.sh). Note that this *needs* to be done from a Powershell
    terminal. Admin privileges are not required.
-3. Download [FiraCode
-   NerdFont](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode)
-   and install it. Regular version is recommended.
-
-### Install Git
-
-Download the latest release from [here](https://git-scm.com/downloads). When installing,
-use the following options:
-
-* If using a work PC, override default branch to be whatever standard is used there.
-  Otherwise, set to `master`.
-* Ensure that *all* of git is added to path.
-* Remaining options may be left as default or modified as appropriate.
 
 ### Install Scoop Packages
 
-Open a terminal (doesn't matter which) run `scoop bucket add extras`. Then, using `scoop
-install`, install the following packages:
+Open the windows terminal (`cmd` is fine) and then add the following buckets with `scoop
+bucket add`:
 
+* `extras`
+* `nerd-fonts`
+
+Once that is done, install the following:
+
+* `7zip`
 * `bat`
 * `cmake`
 * `delta`
 * `fd`
+* `FiraCode-NF`
+* `fzf`
+* `git`
 * `llvm`
 * `neovide`
 * `neovim`
@@ -42,25 +38,30 @@ install`, install the following packages:
 * `ripgrep`
 * `stylua`
 * `tree-sitter`
-* `zstd`
 * `wezterm`
+* `winrar`
+* `zstd`
 
 > [!NOTE]
 > If python will be used for development, then also install `uv`
 
+> [!IMPORTANT]
+> Care needs to be taken when updating Git, as we're using a heavily modified environment.
+> As scoop will effectively move the installation folder to the one with the new version,
+> `pacman` needs to be re-installed alongside the tools it manages. Other than that,
+> everything else should work normally.
 
 ## Installing dotfiles
 
 Once everything has been installed, clone this repository and run `install.bat` as admin.
 
-
 ## Post-build Steps
 
 ### Setting up `pacman`
 
-1. Open an admin terminal running git bash and run `sh install_pacman.sh` from this
+1. Open a terminal running git bash and run `sh install_pacman.sh` from this
    repository.
-2. Run `pacman -Suu` to update everything.
+1. Run `pacman -Suu` to update everything.
 
 Once `pacman` is correctly installed, open another admin terminal and install:
 
@@ -75,25 +76,43 @@ Once `pacman` is correctly installed, open another admin terminal and install:
 > [!NOTE]
 > In newer versions, it is possible for `pacman -Suu` to fail with the following error
 > message: `/etc/inputrc exists in both 'libreadline' and 'mingw-w64-x86_64-git-extra'`.
-> If this happens, run `pacman -Suu --overwrite /etc/inputrc`. 
-
-> [!WARNING]
-> 1. It is possible that conflicts between packages occur on installation. I believe this
->    is caused by mismatches between whatever git installs and what pacman pulls down. In
->    that case, usually installing the latest pre-release version solves the issue.
-> 2. When updating git, it is entirely possible that mismatches occur again. The only
->    solution I've found so far is to uninstall Git (removing the folder) and then
->    installing everything again.
+> If this happens, run `pacman -Suu --overwrite /etc/inputrc`.
 
 > [!NOTE]
 > Once `wezterm` is installed and fully configured, Windows Terminal can be left alone and
 > only used when strictly necessary.
+
+> [!NOTE]
+> It is recommended to use the post-install script in the git folder to install pacman and
+> correctly configure git. I'm leaving the full instructions here in the event that the
+> script has to be avoided.
+
 
 ### Creating a SSH Key
 
 Run `ssh-keygen -a 100 -t ed25519` and create the default key using the standard ssh
 password. Once it is done, restart the shell so ZSH can automatically start the ssh-agent
 process.
+
+### Git system-wide Options
+
+Depending on the environment, it may be convenient to tell git to create new repos with a
+specific default branch name. To set this at the "system" level, do:
+
+```sh
+git config --system init.defaultBranch <name>
+```
+
+In the specific case of Windows, it may be preferable to always use LF, in which case this
+should also be set:
+
+```sh
+git config --system core.autocrlf input
+```
+
+> [!NOTE]
+> These settings can be set using the post-install script for Windows. These instructions
+> are here in case it needs to be done manually.
 
 ### Adding Python venv for Nvim
 
