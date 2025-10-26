@@ -82,8 +82,3 @@ else
     echo "For Windows, please use scoop install/update."
     echo "For macOS, please use brew install/update."
 fi
-
-unset -f _update_nvim
-unset -f _update_neovide
-unset -f _update_delta
-unset -f _update_fzf

@@ -23,22 +23,22 @@ function _find_dir() {
     fi
 }
 
-export FIND_FILE=$(functions _find_file)
-export FIND_DIR=$(functions _find_dir)
+export _FIND_FILE=$(functions _find_file)
+export _FIND_DIR=$(functions _find_dir)
 
 _set_user_var IS_EXPLORER "true"
 
-selection=$(_find_dir | fzf --with-shell="zsh -c" --multi --height=80% --border=rounded \
+local selection=$(_find_dir | fzf --with-shell="zsh -c" --multi --height=80% --border=rounded \
 --preview="tree -C {}" --preview-window="45%,border-rounded" \
 --prompt="Dirs > " \
 --bind="del:execute(rm -ri {+})" \
 --bind="?:toggle-preview" \
 --bind="ctrl-d:change-prompt(Dirs > )" \
---bind="ctrl-d:+reload(eval $FIND_DIR && _find_dir)" \
+--bind="ctrl-d:+reload(eval $_FIND_DIR && _find_dir)" \
 --bind="ctrl-d:+change-preview(tree -C {})" \
 --bind="ctrl-d:+refresh-preview" \
 --bind="ctrl-f:change-prompt(Files > )" \
---bind="ctrl-f:+reload(eval $FIND_FILE && _find_file)" \
+--bind="ctrl-f:+reload(eval $_FIND_FILE && _find_file)" \
 --bind="ctrl-f:+change-preview(bat --color=always {})" \
 --bind="ctrl-f:+refresh-preview" \
 --bind="ctrl-a:select-all" \
@@ -62,7 +62,3 @@ else
 fi
 
 _set_user_var IS_EXPLORER "false"
-
-unset -f _set_user_var
-unset -f _find_file
-unset -f _find_dir
