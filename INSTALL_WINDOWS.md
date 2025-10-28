@@ -82,12 +82,6 @@ Once `pacman` is correctly installed, open another admin terminal and install:
 > Once `wezterm` is installed and fully configured, Windows Terminal can be left alone and
 > only used when strictly necessary.
 
-> [!NOTE]
-> It is recommended to use the post-install script in the git folder to install pacman and
-> correctly configure git. I'm leaving the full instructions here in the event that the
-> script has to be avoided.
-
-
 ### Creating a SSH Key
 
 Run `ssh-keygen -a 100 -t ed25519` and create the default key using the standard ssh
@@ -109,10 +103,6 @@ should also be set:
 ```sh
 git config --system core.autocrlf input
 ```
-
-> [!NOTE]
-> These settings can be set using the post-install script for Windows. These instructions
-> are here in case it needs to be done manually.
 
 ### Adding Python venv for Nvim
 
