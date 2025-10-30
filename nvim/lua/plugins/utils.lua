@@ -554,7 +554,6 @@ return {
         "nvim-mini/mini.nvim",
         version = false,
         config = function()
-            require("mini.pairs").setup({})
             require("mini.surround").setup({})
 
             local icons = require("mini.icons")
@@ -574,5 +573,10 @@ return {
             })
             icons.mock_nvim_web_devicons()
         end,
+    },
+    {
+        "windwp/nvim-autopairs",
+        event = "InsertEnter",
+        opts = {},
     },
 }
