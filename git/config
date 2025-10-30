@@ -14,15 +14,17 @@
 
 [commit]
     template = ~/.gittemplate.txt
+    verbose = true
 
 [web]
     browser = firefox
 
 [push]
-    default = matching
+    default = current
+    autoSetupRemote = true
 
 [pull]
-    rebase = true
+    ff = only
 
 [color]
     ui = auto
@@ -34,6 +36,7 @@
 
 [diff]
     tool = nvim
+    algorithm = histogram
 
 [difftool]
     prompt = false
@@ -43,6 +46,7 @@
 
 [merge]
     tool = nvim
+    conflictstyle = zdiff3
 
 [mergetool]
     prompt = false
