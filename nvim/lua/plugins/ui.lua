@@ -149,6 +149,8 @@ return {
                     { pattern = "jumps", icon = "󰓾" },
                     { pattern = "word", icon = "" },
                     { pattern = "recent", icon = "" },
+                    { pattern = "highlight", icon = "󰸱" },
+                    { pattern = "resume", icon = "" },
                 },
             },
         },

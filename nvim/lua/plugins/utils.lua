@@ -134,7 +134,7 @@ return {
             },
             {
                 "<leader>fr",
-                function() Snacks.picker.recent() end,
+                function() Snacks.picker.recent({ filter = { cwd = true } }) end,
                 desc = "Recent",
             },
             {
@@ -233,6 +233,11 @@ return {
                 "<leader>sn",
                 function() Snacks.picker.notifications() end,
                 desc = "Noice",
+            },
+            {
+                "<leader>sr",
+                function() Snacks.picker.resume() end,
+                desc = "Resume",
             },
             {
                 "<leader>st",
