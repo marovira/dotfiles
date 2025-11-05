@@ -72,6 +72,7 @@ return {
             vim.g.ale_open_list = true
             vim.g.ale_fix_on_save = true
             vim.g.ale_disable_lsp = true
+            vim.g.ale_lint_on_enter = true
 
             -- Disable cursor messages.
             vim.g.ale_echo_cursor = false
