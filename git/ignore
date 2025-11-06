@@ -1,3 +1,4 @@
+# vi: ft=gitignore
 # Global Git Ignore File #
 ##########################
 # Unless otherwise specified, the language ignores were taken from Github's
@@ -233,7 +234,6 @@ acs-*.bib
 #(r)(e)ledmac/(r)(e)ledpar
 *.end
 *.?end
-*.[1-9]
 *.[1-9][0-9]
 *.[1-9][0-9][0-9]
 *.[1-9]R
