@@ -2,6 +2,9 @@ HISTFILE=${ZDOTDIR}/.zsh_history
 setopt EXTENDED_HISTORY
 setopt inc_append_history_time
 
+export COLUMNS
+export FZF_PREVIEW_COLUMNS
+
 # Setup platform identification
 _uname=$(uname)
 case "$_uname" in
