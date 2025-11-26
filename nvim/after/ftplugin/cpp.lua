@@ -26,7 +26,7 @@ else
             vim.b.ale_cpp_cc_executable = clang .. ver
         end
         if vim.fn.executable(fmt .. ver) == 1 then
-            vim.b.ale_cpp_clangformat_executable = fmt .. ver
+            vim.g.ale_c_clangformat_executable = fmt .. ver
         end
         if vim.fn.executable(tidy .. ver) == 1 then
             vim.b.ale_cpp_clangtidy_executable = tidy .. ver
