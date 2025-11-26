@@ -40,6 +40,12 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     end,
 })
 
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    pattern = { "*.rs" },
+    group = augroup,
+    callback = function() vim.opt_local.textwidth = 90 end,
+})
+
 -- Ensure shader files are appropriately recognised.
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = { "*.vert", "*.tesc", "*.tese", "*.geom", "*.frag", "*.comp" },
