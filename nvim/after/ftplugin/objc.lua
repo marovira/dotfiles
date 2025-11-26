@@ -15,4 +15,3 @@ else
 end
 
 vim.g.ale_objcpp_clang_options = "-std=c++20 -Wall --pedantic"
-vim.g.ale_objcpp_clangd_options = "--header-insertion=never"

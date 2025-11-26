@@ -5,7 +5,6 @@ local common = require("common")
 local llvm_versions = { "18", "19", "20", "21" }
 
 vim.g.ale_cpp_cc_options = "-std=c++20 -Wall --pedantic"
-vim.g.ale_cpp_clangd_options = "--header-insertion=never"
 
 vim.b.ale_linters = { "clangtidy" }
 vim.b.ale_fixers = { "clang-format" }
