@@ -16,6 +16,7 @@ set CURDIR=%~dp0
 
 :: Set environment variables
 setx XDG_CONFIG_HOME %LOCALAPPDATA%
+setx PATH "%PATH%;%USERPROFILE%\scoop\apps\git\current\bin"
 
 :: Make sure the .config folder exists
 if not exist "%USERPROFILE%\.config\" mkdir %USERPROFILE%\.config
