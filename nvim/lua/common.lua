@@ -1,16 +1,5 @@
 M = {}
 
----@param table table
----@param val any
----@return boolean
-function M.has_value(table, val)
-    for _, value in ipairs(table) do
-        if value == val then return true end
-    end
-
-    return false
-end
-
 ---@param str string
 ---@return boolean
 function M.is_empty_string(str) return str == nil or str == "" end
@@ -40,10 +29,12 @@ function M.get_mode()
 end
 
 ---@param t table | string
+---@param buf? integer
 ---@return boolean
-function M.is_buffer_filetype(t)
-    if type(t) == "string" then return vim.bo.filetype == t end
-    return vim.tbl_contains(t, vim.bo.filetype)
+function M.is_buffer_filetype(t, buf)
+    local filetype = buf ~= nil and vim.bo[buf].filetype or vim.bo.filetype
+    if type(t) == "string" then return filetype == t end
+    return vim.tbl_contains(t, filetype)
 end
 
 ---@param buf integer

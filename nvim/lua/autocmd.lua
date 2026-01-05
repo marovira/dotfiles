@@ -80,9 +80,9 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
     group = augroup,
     callback = function(opts)
         if
-            common.has_value(
+            common.is_buffer_filetype(
                 { "dap-repl", "dapui_watches", "dap-terminal" },
-                vim.bo[opts.buf].filetype
+                opts.buf
             )
         then
             vim.opt_local.textwidth = 0

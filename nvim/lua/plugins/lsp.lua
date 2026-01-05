@@ -207,15 +207,13 @@ return {
                         name = "Omni",
                         module = "blink.cmp.sources.complete_func",
                         opts = { disable_omnifuncs = { "v:lua.vim.lsp.omnifunc" } },
-                        enabled = function()
-                            return common.has_value({ "tex" }, vim.bo.filetype)
-                        end,
+                        enabled = function() return common.is_buffer_filetype({ "tex" }) end,
                     },
                     markdown = {
                         name = "markdown",
                         module = "render-markdown.integ.blink",
                         enabled = function()
-                            return common.has_value({ "markdown" }, vim.bo.filetype)
+                            return common.is_buffer_filetype({ "markdown" })
                         end,
                         fallbacks = { "lsp" },
                     },
