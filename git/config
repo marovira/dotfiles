@@ -43,6 +43,7 @@
 
 [difftool "nvim"]
     cmd = nvim -d $LOCAL $REMOTE
+    trustExitCode = true
 
 [merge]
     tool = nvim
