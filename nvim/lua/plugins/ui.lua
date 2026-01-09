@@ -1,3 +1,5 @@
+local common = require("common")
+
 return {
     {
         "folke/tokyonight.nvim",
@@ -178,9 +180,11 @@ return {
             local ns = vim.api.nvim_create_namespace("treesitter.async")
 
             -- Helper to start highlighting and indentation
+            ---@param buf integer
+            ---@param lang string
             local function start(buf, lang)
                 local ok = pcall(vim.treesitter.start, buf, lang)
-                if ok then
+                if ok and not common.is_buffer_filetype({ "toml", "python" }, buf) then
                     vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
                 end
                 return ok
@@ -248,6 +252,7 @@ return {
                 "gitcommit",
                 "blink-cmp-documentation",
                 "blink-cmp-menu",
+                "blink-cmp-signature",
                 "checkhealth",
                 "lazy",
                 "mason",
