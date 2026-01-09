@@ -13,7 +13,6 @@
     diffFilter = delta --color-only
 
 [commit]
-    template = ~/.gittemplate.txt
     verbose = true
 
 [web]

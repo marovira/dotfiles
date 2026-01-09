@@ -9,4 +9,4 @@ line-length=50
 line-length=75
 
 [contrib-title-conventional-commits]
-types = git,zsh,vim,wez,install,docs,chore
+types = git,zsh,nvim,wez,install,docs,chore
