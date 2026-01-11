@@ -3,7 +3,7 @@ contrib=contrib-title-conventional-commits
 ignore=T5,B5,B6
 
 [title-max-length]
-line-length=50
+line-length=72
 
 [body-max-line-length]
 line-length=75
