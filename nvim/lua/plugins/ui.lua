@@ -184,7 +184,13 @@ return {
             ---@param lang string
             local function start(buf, lang)
                 local ok = pcall(vim.treesitter.start, buf, lang)
-                if ok and not common.is_buffer_filetype({ "toml", "python" }, buf) then
+                if
+                    ok
+                    and not common.is_buffer_filetype(
+                        { "toml", "python", "markdown" },
+                        buf
+                    )
+                then
                     vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
                 end
                 return ok
