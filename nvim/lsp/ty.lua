@@ -2,7 +2,7 @@ return {
     settings = {
         ty = {
             disableLanguageService = false, -- Enable/disable LSP
-            diagnosticMode = "workspace", -- Enable diagnostics on workspace
+            diagnosticMode = "off", -- Disable diagnostics (until ALE supports ty)
             showSyntaxErrors = true,
             inlayHints = {
                 variableTypes = true,
