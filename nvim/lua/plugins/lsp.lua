@@ -95,10 +95,14 @@ return {
             ensure_installed = {
                 "lua_ls",
                 "clangd",
-                -- "pylsp",
+                "pylsp",
                 "cmake",
                 "marksman",
-                "ty",
+                -- NOTE: I'm leaving these here so they can be tested from time to time.
+                -- As it stands, neither one is really ready to replace pylsp, but they
+                -- should be better with time.
+                -- "ty",
+                -- "zuban",
             },
         },
     },
