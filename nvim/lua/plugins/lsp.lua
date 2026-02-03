@@ -93,7 +93,9 @@ return {
         version = "*",
         opts = {
             ensure_installed = {
-                "lua_ls",
+                -- NOTE: I'm pinning the version of LuaLS until this bug has been fixed:
+                --https://github.com/folke/lazydev.nvim/issues/136
+                "lua_ls@3.16.4",
                 "clangd",
                 "pylsp",
                 "cmake",
