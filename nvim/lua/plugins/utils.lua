@@ -380,6 +380,13 @@ return {
                         and not common.is_filetype(buf, { "gitcommit" })
                 end,
             },
+            dim = {
+                scope = {
+                    min_size = 5,
+                    max_size = 50,
+                    siblings = true,
+                },
+            },
             scroll = { enabled = true },
             statuscolumn = { enabled = true },
             scope = { enabled = true },
@@ -462,6 +469,28 @@ return {
                 mode = { "n", "x", "o" },
                 function() require("flash").treesitter() end,
                 desc = "Flash Treesitter",
+            },
+            {
+                "<leader>je",
+                mode = { "n" },
+                function()
+                    require("flash").treesitter({
+                        jump = { pos = "end" },
+                        label = { before = false, after = true },
+                    })
+                end,
+                desc = "Flash Treesitter jump to end",
+            },
+            {
+                "<leader>js",
+                mode = { "n" },
+                function()
+                    require("flash").treesitter({
+                        jump = { pos = "start" },
+                        label = { before = true, after = false },
+                    })
+                end,
+                desc = "Flash Treesitter jump to start",
             },
             {
                 "r",
