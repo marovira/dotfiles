@@ -10,6 +10,33 @@ vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
     callback = function() common.set_wezterm_user_var("IS_NVIM", false) end,
 })
 
+vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
+    pattern = { "*" },
+    group = augroup,
+    callback = function()
+        if not common.is_windows() then return end
+
+        local status = 0
+        for _, f in
+            ipairs(
+                vim.fn.globpath(vim.fn.stdpath("data") .. "/shada", "*tmp", false, true)
+            )
+        do
+            if vim.tbl_isempty(vim.fn.readfile(f)) then
+                status = status + vim.fn.delete(f)
+            end
+        end
+        if status ~= 0 then
+            vim.notify(
+                "Could not delete empty temporary ShaDa files",
+                vim.log.levels.ERROR
+            )
+            vim.fn.getchar()
+        end
+    end,
+    desc = "Delete empty ShaDa files",
+})
+
 -- Makes it so neovim reloads the file whenever a change has been made externally.
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
     pattern = "*",
