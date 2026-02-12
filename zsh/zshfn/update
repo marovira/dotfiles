@@ -66,6 +66,17 @@ _update_stylua() {
     rm stylua-linux-x86_64.zip
 }
 
+_update_treesitter() {
+    if [ -f "$HOME/.local/bin/tree-sitter" ]; then
+        rm "$HOME/.local/bin/tree-sitter"
+    fi
+
+    curl -LO https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-linux-x64.gz
+    gunzip -d tree-sitter-linux-x64.gz
+    mv tree-sitter-linux-x64 "$HOME/.local/bin/tree-sitter"
+    chmod +x "$HOME/.local/bin/tree-sitter"
+}
+
 local cur_os=$(uname)
 if [[ "$cur_os" == "Linux" ]]; then
     local -r app=${1:?"error: no app to update has been specified"}
@@ -75,6 +86,7 @@ if [[ "$cur_os" == "Linux" ]]; then
         neovide) _update_neovide;;
         delta) _update_delta;;
         fzf) _update_fzf;;
+        treesitter) _update_treesitter;;
         *) echo "Unknown app name";;
     esac
 else
