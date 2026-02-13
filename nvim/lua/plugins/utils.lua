@@ -620,4 +620,9 @@ return {
         cmd = "CodeDiff",
         version = "*",
     },
+    {
+        "nemanjamalesija/smart-paste.nvim",
+        event = "VeryLazy",
+        config = true,
+    },
 }
