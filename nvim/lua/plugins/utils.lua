@@ -521,6 +521,7 @@ return {
             disable_mouse = false,
             disabled_filetypes = {
                 ["dap*"] = true,
+                ["codediff-explorer"] = true,
             },
             hints = {
                 ["[dcyvV][ia][%(%)]"] = {
@@ -612,5 +613,11 @@ return {
         "windwp/nvim-autopairs",
         event = "InsertEnter",
         opts = {},
+    },
+    {
+        "esmuellert/codediff.nvim",
+        dependencies = { "MunifTanjim/nui.nvim" },
+        cmd = "CodeDiff",
+        version = "*",
     },
 }
