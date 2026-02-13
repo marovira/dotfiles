@@ -41,7 +41,7 @@
     prompt = false
 
 [difftool "nvim"]
-    cmd = nvim -d $LOCAL $REMOTE
+	cmd = nvim \"$LOCAL\" \"$REMOTE\" +\"CodeDiff file $LOCAL $REMOTE\"
     trustExitCode = true
 
 [merge]
@@ -54,7 +54,7 @@
     keepTemporaries = false
 
 [mergetool "nvim"]
-    cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+	cmd = nvim \"$MERGED\" -c \"CodeDiff merge \\\"$MERGED\\\"\"
 
 [delta]
     syntax-theme = tokyonight_moon
