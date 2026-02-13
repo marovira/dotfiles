@@ -10,6 +10,20 @@ vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
     callback = function() common.set_wezterm_user_var("IS_NVIM", false) end,
 })
 
+vim.api.nvim_create_autocmd({ "FocusGained", "FocusLost" }, {
+    pattern = "*",
+    group = augroup,
+    callback = function(args)
+        if vim.g.neovide and common.is_windows() then
+            if args.event == "FocusGained" then
+                vim.g.neovide_opacity = 0.5
+            else
+                vim.g.neovide_opacity = 1
+            end
+        end
+    end,
+})
+
 vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
     pattern = { "*" },
     group = augroup,
