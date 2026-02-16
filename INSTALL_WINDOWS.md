@@ -97,12 +97,10 @@ specific default branch name. To set this at the "system" level, do:
 git config --system init.defaultBranch <name>
 ```
 
-In the specific case of Windows, it may be preferable to always use LF, in which case this
-should also be set:
-
-```sh
-git config --system core.autocrlf input
-```
+> [!IMPORTANT]
+> Since we're now relying on scoop to manage git itself, system-wide settings will need to
+> be re-applied every time git is updated. Whenever possible, please consider moving them
+> to the config itself so that we don't have to keep updating it.
 
 ### Adding Python venv for Nvim
 
