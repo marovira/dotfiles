@@ -4,11 +4,16 @@ local common = require("common")
 -- =======================
 local ui_group = vim.api.nvim_create_augroup("nvimrc_ui", { clear = true })
 
--- Ensure IS_NVIM is cleared on WezTerm when we exit.
-vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
+vim.api.nvim_create_autocmd({ "VimEnter", "VimLeavePre" }, {
     pattern = "*",
     group = ui_group,
-    callback = function() common.set_wezterm_user_var("IS_NVIM", false) end,
+    callback = function(args)
+        if args.event == "VimEnter" then
+            common.set_wezterm_user_var("IS_NVIM", true)
+        else
+            common.set_wezterm_user_var("IS_NVIM", false)
+        end
+    end,
 })
 
 -- If using Neovide, ensure that the opacity is set to 1 on focus lost so we don't get
