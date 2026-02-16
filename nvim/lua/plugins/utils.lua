@@ -622,6 +622,13 @@ return {
         dependencies = { "MunifTanjim/nui.nvim" },
         cmd = "CodeDiff",
         version = "*",
+        keys = {
+            {
+                "<leader>df",
+                "<cmd>CodeDiff<cr>",
+                desc = "CodeDiff",
+            },
+        },
     },
     {
         "nemanjamalesija/smart-paste.nvim",
