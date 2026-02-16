@@ -197,9 +197,12 @@ return {
             end
 
             -- Install core parsers after lazy.nvim finishes loading all plugins
+            local group =
+                vim.api.nvim_create_augroup("nvimrc_treesitter", { clear = true })
             vim.api.nvim_create_autocmd("User", {
                 pattern = "LazyDone",
                 once = true,
+                group = group,
                 callback = function()
                     ts.install({
                         "bash",
@@ -252,8 +255,6 @@ return {
                 end),
             })
 
-            local group = vim.api.nvim_create_augroup("TreesitterSetup", { clear = true })
-
             local ignore_filetypes = {
                 "gitcommit",
                 "blink-cmp-documentation",
@@ -299,39 +300,6 @@ return {
             })
         end,
     },
-    -- {
-    --     "nvim-treesitter/nvim-treesitter",
-    --     build = function()
-    --         require("nvim-treesitter.install").update({ with_sync = true })()
-    --     end,
-    --     config = function()
-    --         local configs = require("nvim-treesitter.configs")
-    --
-    --         ---@diagnostic disable: missing-fields
-    --         configs.setup({
-    --             ensure_installed = {
-    --                 "c",
-    --                 "cpp",
-    --                 "lua",
-    --                 "vim",
-    --                 "vimdoc",
-    --                 "query",
-    --                 "python",
-    --                 "cmake",
-    --                 "glsl",
-    --                 "bash",
-    --                 "git_config",
-    --                 "objc",
-    --             },
-    --             sync_install = false,
-    --             auto_install = true,
-    --             highlight = {
-    --                 enable = true,
-    --                 disable = { "gitcommit", "latex" },
-    --             },
-    --         })
-    --     end,
-    -- },
     {
         "rachartier/tiny-inline-diagnostic.nvim",
         event = "VeryLazy",
