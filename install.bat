@@ -21,28 +21,24 @@ setx PATH "%PATH%;%USERPROFILE%\scoop\apps\git\current\bin"
 :: Make sure the .config folder exists
 if not exist "%USERPROFILE%\.config\" mkdir %USERPROFILE%\.config
 
-:: Setup nvim
+:: nvim
 mklink /D %LOCALAPPDATA%\nvim %CURDIR%nvim
 mklink %USERPROFILE%\.vsvimrc %CURDIR%nvim\vsvim.vim
 
-:: Now setup git
+:: git
 mklink %USERPROFILE%\.gitconfig %CURDIR%git\config
 mklink %USERPROFILE%\.gitignore %CURDIR%git\ignore
-mklink %USERPROFILE%\.gittemplate.txt %CURDIR%git\template
 
-:: Setup language support.
-mklink %USERPROFILE%\.clang-format %CURDIR%cpp\.clang-format
-
-:: Setup ZSH
+:: zsh
 mklink %USERPROFILE%\.bashrc %CURDIR%bash\bashrc_win_zsh
 mklink %USERPROFILE%\.zshenv %CURDIR%zsh\zshenv
 mklink /D %USERPROFILE%\.config\zsh %CURDIR%zsh
 
-:: Setup bat
+:: bat
 mklink %USERPROFILE%\scoop\apps\bat\current\config %CURDIR%bat\config
 mklink %USERPROFILE%\scoop\apps\bat\current\themes\tokyonight_moon.tmTheme %CURDIR%bat\themes\tokyonight_moon.tmTheme
 
-:: Setup Wezterm
+:: wezterm
 mklink /D %LOCALAPPDATA%\wezterm %CURDIR%wezterm
 
 echo Install finished successfully

@@ -2,25 +2,26 @@
 
 cur_os=$(uname)
 
-# ZSH
+# nvim
+rm "$HOME/.config/nvim"
+
+# git
+rm "$HOME/.gitconfig"
+rm "$HOME/.gitignore"
+
+# zsh
 rm "$HOME/.zshenv"
 rm "$HOME/.config/zsh"
 
-# Git
-rm "$HOME/.gitconfig"
-rm "$HOME/.gitignore"
-rm "$HOME/.gittemplate.txt"
-
-# Nvim
-rm "$HOME/.config/nvim"
-
 # Language files
-rm "$HOME/.clang-format"
+if [ -f "$HOME/.clang-format" ]; then
+    rm "$HOME/.clang-format"
+fi
 
-# Bat
+# bat
 rm "$HOME/.config/bat"
 
-# WezTerm
+# wezterm
 rm "$HOME/.config/wezterm"
 
 if [[ "$cur_os" != "Darwin" ]]; then

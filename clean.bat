@@ -23,10 +23,9 @@ del %USERPROFILE%\.vsvimrc
 :: Git
 del %USERPROFILE%\.gitconfig
 del %USERPROFILE%\.gitignore
-del %USERPROFILE%\.gittemplate.txt
 
 :: Language
-del %USERPROFILE%\.clang-format
+if exist %USERPROFILE%\.clang-format del %USERPROFILE%\.clang-format
 
 :: ZSH
 del %USERPROFILE%\.bashrc
