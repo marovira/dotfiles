@@ -398,8 +398,10 @@ return {
             },
         },
         init = function()
+            local group = vim.api.nvim_create_augroup("nvimrc_snacks", { clear = true })
             vim.api.nvim_create_autocmd("User", {
                 pattern = "VeryLazy",
+                group = group,
                 callback = function()
                     local Snacks = require("snacks")
                     _G.dd = function(...) Snacks.debug.inspect(...) end
@@ -436,6 +438,7 @@ return {
             })
 
             vim.api.nvim_create_autocmd("VimEnter", {
+                group = group,
                 callback = function()
                     Snacks.util.set_hl({
                         PickerDir = { link = "Comment" },
