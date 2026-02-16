@@ -1,18 +1,21 @@
 local common = require("common")
 
--- Autocommands
+-- UI Autocmds
 -- =======================
-local augroup = vim.api.nvim_create_augroup("vimrc", { clear = true })
+local ui_group = vim.api.nvim_create_augroup("nvimrc_ui", { clear = true })
 
+-- Ensure IS_NVIM is cleared on WezTerm when we exit.
 vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
     pattern = "*",
-    group = augroup,
+    group = ui_group,
     callback = function() common.set_wezterm_user_var("IS_NVIM", false) end,
 })
 
+-- If using Neovide, ensure that the opacity is set to 1 on focus lost so we don't get
+-- weird colours due to the window blur.
 vim.api.nvim_create_autocmd({ "FocusGained", "FocusLost" }, {
     pattern = "*",
-    group = augroup,
+    group = ui_group,
     callback = function(args)
         if vim.g.neovide and common.is_windows() then
             if args.event == "FocusGained" then
@@ -24,47 +27,38 @@ vim.api.nvim_create_autocmd({ "FocusGained", "FocusLost" }, {
     end,
 })
 
-vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
-    pattern = { "*" },
-    group = augroup,
-    callback = function()
-        if not common.is_windows() then return end
-
-        local status = 0
-        for _, f in
-            ipairs(
-                vim.fn.globpath(vim.fn.stdpath("data") .. "/shada", "*tmp", false, true)
-            )
-        do
-            if vim.tbl_isempty(vim.fn.readfile(f)) then
-                status = status + vim.fn.delete(f)
-            end
-        end
-        if status ~= 0 then
-            vim.notify(
-                "Could not delete empty temporary ShaDa files",
-                vim.log.levels.ERROR
-            )
-            vim.fn.getchar()
-        end
-    end,
-    desc = "Delete empty ShaDa files",
-})
-
--- Makes it so neovim reloads the file whenever a change has been made externally.
-vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+-- Switch to absolute line numbers in insert mode.
+vim.api.nvim_create_autocmd({ "InsertEnter" }, {
     pattern = "*",
-    group = augroup,
+    group = ui_group,
     callback = function()
-        if vim.fn.mode() ~= "c" then vim.api.nvim_command("checktime") end
+        -- Don't mess with the line numbers in the snacks pickers.
+        if common.is_buffer_filetype({ "snacks_picker_list" }) then return end
+        vim.opt.relativenumber = false
+        vim.opt.number = true
     end,
 })
+
+-- Switch back to relative numbers in normal mode.
+vim.api.nvim_create_autocmd({ "InsertLeave", "BufNewFile", "VimEnter" }, {
+    pattern = "*",
+    group = ui_group,
+    callback = function()
+        if common.is_buffer_filetype({ "snacks_picker_list" }) then return end
+        vim.opt.number = true
+        vim.opt.relativenumber = true
+    end,
+})
+
+-- File-type Autocmd
+-- =======================
+local ft_group = vim.api.nvim_create_augroup("nvimrc_ft", { clear = true })
 
 -- Treat all h/c files as C++. In the event I ever write C again, this will be changed
 -- accordingly.
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = { ".h", "*.c" },
-    group = augroup,
+    group = ft_group,
     command = "set filetype=cpp",
 })
 
@@ -72,7 +66,7 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 -- they get treated as XML files.
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = { "*.props" },
-    group = augroup,
+    group = ft_group,
     callback = function()
         vim.cmd("set filetype=xml")
         vim.opt_local.tabstop = 2
@@ -81,44 +75,45 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     end,
 })
 
+-- The default line-width on rust is 100, so let's force it back to 90.
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = { "*.rs" },
-    group = augroup,
+    group = ft_group,
     callback = function() vim.opt_local.textwidth = 90 end,
 })
 
--- Ensure shader files are appropriately recognised.
+-- Ensure GLSL shader files are appropriately recognised.
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = { "*.vert", "*.tesc", "*.tese", "*.geom", "*.frag", "*.comp" },
-    group = augroup,
+    group = ft_group,
     command = "set filetype=glsl",
 })
 
 -- Allow detection of Objective C++.
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = "*.mm",
-    group = augroup,
+    group = ft_group,
     command = "set filetype=objc",
 })
 
 -- Set .tmux files to tmux
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = { "*.tmux" },
-    group = augroup,
+    group = ft_group,
     command = "set filetype=tmux",
 })
 
 -- Disable folds in JSON and markdown.
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = { "*.json", "*.md" },
-    group = augroup,
+    group = ft_group,
     command = "silent! :set nofoldenable",
 })
 
 -- Disable text width in DAP buffers.
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
     pattern = { "*" },
-    group = augroup,
+    group = ft_group,
     callback = function(opts)
         if
             common.is_buffer_filetype(
@@ -131,32 +126,12 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
     end,
 })
 
--- Switch to absolute line numbers in insert mode.
-vim.api.nvim_create_autocmd({ "InsertEnter" }, {
-    pattern = "*",
-    group = augroup,
-    callback = function()
-        -- Don't mess with the line numbers in the snacks pickers.
-        if common.is_buffer_filetype({ "snacks_picker_list" }) then return end
-        vim.opt.relativenumber = false
-        vim.opt.number = true
-    end,
-})
+-- LSP Autocmd
+-- =======================
+local lsp_group = vim.api.nvim_create_augroup("nvimrc_lsp", { clear = true })
 
--- Switch back to relative numbers in normal mode.
-vim.api.nvim_create_autocmd({ "InsertLeave", "BufNewFile", "VimEnter" }, {
-    pattern = "*",
-    group = augroup,
-    callback = function()
-        if common.is_buffer_filetype({ "snacks_picker_list" }) then return end
-        vim.opt.number = true
-        vim.opt.relativenumber = true
-    end,
-})
-
--- LSP autocmd
 vim.api.nvim_create_autocmd({ "LspAttach" }, {
-    group = augroup,
+    group = lsp_group,
     desc = "LSP actions",
     callback = function(event)
         vim.keymap.set(
@@ -189,5 +164,47 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
             "<cmd>lua vim.lsp.buf.code_action()<cr>",
             { buffer = event.buf, desc = "LSP code action" }
         )
+    end,
+})
+
+-- Util Autocmd
+-- =======================
+local util_group = vim.api.nvim_create_augroup("nvimrc_util", { clear = true })
+
+-- On Windows only, ensure empty ShaDa files are cleared on exit. This prevents the "can't
+-- save because of ShaDa" errors.
+vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
+    pattern = { "*" },
+    group = util_group,
+    callback = function()
+        if not common.is_windows() then return end
+
+        local status = 0
+        for _, f in
+            ipairs(
+                vim.fn.globpath(vim.fn.stdpath("data") .. "/shada", "*tmp", false, true)
+            )
+        do
+            if vim.tbl_isempty(vim.fn.readfile(f)) then
+                status = status + vim.fn.delete(f)
+            end
+        end
+        if status ~= 0 then
+            vim.notify(
+                "Could not delete empty temporary ShaDa files",
+                vim.log.levels.ERROR
+            )
+            vim.fn.getchar()
+        end
+    end,
+    desc = "Delete empty ShaDa files",
+})
+
+-- Makes it so neovim reloads the file whenever a change has been made externally.
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+    pattern = "*",
+    group = util_group,
+    callback = function()
+        if vim.fn.mode() ~= "c" then vim.api.nvim_command("checktime") end
     end,
 })
