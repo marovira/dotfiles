@@ -9,36 +9,6 @@ vim.keymap.set(
 
 vim.keymap.set("n", "<Space>", "@q", { desc = "Play macro stored in buffer q" })
 
--- LSP diagnostic keymaps
-vim.keymap.set(
-    "n",
-    "gl",
-    function() vim.diagnostic.open_float() end,
-    { desc = "LSP diagnostic open float" }
-)
-vim.keymap.set(
-    "n",
-    "[d",
-    function()
-        vim.diagnostic.jump({
-            count = -1,
-            float = false,
-        })
-    end,
-    { desc = "LSP go to previous diagnostic" }
-)
-vim.keymap.set(
-    "n",
-    "]d",
-    function()
-        vim.diagnostic.jump({
-            count = 1,
-            float = false,
-        })
-    end,
-    { desc = "LSP go to next diagnostic" }
-)
-
 -- Movement keymaps
 -- Allow returning to starting position when doing relative vertical jumps with C-o.
 vim.keymap.set("n", "j", function()
