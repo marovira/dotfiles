@@ -29,7 +29,7 @@ vim.keymap.set("n", "<localleader>lc", ":VimtexStop<CR>:VimtexClean<CR>", {
 })
 
 -- Make vimtex clean everything when we close the file.
-local augroup = vim.api.nvim_create_augroup("vimtex", { clear = true })
+local augroup = vim.api.nvim_create_augroup("nvimrc_vimtex", { clear = true })
 vim.api.nvim_create_autocmd({ "User" }, {
     pattern = "VimtexEventQuit",
     group = augroup,
