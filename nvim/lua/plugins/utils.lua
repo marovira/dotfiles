@@ -624,7 +624,7 @@ return {
         version = "*",
         keys = {
             {
-                "<leader>df",
+                "<leader>gd",
                 "<cmd>CodeDiff<cr>",
                 desc = "CodeDiff",
             },
