@@ -215,7 +215,11 @@ vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
         local status = 0
         for _, f in
             ipairs(
-                vim.fn.globpath(vim.fn.stdpath("data") .. "/shada", "*tmp", false, true)
+                vim.fn.glob(
+                    vim.fn.expand(vim.fn.stdpath("data") .. "/shada") .. "/*",
+                    false,
+                    true
+                )
             )
         do
             if vim.tbl_isempty(vim.fn.readfile(f)) then
