@@ -1,0 +1,8 @@
+description_case = "upper"
+imperative = true
+no_period = false
+max_header_length = 72
+max_body_length = 75
+whitespace = true
+header_pattern = "^(git|zsh|nvim|wez|install|docs|repo): "
+strip_header_pattern = true
