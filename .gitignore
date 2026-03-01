@@ -1,6 +1,9 @@
 .DS_Store
 git-sdk-64/
 
+# Ignore local WezTerm config files
+wezterm/local_launch.lua
+
 # Machine-specific ZSH files
 .zcompdump
 .antidote

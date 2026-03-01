@@ -29,8 +29,9 @@ end
 
 ---@return string
 function M.get_default_cwd()
-    if M.is_windows() then
-        return "E:/"
+    local has_local, launch = pcall(require, "local_launch")
+    if has_local then
+        return launch.get_launch_path()
     else
         return "~"
     end
