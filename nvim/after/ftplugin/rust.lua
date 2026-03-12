@@ -1,3 +1,5 @@
+vim.opt_local.textwidth = 90
+
 vim.b.ale_linters = { "analyzer", "cargo" }
 vim.b.ale_fixers = { "rustfmt" }
 vim.b.ale_linters_explicit = true

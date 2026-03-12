@@ -80,13 +80,6 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     end,
 })
 
--- The default line-width on rust is 100, so let's force it back to 90.
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = { "*.rs" },
-    group = ft_group,
-    callback = function() vim.opt_local.textwidth = 90 end,
-})
-
 -- Ensure GLSL shader files are appropriately recognised.
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = { "*.vert", "*.tesc", "*.tese", "*.geom", "*.frag", "*.comp" },
