@@ -257,20 +257,7 @@ return {
 
             local ignore_filetypes = {
                 "gitcommit",
-                "blink-cmp-documentation",
-                "blink-cmp-menu",
-                "blink-cmp-signature",
-                "checkhealth",
                 "lazy",
-                "mason",
-                "noice",
-                "snacks_dashboard",
-                "snacks_layout_box",
-                "snacks_notif",
-                "snacks_picker_input",
-                "snacks_picker_list",
-                "snacks_picker_preview",
-                "snacks_win",
             }
 
             -- Auto-install parsers and enable highlighting on FileType
@@ -295,7 +282,8 @@ return {
                     end
 
                     -- Auto-install missing parsers (async, no-op if already installed)
-                    ts.install({ lang })
+                    local parsers = require("nvim-treesitter.parsers")
+                    if vim.tbl_contains(parsers, lang) then ts.install({ lang }) end
                 end,
             })
         end,
