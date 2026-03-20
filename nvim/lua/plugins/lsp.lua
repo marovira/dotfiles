@@ -31,7 +31,7 @@ local function get_blink_text(ctx)
     elseif
         vim.tbl_contains({ "spell", "cmdline", "markdown", "Dict" }, ctx.source_name)
     then
-        local lsp_icon = lspkind.symbolic(ctx.source_name, { mode = "symbol" })
+        local lsp_icon = lspkind.symbolic(ctx.source_name)
         if lsp_icon then icon = lsp_icon end
     end
     return icon
@@ -93,9 +93,7 @@ return {
         version = "*",
         opts = {
             ensure_installed = {
-                -- NOTE: I'm pinning the version of LuaLS until this bug has been fixed:
-                --https://github.com/folke/lazydev.nvim/issues/136
-                "lua_ls@3.16.4",
+                "lua_ls",
                 "clangd",
                 "pylsp",
                 "cmake",
