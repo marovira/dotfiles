@@ -29,7 +29,7 @@ cfg.use_fancy_tab_bar = true
 cfg.hide_tab_bar_if_only_one_tab = true
 cfg.tab_bar_at_bottom = true
 
-cfg.window_decorations = utils.is_linux() and "NONE" or "TITLE | RESIZE"
+cfg.window_decorations = utils.is_linux() and "RESIZE" or "TITLE | RESIZE"
 
 -- Scrollbar/scrollback
 cfg.scrollback_lines = 10000
