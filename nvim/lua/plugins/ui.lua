@@ -38,8 +38,6 @@ return {
                 theme = "tokyonight",
                 disabled_filetypes = {
                     statusline = {
-                        "Trouble",
-                        "gitcommit",
                         "snacks_picker_list",
                     },
                 },
@@ -47,7 +45,7 @@ return {
             sections = {
                 lualine_a = { "mode" },
                 lualine_b = {
-                    { "branch", icon = "" },
+                    { function() return require("extra.git_branch").get_branch() end },
                     {
                         "diff",
                         symbols = {

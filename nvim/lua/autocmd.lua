@@ -55,6 +55,15 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "BufNewFile", "VimEnter" }, {
     end,
 })
 
+-- Ensure the git branch is updated for lualine
+vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "BufWritePost" }, {
+    group = ui_group,
+    callback = function()
+        local branch = require("extra.git_branch")
+        branch.update_branch()
+    end,
+})
+
 -- File-type Autocmd
 -- =======================
 local ft_group = vim.api.nvim_create_augroup("nvimrc_ft", { clear = true })
