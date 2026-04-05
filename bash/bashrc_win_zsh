@@ -1,5 +1,20 @@
-# Only start zsh if it's installed. This allows clean installs of Git bash to still
-# function normally without having to manually hack this file.
-if [ -x "$(command -v zsh)" ] && [[ $- == *i* ]]; then
-    exec zsh -i
-fi
+# vi: ft=bash
+# Export variables
+export EDITOR='nvim'
+
+# Vim aliases
+alias vi='nvim'
+alias vim='nvim'
+alias gvim='neovide'
+
+# Aliases
+alias grep='grep --color'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+# Emulates Apple's open
+alias open='start'
+
+# Directory listings
+alias ls='ls -1 -hF --color=auto'
+alias la='ls -lA'
