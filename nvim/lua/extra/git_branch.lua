@@ -4,6 +4,11 @@ local branch_cache = ""
 local GitBranch = {}
 
 function GitBranch.update_branch()
+    if vim.fn.executable("git") ~= 1 then
+        branch_cache = ""
+        return
+    end
+
     vim.system(
         { "git", "branch", "--show-current" },
         { text = true, stderr = false },
