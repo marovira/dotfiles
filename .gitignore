@@ -11,3 +11,7 @@ wezterm/local_launch.lua
 .zsh_plugins.zsh
 .zcompcache
 .zsh_history.*
+
+# Generated completion files
+_uv_completion
+_uvx_completion

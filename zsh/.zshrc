@@ -1,6 +1,7 @@
 HISTFILE=${ZDOTDIR}/.zsh_history
 setopt EXTENDED_HISTORY
 setopt inc_append_history_time
+setopt hist_ignore_all_dups
 
 export COLUMNS
 export FZF_PREVIEW_COLUMNS
@@ -47,7 +48,13 @@ fi
 # Load compinit for Windows and macOS since they don't enable it by default
 if [[ "$_current_platform" == "Windows" || "$_current_platform" == "Darwin" ]]; then
     autoload -Uz compinit
-    compinit
+
+    # Only re-create the completion cache once a day.
+    if [ "$(date +'%j')" != "$(stat -f '%Sm' -t '%j' $ZDOTDIR/.zcompdump 2>/dev/null)" ]; then
+        compinit
+    else
+        compinit -C
+    fi
 fi
 
 # Install antidote if necessary
@@ -131,18 +138,19 @@ autoload -U $FORGIT_INSTALL_DIR/completions/_git-forgit
 
 # Add UV completions (if it exists)
 if type "uv" > /dev/null; then
-    eval "$(uv generate-shell-completion zsh)"
-    eval "$(uvx --generate-shell-completion zsh)"
-
-    # Fix completions for uv run.
-    _uv_run_mod() {
-        if [[ "$words[2]" == "run" && "$words[CURRENT]" != -* ]]; then
-            _arguments '*:filename:_files'
-        else
-            _uv "$@"
-        fi
-    }
-    compdef _uv_run_mod uv
+    # Generate UV shell completions if they don't exist yet.
+    _uv_completion_file="$ZDOTDIR/_uv_completion"
+    _uvx_completion_file="$ZDOTDIR/_uvx_completion"
+    if [[ ! -f "$_uv_completion_file" ]]; then
+        uv generate-shell-completion zsh > "$_uv_completion_file"
+    fi
+    if [[ ! -f "$_uvx_completion_file" ]]; then
+        uv generate-shell-completion zsh > "$_uvx_completion_file"
+    fi
+    source "$_uv_completion_file"
+    source "$_uvx_completion_file"
+    unset _uv_completion_file
+    unset _uvx_completion_file
 fi
 
 # Source cargo (if available).
