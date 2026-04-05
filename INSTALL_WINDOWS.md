@@ -41,15 +41,10 @@ Once that is done, install the following:
 * `wezterm`
 * `winrar`
 * `zstd`
+* `msys2`
 
 > [!NOTE]
 > If python will be used for development, then also install `uv`
-
-> [!IMPORTANT]
-> Care needs to be taken when updating Git, as we're using a heavily modified environment.
-> As scoop will effectively move the installation folder to the one with the new version,
-> `pacman` needs to be re-installed alongside the tools it manages. Other than that,
-> everything else should work normally.
 
 ## Installing dotfiles
 
@@ -57,26 +52,22 @@ Once everything has been installed, clone this repository and run `install.bat` 
 
 ## Post-build Steps
 
-### Setting up `pacman`
+### Setting up msys2
 
-1. Open a terminal running git bash and run `sh install_pacman.sh` from this
-   repository.
-1. Run `pacman -Suu` to update everything.
+After `msys2` is installed, open a terminal and enter `msys2`. This will trigger the
+completion of the environment setup. Once that finishes, do:
 
-Once `pacman` is correctly installed, open another admin terminal and install:
+1. Run `pacman -Syuu` to update everything.
+1. Run `pacman -S mingw-w64-x86_64-git` to install the git for windows version.
+1. Run `pacman -S zsh pv tree openssh` to install everything else.
 
-* `zsh`
-* `util-linux`
-* `pv`
-* `tree`
+After this, switch to WezTerm and double-check that:
 
-> [!NOTE]
-> Errors during install referring to `man` are normal as it is not actually installed.
+1. The ssh-agent is sourced immediately with the correct key.
+1. That the start-up folder is the correct one.
+1. That you can clone using ssh without having to enter the password.
 
-> [!NOTE]
-> In newer versions, it is possible for `pacman -Suu` to fail with the following error
-> message: `/etc/inputrc exists in both 'libreadline' and 'mingw-w64-x86_64-git-extra'`.
-> If this happens, run `pacman -Suu --overwrite /etc/inputrc`.
+If all these checks pass, then msys2 is properly configured and ready to go.
 
 > [!NOTE]
 > Once `wezterm` is installed and fully configured, Windows Terminal can be left alone and
