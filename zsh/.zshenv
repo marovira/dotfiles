@@ -1,3 +1,6 @@
+if [[ "$OSTYPE" == (msys|cygwin)* ]]; then
+    export PATH="/usr/bin:/mingw64/bin:$PATH"
+fi
 # Ensure XDG directories are always consistent
 _cur_os=$(uname)
 if [[ "$_cur_os" == "Linux" || "$_cur_os" == "Darwin" ]]; then
