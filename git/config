@@ -125,6 +125,10 @@
     #==============================#
     cn = forgit clean
 
+    # Clean commands
+    #==============================#
+    cp = forgit cherry_pick
+
     # Push commands
     #==============================#
     ps = push
