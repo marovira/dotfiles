@@ -4,17 +4,11 @@ local cfg = {}
 
 if common.is_windows() then
     local args = {
-        "cmd.exe",
-        "/c",
-        os.getenv("USERPROFILE") .. "/scoop/apps/msys2/current/msys2_shell.cmd",
-        "-mingw64",
-        "-shell",
-        "zsh",
-        "-defterm",
-        "-no-start",
-        "-use-full-path",
+        os.getenv("USERPROFILE") .. "/scoop/apps/msys2/current/usr/bin/zsh.exe",
+        "--login",
     }
     local env = {
+        MSYSTEM = "MINGW64",
         MSYS2_PATH_TYPE = "inherit",
         CHERE_INVOKING = "1",
     }
