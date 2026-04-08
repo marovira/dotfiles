@@ -153,6 +153,11 @@ if type "uv" > /dev/null; then
     unset _uvx_completion_file
 fi
 
+# Activate patina (if it exists).
+if type "zsh-patina" > /dev/null; then
+    eval "$(zsh-patina activate)"
+fi
+
 # Source cargo (if available).
 if [ -f "$HOME/.cargo/env" ]; then
     . "$HOME/.cargo/env"

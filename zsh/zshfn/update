@@ -77,6 +77,25 @@ _update_treesitter() {
     chmod +x "$HOME/.local/bin/tree-sitter"
 }
 
+_update_patina() {
+    if [ -f "$HOME/.local/bin/zsh-patina" ]; then
+        rm "$HOME/.local/bin/zsh-patina"
+    fi
+
+    curl -s "https://api.github.com/repos/michel-kraemer/zsh-patina/releases/latest" \
+        | grep "x86_64-unknown-linux-gnu" \
+        | cut -d : -f 2,3 \
+        | tr -d \" \
+        | tail -n 1 \
+        | wget -qi - -O zsh-patina.tar.gz
+
+    _name=$(tar -tzf "zsh-patina.tar.gz" | grep "/zsh-patina")
+    tar -xzf "zsh-patina.tar.gz" -C "$HOME/.local/bin" $_name --strip-components=1
+    chmod +x "$HOME/.local/bin/zsh-patina"
+    rm zsh-patina.tar.gz
+    unset _name
+}
+
 local cur_os=$(uname)
 if [[ "$cur_os" == "Linux" ]]; then
     local -r app=${1:?"error: no app to update has been specified"}
@@ -87,6 +106,7 @@ if [[ "$cur_os" == "Linux" ]]; then
         delta) _update_delta;;
         fzf) _update_fzf;;
         treesitter) _update_treesitter;;
+        patina) _update_patina;;
         *) echo "Unknown app name";;
     esac
 else
