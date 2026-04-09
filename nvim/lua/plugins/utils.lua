@@ -350,6 +350,13 @@ return {
                 },
             },
             picker = {
+                win = {
+                    input = {
+                        wo = {
+                            virtualedit = "all",
+                        },
+                    },
+                },
                 formatters = {
                     file = {
                         filename_first = true,
