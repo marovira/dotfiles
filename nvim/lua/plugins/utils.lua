@@ -387,18 +387,11 @@ return {
                         and not common.is_filetype(buf, { "gitcommit" })
                 end,
             },
-            dim = {
-                scope = {
-                    min_size = 5,
-                    max_size = 50,
-                    siblings = true,
-                },
-            },
             scroll = { enabled = true },
             statuscolumn = { enabled = true },
             scope = { enabled = true },
             words = { enabled = true },
-            zen = { enabled = true },
+            zen = { enabled = true, toggles = { dim = false } },
             notifier = {
                 enabled = true,
                 timeout = 3000,
@@ -419,7 +412,6 @@ return {
                     Snacks.toggle.treesitter():map("<leader>tt")
                     Snacks.toggle.animate():map("<leader>ta")
                     Snacks.toggle.zen():map("<leader>tz")
-                    Snacks.toggle.dim():map("<leader>th")
                     Snacks.toggle
                         .option("relativenumber", { name = "Relative number" })
                         :map("<leader>tn")
@@ -580,18 +572,6 @@ return {
                 long_message_to_split = true,
                 inc_rename = false,
                 lsp_doc_border = false,
-            },
-        },
-        keys = {
-            {
-                "<leader>nl",
-                function() require("noice").cmd("last") end,
-                desc = "Noice last message",
-            },
-            {
-                "<leader>nh",
-                function() require("noice").cmd("history") end,
-                desc = "Noice message history",
             },
         },
     },
