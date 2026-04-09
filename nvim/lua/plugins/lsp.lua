@@ -123,7 +123,6 @@ return {
         "saghen/blink.cmp",
         version = "*",
         dependencies = {
-            { "rafamadriz/friendly-snippets" },
             {
                 "onsails/lspkind.nvim",
                 opts = {

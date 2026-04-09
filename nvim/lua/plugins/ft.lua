@@ -40,34 +40,6 @@ return {
         },
     },
     {
-        "Civitasv/cmake-tools.nvim",
-        dependencies = {
-            { "nvim-lua/plenary.nvim" },
-            { "mfussenegger/nvim-dap" },
-        },
-        opts = {
-            cmake_build_directory = "build",
-        },
-        ft = "cpp",
-        keys = {
-            {
-                "<leader>mg",
-                "<cmd>CMakeGenerate<cr>",
-                desc = "CMake generate",
-            },
-            {
-                "<leader>mb",
-                "<cmd>CMakeBuild<cr>",
-                desc = "CMake build",
-            },
-            {
-                "<leader>mr",
-                "<cmd>CMakeRun<cr>",
-                desc = "CMake run",
-            },
-        },
-    },
-    {
         "mrcjkb/rustaceanvim",
         version = "*",
         lazy = false,
