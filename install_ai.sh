@@ -1,14 +1,13 @@
 #!/bin/bash
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-mklink() {
-    ln -sf "$1" "$2"
-}
+source "$SCRIPT_DIR/common.sh"
 
 # Ensure that .claude exists
 mkdir -p "$HOME/.claude"
 
-mklink "$PWD/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
-mklink "$PWD/claude/settings.json" "$HOME/.claude/settings.json"
-mklink "$PWD/claude/keybindings.json" "$HOME/.claude/keybindings.json"
-mklink "$PWD/claude/skills" "$HOME/.claude/skills"
+mklink "$SCRIPT_DIR/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+mklink "$SCRIPT_DIR/claude/settings.json" "$HOME/.claude/settings.json"
+mklink "$SCRIPT_DIR/claude/keybindings.json" "$HOME/.claude/keybindings.json"
+mklink "$SCRIPT_DIR/claude/skills" "$HOME/.claude/skills"

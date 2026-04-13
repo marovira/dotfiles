@@ -1,35 +1,37 @@
 #!/bin/bash
 
-mklink() {
-    ln -sf "$1" "$2"
-}
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+source "$SCRIPT_DIR/common.sh"
 
 # Ensure that .config exists
 mkdir -p "$HOME/.config"
 
 # nvim
-mklink "$PWD/nvim" "$HOME/.config/nvim"
+mklink "$SCRIPT_DIR/nvim" "$HOME/.config/nvim"
 
 # git
-mklink "$PWD/git/config" "$HOME/.gitconfig"
-mklink "$PWD/git/ignore" "$HOME/.gitignore"
+mklink "$SCRIPT_DIR/git/config" "$HOME/.gitconfig"
+mklink "$SCRIPT_DIR/git/ignore" "$HOME/.gitignore"
 
 # zsh
-mklink "$PWD/zsh/zshenv" "$HOME/.zshenv"
-mklink "$PWD/zsh" "$HOME/.config/zsh"
-mklink "$PWD/zsh/zsh-patina" "$HOME/.config/zsh-patina"
+mklink "$SCRIPT_DIR/zsh/zshenv" "$HOME/.zshenv"
+mklink "$SCRIPT_DIR/zsh" "$HOME/.config/zsh"
+mklink "$SCRIPT_DIR/zsh/zsh-patina" "$HOME/.config/zsh-patina"
 
 # bat
-mklink "$PWD/bat" "$HOME/.config/bat"
+mklink "$SCRIPT_DIR/bat" "$HOME/.config/bat"
 
 # wezterm
-mklink "$PWD/wezterm" "$HOME/.config/wezterm"
+mklink "$SCRIPT_DIR/wezterm" "$HOME/.config/wezterm"
 
 # tmux (Linux only)
 if [[ "$cur_os" != "Darwin" ]]; then
     mkdir -p "$HOME/.tmux/"
-    ln --backup -s "$PWD/tmux/tmux.conf" "$HOME/.tmux.conf"
-    ln --backup -s "$PWD/tmux/themes" "$HOME/.tmux/themes"
+    mklink "$SCRIPT_DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
+    mklink "$SCRIPT_DIR/tmux/themes" "$HOME/.tmux/themes"
 
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    if [[ ! -d "$HOME/.tmux/plugins/tpm" ]]; then
+        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    fi
 fi
