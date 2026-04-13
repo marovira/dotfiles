@@ -12,6 +12,7 @@ rm "$HOME/.gitignore"
 # zsh
 rm "$HOME/.zshenv"
 rm "$HOME/.config/zsh"
+rm "$HOME/.config/zsh-patina"
 
 # Language files
 if [ -f "$HOME/.clang-format" ]; then

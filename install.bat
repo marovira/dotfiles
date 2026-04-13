@@ -34,6 +34,7 @@ mklink %USERPROFILE%\.gitignore %CURDIR%git\ignore
 mklink %USERPROFILE%\.bashrc %CURDIR%bash\bashrc_win_zsh
 mklink %USERPROFILE%\.zshenv %CURDIR%zsh\zshenv
 mklink /D %USERPROFILE%\.config\zsh %CURDIR%zsh
+mklink /D %USERPROFILE%\.config\zsh-patina %CURDIR%zsh\zsh-patina
 
 :: bat
 mklink %USERPROFILE%\scoop\apps\bat\current\config %CURDIR%bat\config

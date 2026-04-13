@@ -23,6 +23,7 @@ mklink "$PWD/git/ignore" "$HOME/.gitignore"
 # zsh
 mklink "$PWD/zsh/zshenv" "$HOME/.zshenv"
 mklink "$PWD/zsh" "$HOME/.config/zsh"
+mklink "$PWD/zsh/zsh-patina" "$HOME/.config/zsh-patina"
 
 # bat
 mklink "$PWD/bat" "$HOME/.config/bat"

@@ -30,6 +30,7 @@ if exist %USERPROFILE%\.clang-format del %USERPROFILE%\.clang-format
 del %USERPROFILE%\.bashrc
 del %USERPROFILE%\.zshenv
 rmdir %USERPROFILE%\.config\zsh
+rmdir %USERPROFILE%\.config\zsh-patina
 
 :: Bat
 del %USERPROFILE%\scoop\apps\bat\current\config
