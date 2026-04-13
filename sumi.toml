@@ -4,5 +4,5 @@ no_period = false
 max_header_length = 72
 max_body_length = 75
 whitespace = false
-header_pattern = "^(git|zsh|nvim|wez|install|docs|repo): "
+header_pattern = "^(git|zsh|nvim|wez|install|docs|repo|ai): "
 strip_header_pattern = true

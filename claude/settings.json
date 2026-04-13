@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+  },
+  "permissions": {
+    "allow": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash(git status)",
+      "Bash(git log *)",
+      "Bash(git diff *)",
+      "Bash(git fetch *)",
+      "Bash(git pull *)",
+      "Bash(git push *)",
+      "Bash(git checkout *)",
+      "Bash(git branch *)",
+      "Bash(git stash *)",
+      "Bash(git remote *)",
+      "Bash(git show *)",
+      "Bash(git tag *)",
+      "Bash(uv run *)",
+      "Bash(cargo build *)",
+      "Bash(cargo test *)",
+      "Bash(cargo run *)",
+      "Bash(cargo clippy *)",
+      "Bash(cargo fmt *)",
+      "Bash(ls *)",
+      "Bash(find *)",
+      "Bash(grep *)",
+      "Bash(cat *)",
+      "Bash(pwd)",
+      "Bash(tree *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(wc *)",
+      "Bash(echo *)",
+      "Bash(which *)",
+      "Bash(env *)",
+      "Bash(printenv *)",
+      "Bash(sort *)",
+      "Bash(uniq *)",
+      "Bash(cut *)",
+      "Bash(mkdir *)"
+    ],
+    "deny": [
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git merge *)",
+      "Bash(git reset *)",
+      "Bash(git rebase *)",
+      "Bash(git clean *)",
+      "Bash(rm *)",
+      "Bash(rmdir *)",
+      "Bash(chmod *)",
+      "Bash(chown *)",
+      "Bash(uvx *)"
+    ],
+    "defaultMode": "default"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir // .cwd'); model=$(echo \"$input\" | jq -r '.model.display_name'); remaining=$(echo \"$input\" | jq -r '.context_window.remaining_percentage // empty'); dir=$(basename \"$cwd\"); branch=\"\"; if git -C \"$cwd\" rev-parse --git-dir > /dev/null 2>&1; then b=$(git -C \"$cwd\" symbolic-ref --short HEAD 2>/dev/null || git -C \"$cwd\" rev-parse --short HEAD 2>/dev/null); d=\"\"; git -C \"$cwd\" diff --quiet 2>/dev/null && git -C \"$cwd\" diff --cached --quiet 2>/dev/null || d=\"*\"; u=$(git -C \"$cwd\" ls-files --others --exclude-standard \"$cwd\" 2>/dev/null | wc -l | tr -d ' '); [ \"$u\" -gt 0 ] && d=\"${d}?\"; branch=\" [${b}${d}]\"; fi; ctx=\"\"; [ -n \"$remaining\" ] && ctx=\" [ctx: $(printf '%.0f' \"$remaining\")%]\"; printf \"%s%s | %s%s\\n\" \"$dir\" \"$branch\" \"$model\" \"$ctx\""
+  },
+  "enabledPlugins": {
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true
+  },
+  "autoUpdatesChannel": "latest"
+}
