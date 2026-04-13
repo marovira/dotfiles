@@ -1,13 +1,7 @@
-#!/bin/sh
-
-cur_os=$(uname)
+#!/bin/bash
 
 mklink() {
-    if [[ "$cur_os" == "Darwin" ]]; then
-        ln -s $@
-    else
-        ln --backup -s $@
-    fi
+    ln -sf "$1" "$2"
 }
 
 # Ensure that .config exists

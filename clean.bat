@@ -12,8 +12,9 @@ if %errorLevel% == 0 (
 )
 
 :: Environment variables
-setx XDG_CONFIG_HOME ""
-setx HOME ""
+reg delete "HKCU\Environment" /v XDG_CONFIG_HOME /f >nul 2>&1
+reg delete "HKCU\Environment" /v HOME /f >nul 2>&1
+reg delete "HKCU\Environment" /v CLAUDE_CODE_GIT_BASH_PATH /f >nul 2>&1
 
 :: Neovim
 rmdir %LOCALAPPDATA%\nvim
@@ -38,6 +39,11 @@ del %USERPROFILE%\scoop\apps\bat\themes\tokyonight_moon.tmTheme
 
 :: Wezterm
 rmdir %LOCALAPPDATA%\wezterm
+
+del %USERPROFILE%\.claude\CLAUDE.md
+del %USERPROFILE%\.claude\settings.json
+del %USERPROFILE%\.claude\keybindings.json
+rmdir %USERPROFILE%\.claude\skills
 
 echo Clean finished successfully
 pause

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 cur_os=$(uname)
 
@@ -28,4 +28,12 @@ rm "$HOME/.config/wezterm"
 if [[ "$cur_os" != "Darwin" ]]; then
     rm "$HOME/.tmux.conf"
     rm -rf "$HOME/.tmux"
+fi
+
+# If the .claude folder exists, remove the symlinks for it
+if [ -d "$HOME/.claude" ]; then
+    rm "$HOME/.claude/CLAUDE.md"
+    rm "$HOME/.claude/settings.json"
+    rm "$HOME/.claude/keybindings.json"
+    rm "$HOME/.claude/skills"
 fi
