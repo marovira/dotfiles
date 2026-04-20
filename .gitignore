@@ -15,3 +15,4 @@ wezterm/local_launch.lua
 # Generated completion files
 _uv_completion
 _uvx_completion
+_patina_completion

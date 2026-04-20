@@ -155,6 +155,13 @@ fi
 
 # Activate patina (if it exists).
 if type "zsh-patina" > /dev/null; then
+    # Generate shell completions if they don't exist yet
+    _patina_completion_file="$ZDOTDIR/_patina_completion"
+    if [[ ! -f "$_patina_completion_file" ]]; then
+        zsh-patina completion > "$_patina_completion_file"
+    fi
+    source "$_patina_completion_file"
+    unset _patina_completion_file
     eval "$(zsh-patina activate)"
 fi
 
