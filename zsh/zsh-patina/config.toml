@@ -1,5 +1,5 @@
 [highlighting]
 theme = "tokyonight"
-dynamic = true
+dynamic = { callables = true, paths = "partial" }
 max_line_length = 20000
 timeout_ms = 500
