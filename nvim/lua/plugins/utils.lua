@@ -524,6 +524,7 @@ return {
             disabled_filetypes = {
                 ["dap*"] = true,
                 ["codediff-explorer"] = true,
+                ["codediff-history"] = true,
             },
             hints = {
                 ["[dcyvV][ia][%(%)]"] = {
