@@ -153,7 +153,7 @@ return {
                 if
                     ok
                     and not common.is_buffer_filetype(
-                        { "toml", "python", "markdown" },
+                        { "toml", "python", "markdown", "cpp" },
                         buf
                     )
                 then
