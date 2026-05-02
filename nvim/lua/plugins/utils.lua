@@ -637,4 +637,34 @@ return {
             },
         },
     },
+    {
+        "folke/trouble.nvim",
+        dependencies = { "nvim-mini/mini.nvim" },
+        opts = {
+            auto_close = true,
+        },
+        cmd = "Trouble",
+        keys = {
+            {
+                "<leader>xx",
+                "<cmd>Trouble diagnostics toggle<cr>",
+                desc = "Trouble diagnostics",
+            },
+            {
+                "<leader>xX",
+                "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+                desc = "Trouble Buffer diagnostics",
+            },
+            {
+                "<leader>xL",
+                "<cmd>Trouble loclist toggle<cr>",
+                desc = "Trouble loclist",
+            },
+            {
+                "<leader>xQ",
+                "<cmd>Trouble qflist toggle<cr>",
+                desc = "Trouble quickfix",
+            },
+        },
+    },
 }
