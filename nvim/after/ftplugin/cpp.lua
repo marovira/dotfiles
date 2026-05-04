@@ -10,7 +10,7 @@ vim.b.ale_linters = { "clangtidy" }
 vim.b.ale_fixers = { "clang-format" }
 vim.b.ale_linters_explicit = true
 vim.b.ale_lint_on_text_changed = false
-vim.b.ale_lint_on_insert_leave = true
+vim.b.ale_lint_on_insert_leave = false
 vim.b.ale_lint_on_save = true
 
 if common.is_windows() or common.is_mac() then
