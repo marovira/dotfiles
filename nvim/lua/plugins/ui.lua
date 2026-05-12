@@ -119,6 +119,7 @@ return {
                     { pattern = "recent", icon = "" },
                     { pattern = "highlight", icon = "󰸱" },
                     { pattern = "resume", icon = "" },
+                    { pattern = "sidekick", icon = "󰚩" },
                 },
             },
         },

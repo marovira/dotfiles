@@ -621,6 +621,12 @@ return {
     {
         "folke/sidekick.nvim",
         keys = {
+            -- Toggle CLI
+            {
+                "<leader>aa",
+                function() require("sidekick.cli").toggle() end,
+                desc = "Sidekick toggle CLI",
+            },
             {
                 "<leader>ac",
                 function()
@@ -628,12 +634,24 @@ return {
                 end,
                 desc = "Sidekick toggle Claude",
             },
+            -- Send to CLI
             {
-                "<leader>ag",
-                function()
-                    require("sidekick.cli").toggle({ name = "gemini", focus = true })
-                end,
-                desc = "Sidekick toggle Gemini",
+                "<leader>at",
+                function() require("sidekick.cli").send({ msg = "{this}" }) end,
+                mode = { "x", "n" },
+                desc = "Sidekick send this",
+            },
+            {
+                "<leader>af",
+                function() require("sidekick.cli").send({ msg = "{file}" }) end,
+                mode = { "x", "n" },
+                desc = "Sidekick send file",
+            },
+            {
+                "<leader>av",
+                function() require("sidekick.cli").send({ msg = "{selection}" }) end,
+                mode = { "x" },
+                desc = "Sidekick send selection",
             },
         },
     },
