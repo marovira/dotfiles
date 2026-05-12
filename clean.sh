@@ -35,5 +35,6 @@ if [ -d "$HOME/.claude" ]; then
     rm "$HOME/.claude/CLAUDE.md"
     rm "$HOME/.claude/settings.json"
     rm "$HOME/.claude/keybindings.json"
+    rm "$HOME/.claude/statusline.sh"
     rm "$HOME/.claude/skills"
 fi

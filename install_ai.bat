@@ -24,4 +24,5 @@ if not exist "%USERPROFILE%\.claude\" mkdir "%USERPROFILE%\.claude"
 mklink %USERPROFILE%\.claude\CLAUDE.md %CURDIR%claude\CLAUDE.md
 mklink %USERPROFILE%\.claude\settings.json %CURDIR%claude\settings.json
 mklink %USERPROFILE%\.claude\keybindings.json %CURDIR%claude\keybindings.json
+mklink %USERPROFILE%\.claude\statusline.sh %CURDIR%claude\statusline.sh
 mklink /D %USERPROFILE%\.claude\skills %CURDIR%claude\skills

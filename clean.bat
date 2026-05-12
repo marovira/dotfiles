@@ -43,6 +43,7 @@ rmdir %LOCALAPPDATA%\wezterm
 del %USERPROFILE%\.claude\CLAUDE.md
 del %USERPROFILE%\.claude\settings.json
 del %USERPROFILE%\.claude\keybindings.json
+del %USERPROFILE%\.claude\statusline.sh
 rmdir %USERPROFILE%\.claude\skills
 
 echo Clean finished successfully
