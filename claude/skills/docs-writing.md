@@ -56,12 +56,13 @@ When in doubt about whether a term qualifies as an exception, leave it as-is and
 
 ### No Em Dashes
 
-Do not use em dashes (—) anywhere. Replace them with the most natural alternative given the context:
+Do not use em dashes (—) anywhere. The reason is practical: em dashes are not easy to type on a standard keyboard, and documentation should be easy to edit. Replace them with the most natural alternative given the context:
 
 - Use a **comma** for a mild aside or continuation: *"The function runs quickly, which is important for large inputs."*
 - Use **parentheses** for a parenthetical remark: *"The function runs quickly (especially for large inputs)."*
 - Use a **semicolon** for two closely related clauses: *"The function runs quickly; performance is critical here."*
-- Rewrite the sentence if none of the above fits naturally.
+- Use a **regular hyphen** (`-`) where a separator is needed and none of the above fits naturally (for example, in table cells or quote attributions).
+- Rewrite the sentence if none of the above fits.
 
 ### Formal Mathematical Language
 
