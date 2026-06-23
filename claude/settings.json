@@ -91,5 +91,8 @@
     "lua-lsp@claude-plugins-official": true,
     "clangd-lsp@claude-plugins-official": true
   },
-  "autoUpdatesChannel": "latest"
+  "effortLevel": "medium",
+  "awaySummaryEnabled": false,
+  "autoUpdatesChannel": "latest",
+  "theme": "dark-ansi"
 }
