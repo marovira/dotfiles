@@ -98,10 +98,11 @@ return {
                 "cmake",
                 "marksman",
                 -- Python LSP:
-                -- I'm leaving pylsp here as a fall-back, but Ty appears to have moved
-                -- enough that it should be (mostly) fine to use. I'm also pretty sure
-                -- I'll be shifting to it as a type-checker once it stabilises a bit more.
-                "ty",
+                -- Switching back to zuban as it appears to have advanced enough for me to
+                -- use it reliably. The type-checker is now pretty much on par with mypy's
+                -- behaviour but is significantly faster and imports now work properly.
+                -- I'm leaving pylsp as a backup just in case.
+                "zuban",
                 -- "pylsp",
             },
         },
