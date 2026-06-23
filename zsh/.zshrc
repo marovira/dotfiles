@@ -45,6 +45,28 @@ if [[ "$_current_platform" == "Windows" ]]; then
     unset SHELL
 fi
 
+# Generate completions for any tool with a spec file, if the binary has changed.
+# Spec files live in $ZDOTDIR/completion-specs/<toolname> and contain the shell
+# command that writes completions to stdout.
+fpath+=("$ZDOTDIR/completions")
+() {
+    local comp_dir="$ZDOTDIR/completions"
+    mkdir -p "$comp_dir"
+    local spec_dir spec tool binary comp
+    for spec_dir in "$ZDOTDIR/completion-specs" "$ZDOTDIR/completion-specs-local"; do
+        [[ -d "$spec_dir" ]] || continue
+        for spec in "$spec_dir"/*(N); do
+            [[ -f "$spec" ]] || continue
+            tool=${spec:t}
+            binary=$(command -v "$tool" 2>/dev/null) || continue
+            comp="$comp_dir/_${tool}"
+            if [[ ! -f "$comp" || "$binary" -nt "$comp" ]]; then
+                eval "$(< "$spec")" > "$comp" 2>/dev/null || rm -f "$comp"
+            fi
+        done
+    done
+}
+
 # Load compinit for Windows and macOS since they don't enable it by default
 if [[ "$_current_platform" == "Windows" || "$_current_platform" == "Darwin" ]]; then
     autoload -Uz compinit
@@ -136,32 +158,8 @@ autoload -U $fpath[-1]/*(.:t)
 fpath+=($FORGIT_INSTALL_DIR/completions/_git-forgit)
 autoload -U $FORGIT_INSTALL_DIR/completions/_git-forgit
 
-# Add UV completions (if it exists)
-if type "uv" > /dev/null; then
-    # Generate UV shell completions if they don't exist yet.
-    _uv_completion_file="$ZDOTDIR/_uv_completion"
-    _uvx_completion_file="$ZDOTDIR/_uvx_completion"
-    if [[ ! -f "$_uv_completion_file" ]]; then
-        uv generate-shell-completion zsh > "$_uv_completion_file"
-    fi
-    if [[ ! -f "$_uvx_completion_file" ]]; then
-        uv generate-shell-completion zsh > "$_uvx_completion_file"
-    fi
-    source "$_uv_completion_file"
-    source "$_uvx_completion_file"
-    unset _uv_completion_file
-    unset _uvx_completion_file
-fi
-
 # Activate patina (if it exists).
 if type "zsh-patina" > /dev/null; then
-    # Generate shell completions if they don't exist yet
-    _patina_completion_file="$ZDOTDIR/_patina_completion"
-    if [[ ! -f "$_patina_completion_file" ]]; then
-        zsh-patina completion > "$_patina_completion_file"
-    fi
-    source "$_patina_completion_file"
-    unset _patina_completion_file
     eval "$(zsh-patina activate)"
 fi
 

@@ -12,7 +12,9 @@ wezterm/local_launch.lua
 .zcompcache
 .zsh_history.*
 
-# Generated completion files
-_uv_completion
-_uvx_completion
-_patina_completion
+# Generated completion files (auto-managed by completion-specs loader)
+zsh/completions/*
+!zsh/completions/.gitkeep
+
+# Machine-specific completion specs
+zsh/completion-specs-local/
