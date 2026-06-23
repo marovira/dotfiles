@@ -56,13 +56,15 @@ When in doubt about whether a term qualifies as an exception, leave it as-is and
 
 ### No Em Dashes
 
-Do not use em dashes (—) anywhere. The reason is practical: em dashes are not easy to type on a standard keyboard, and documentation should be easy to edit. Replace them with the most natural alternative given the context:
+Do not use em dashes (—) anywhere in prose. The reason is practical: em dashes are not easy to type on a standard keyboard, and documentation should be easy to edit. Replace them with the most natural alternative given the context:
 
 - Use a **comma** for a mild aside or continuation: *"The function runs quickly, which is important for large inputs."*
 - Use **parentheses** for a parenthetical remark: *"The function runs quickly (especially for large inputs)."*
 - Use a **semicolon** for two closely related clauses: *"The function runs quickly; performance is critical here."*
-- Use a **regular hyphen** (`-`) where a separator is needed and none of the above fits naturally (for example, in table cells or quote attributions).
+- Use a **regular hyphen** (`-`) where a separator is needed and none of the above fits naturally (for example, in table cells).
 - Rewrite the sentence if none of the above fits.
+
+**Exception:** Use an em dash in blockquote attribution lines (e.g. `> — Author Name`). A plain hyphen in this position is parsed by Markdown renderers as a bullet point, which is incorrect. This is the only permitted use of an em dash.
 
 ### Formal Mathematical Language
 
@@ -116,7 +118,7 @@ When editing an existing file:
 Before submitting any documentation, verify:
 
 - [ ] British English spellings used throughout (except code references and domain terms)
-- [ ] No em dashes present anywhere
+- [ ] No em dashes present anywhere in prose (blockquote attributions are the only permitted exception)
 - [ ] All numeric ranges and thresholds use formal mathematical notation
 - [ ] Mathematical and algorithmic descriptions use formal language (`Let x be...`, `For a given...`, `if and only if`, `O(...)`)
 - [ ] Tone, structure, and formatting match existing documentation (or the user-specified tone if new)
