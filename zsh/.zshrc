@@ -79,6 +79,13 @@ if [[ "$_current_platform" == "Windows" || "$_current_platform" == "Darwin" ]]; 
     fi
 fi
 
+# Fix completion of paths on other drives on msys2.
+if [[ "$_current_platform" == "Windows" ]]; then
+    drives=$(mount | sed -rn 's#^[A-Z]: on /([a-z]).*#\1#p' | tr '\n' ' ')
+    zstyle ':completion:*' fake-files /: "/:$drives"
+    unset drives
+fi
+
 # Install antidote if necessary
 ANTIDOTE=${ZDOTDIR}/.antidote
 if [ ! -d $ANTIDOTE ]; then
