@@ -25,16 +25,6 @@ if [[ "$_current_platform" == "Darwin" ]]; then
     fi
 fi
 
-_has_brew_python3=false
-if $_has_brew; then
-    # Check every possible version of Python we know of.
-    if brew ls --versions python@3.12 > /dev/null; then
-        _has_brew_python3=true
-    elif brew ls --versions python@3.13 > /dev/null; then
-        _has_brew_python3=true
-    fi
-fi
-
 _is_linux() {
     [[ "$_uname" == "Linux" ]]
 }
@@ -117,10 +107,9 @@ if [[ "$_current_platform" == "Windows" ]]; then
     alias neovide='(neovide --grid 100x50 &)'
 fi
 
-# On macOS only, ensure that python3 gets overwritten to the location of the version we
-# install with homebrew.
-if $_has_brew && $_has_brew_python3; then
-    alias python3=/opt/homebrew/bin/python3
+# If brew is installed, ensure its environment gets set correctly.
+if $_has_brew; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 # Grep aliases
@@ -194,6 +183,5 @@ fi
 
 unset -v _uname
 unset -v _has_brew
-unset -v _has_brew_python3
 unset -v _current_platform
 unset -f _is_linux
