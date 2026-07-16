@@ -66,6 +66,12 @@ Do not use em dashes (—) anywhere in prose. The reason is practical: em dashes
 
 **Exception:** Use an em dash in blockquote attribution lines (e.g. `> — Author Name`). A plain hyphen in this position is parsed by Markdown renderers as a bullet point, which is incorrect. This is the only permitted use of an em dash.
 
+### Line Length
+
+Wrap all prose lines at 90 characters. Break at word boundaries only; never break
+within a word. Markdown table rows and URLs are exempt — they must remain on a single
+line and may exceed 90 characters.
+
 ### Formal Mathematical Language
 
 Use formal mathematical language whenever describing:
@@ -119,6 +125,7 @@ Before submitting any documentation, verify:
 
 - [ ] British English spellings used throughout (except code references and domain terms)
 - [ ] No em dashes present anywhere in prose (blockquote attributions are the only permitted exception)
+- [ ] All prose lines wrap at 90 characters (table rows and URLs are exempt)
 - [ ] All numeric ranges and thresholds use formal mathematical notation
 - [ ] Mathematical and algorithmic descriptions use formal language (`Let x be...`, `For a given...`, `if and only if`, `O(...)`)
 - [ ] Tone, structure, and formatting match existing documentation (or the user-specified tone if new)
