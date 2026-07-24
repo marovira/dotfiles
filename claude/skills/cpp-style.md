@@ -93,23 +93,17 @@ struct Vertex {
 
 ## Const Style
 
-This project uses a **deliberate split** — do not "fix" either rule or apply one
-style everywhere:
+This project uses **east const** (const-on-the-right) everywhere:
 
-- **Function arguments**: const-on-the-right (east const)
-  ```cpp
-  void process(Widget const& w, int const count);
-  ```
+```cpp
+int const max_count{100};
+std::string const name{"pipeline"};
+void process(Widget const& w, int const count);
+char const* const ptr{buffer};
+```
 
-- **Variable declarations**: const-on-the-left (west const)
-  ```cpp
-  const int max_count{100};
-  const std::string name{"pipeline"};
-  ```
-
-The rationale: function arguments frequently involve references and pointers,
-where east const reads more naturally (`T const*` vs `const T*`). Local variable
-declarations are simpler and read more naturally with west const.
+East const is applied consistently to all variable declarations, function
+arguments, return types, and pointer qualifiers.
 
 ---
 
@@ -234,7 +228,7 @@ Before finalising any C++ file, verify:
 - [ ] Header files begin with `#pragma once`
 - [ ] All types are `PascalCase`, all functions/variables are `snake_case`
 - [ ] Private class members have `m_` prefix; struct members do not
-- [ ] Function arguments use east const (`T const&`); variable declarations use west const (`const T`)
+- [ ] East const used everywhere (`T const&`, `int const`, `char const* const`)
 - [ ] Braced initialisation used where unambiguous
 - [ ] No raw `new`/`delete`; smart pointers constructed with `make_unique`/`make_shared`
 - [ ] `auto` used only in the permitted cases
