@@ -1,3 +1,36 @@
 #!/bin/zsh
 
-python ${ZDOTDIR}/zshpy/ssh_listen.py "$@"
+_ssh_listen_generate() {
+    cat > sample.json <<'EOF'
+[
+    {
+        "port": "localhost:16066:localhost:6006",
+        "host": "foo@bar"
+    }
+]
+EOF
+}
+
+_ssh_listen_start() {
+    local config=$1
+    jq -r '.[] | "\(.port) \(.host)"' "$config" | while read -r port host; do
+        if ! ssh -N -f -L "$port" "$host"; then
+            print "error: unable to listen to $host" >&2
+        fi
+    done
+}
+
+local generate=false table=""
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -g|--generate) generate=true ;;
+        *) table=$1 ;;
+    esac
+    shift
+done
+
+if $generate; then
+    _ssh_listen_generate
+elif [[ -n $table ]]; then
+    _ssh_listen_start "$table"
+fi
