@@ -1,6 +1,6 @@
 return {
     init_options = {
-        typeCheckingMode = "mypy",
+        typeCheckingMode = "default",
         disableLanguageServices = false,
         diagnosticMode = "open-files-only",
     },
