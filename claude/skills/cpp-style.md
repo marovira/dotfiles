@@ -91,6 +91,56 @@ struct Vertex {
 
 ---
 
+## Template Parameters
+
+Template parameters follow the same casing rules as other identifiers, but the
+distinction between type and non-type parameters matters.
+
+**Type parameters** introduce a type name and follow `PascalCase`, consistent
+with the general rule for type aliases and template type params in the naming
+table above. Prefer well-known conventional names; only introduce a new name
+when none of the existing ones fit. Do not invent single-letter abbreviations.
+
+| Name | Role | Typical constraint |
+|---|---|---|
+| `T` | Primary generic type | concept or unconstrained |
+| `U` | Secondary type, always paired with `T` | concept or unconstrained |
+| `Clock` | Clock or time-source type | `std::chrono::high_resolution_clock` |
+| `Functor` | Generic callable | `std::invocable` |
+| `Predicate` | Callable returning `bool` | `std::predicate` |
+| `Args` | Variadic parameter pack | `typename...` |
+
+When a template head has multiple type parameters, give each a distinct name
+from the table. Do not use `T` twice.
+
+**Non-type parameters** introduce a value and follow `snake_case`, consistent
+with the general rule for variables and function arguments. Choose descriptive
+names that convey the semantic role of the value — not single-letter
+abbreviations. For example:
+
+| Name | Type | Meaning |
+|---|---|---|
+| `size` | `std::size_t` | Fixed buffer or container size |
+| `count` | `std::size_t` | Number of elements |
+| `dims` | `std::size_t` | Number of dimensions |
+| `flags` | enum / `int` | Bitmask or selector |
+
+```cpp
+// Correct — type param PascalCase, non-type param snake_case
+template<typename T, std::size_t count>
+std::array<T, count> make_array();
+
+// Correct — two distinct named type params in the same head
+template<typename T, std::invocable<T> Functor>
+T transform(T const& value, Functor fn);
+
+// Avoid — single-letter name for non-type param
+template<typename T, std::size_t N>  // N should be count, size, dims, etc.
+std::array<T, N> make_array();
+```
+
+---
+
 ## Const Style
 
 This project uses **east const** (const-on-the-right) everywhere:
@@ -227,6 +277,10 @@ Before finalising any C++ file, verify:
 - [ ] File name is `snake_case` with `.cpp` / `.hpp` extension
 - [ ] Header files begin with `#pragma once`
 - [ ] All types are `PascalCase`, all functions/variables are `snake_case`
+- [ ] Template type params are `PascalCase`; non-type params are `snake_case`
+- [ ] Template type param names are drawn from the standard table (`T`, `U`,
+      `Clock`, `Functor`, `Predicate`, `Args`); non-type params use descriptive
+      `snake_case` names, not single-letter abbreviations
 - [ ] Private class members have `m_` prefix; struct members do not
 - [ ] East const used everywhere (`T const&`, `int const`, `char const* const`)
 - [ ] Braced initialisation used where unambiguous
