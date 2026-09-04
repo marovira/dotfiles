@@ -4,6 +4,17 @@ local wezterm = require("wezterm")
 local utils = require("utils")
 local mux = wezterm.mux
 
+---@return integer
+local function font_size()
+    if utils.is_windows() then
+        return 11
+    elseif utils.is_mac() then
+        return 15
+    else
+        return 12
+    end
+end
+
 local cfg = {}
 
 -- Colour scheme
@@ -11,7 +22,7 @@ cfg.color_scheme = "tokyonight_moon"
 
 -- Font settings
 cfg.font = wezterm.font("FiraCode Nerd Font")
-cfg.font_size = utils.is_windows() and 11 or 12
+cfg.font_size = font_size()
 
 -- Cursor settings
 cfg.default_cursor_style = "BlinkingBar"
