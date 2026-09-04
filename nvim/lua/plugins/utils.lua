@@ -39,29 +39,30 @@ return {
         version = "*",
         opts = {
             multiplexer_integartion = false,
+            default_amount = 5,
         },
         keys = {
             {
                 "<C-S-h>",
-                function() require("smart-splits").resize_left(5) end,
+                function() require("smart-splits").resize_left() end,
                 mode = "n",
                 desc = "Resize split left",
             },
             {
                 "<C-S-j>",
-                function() require("smart-splits").resize_down(5) end,
+                function() require("smart-splits").resize_down() end,
                 mode = "n",
                 desc = "Resize split down",
             },
             {
                 "<C-S-k>",
-                function() require("smart-splits").resize_up(5) end,
+                function() require("smart-splits").resize_up() end,
                 mode = "n",
                 desc = "Resize split up",
             },
             {
                 "<C-S-l>",
-                function() require("smart-splits").resize_right(5) end,
+                function() require("smart-splits").resize_right() end,
                 mode = "n",
                 desc = "Resize split right",
             },
@@ -262,20 +263,20 @@ return {
                 desc = "Goto Declaration",
             },
             {
-                "gr",
+                "grr",
                 function() Snacks.picker.lsp_references() end,
                 nowait = true,
                 desc = "References",
             },
             {
-                "gi",
+                "gri",
                 function() Snacks.picker.lsp_implementations() end,
                 desc = "Goto Implementation",
             },
             {
-                "gy",
+                "grt",
                 function() Snacks.picker.lsp_type_definitions() end,
-                desc = "Goto T[y]pe Definition",
+                desc = "Goto Type Definition",
             },
             {
                 "<leader>ss",
@@ -607,7 +608,6 @@ return {
     },
     {
         "esmuellert/codediff.nvim",
-        dependencies = { "MunifTanjim/nui.nvim" },
         cmd = "CodeDiff",
         version = "*",
         keys = {
