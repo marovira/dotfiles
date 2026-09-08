@@ -1,0 +1,77 @@
+#!/bin/zsh
+# msvc-env - Initialize MSVC build environment in the current shell.
+# Usage: msvc-env [x64|x86|arm64|x64_arm64]  (default: x64)
+
+if [[ "$OSTYPE" != (msys|cygwin)* ]]; then
+    print -u2 "msvc-env: only supported on Windows"
+    return 1
+fi
+
+local arch="${1:-x64}"
+
+local vswhere="/c/Program Files (x86)/Microsoft Visual Studio/Installer/vswhere.exe"
+if [[ ! -x "$vswhere" ]]; then
+    print -u2 "msvc-env: vswhere.exe not found — is Visual Studio installed?"
+    return 1
+fi
+
+local vs_path
+vs_path=$("$vswhere" -latest -property installationPath | tr -d '\r\n')
+if [[ -z "$vs_path" ]]; then
+    print -u2 "msvc-env: no Visual Studio installation found"
+    return 1
+fi
+
+local vcvarsall="${vs_path}\\VC\\Auxiliary\\Build\\vcvarsall.bat"
+
+# Write a temp batch file so both commands run unconditionally — vcvarsall.bat
+# can return non-zero even on success, which would break a cmd-side && chain.
+local tmp_bat
+tmp_bat=$(mktemp /tmp/msvc_XXXXXX.bat)
+printf '@call "%s" %s 1>nul 2>&1\r\n@set\r\n' "$vcvarsall" "$arch" > "$tmp_bat"
+
+local raw
+raw=$(cmd.exe //c "$(cygpath -w "$tmp_bat")")
+rm -f "$tmp_bat"
+
+if [[ -z "$raw" ]]; then
+    print -u2 "msvc-env: vcvarsall.bat failed for arch='$arch'"
+    return 1
+fi
+
+# Preserve the MSYS2-native PATH entries (not present in the Windows env).
+local msys2_path="$PATH"
+
+local key value
+while IFS= read -r line; do
+    line="${line%$'\r'}"
+    [[ "$line" == *=* ]] || continue
+    key="${line%%=*}"
+    value="${line#*=}"
+    # Windows emits pseudo-vars like "=C:=C:\…" — skip them.
+    [[ "$key" =~ ^[A-Za-z_][A-Za-z0-9_]*$ ]] || continue
+    case "$key" in
+        PATH)
+            # Convert MSVC's Windows PATH to Unix format, then re-append
+            # the MSYS2-native paths so /usr/bin etc. stay reachable.
+            local msvc_unix_path
+            msvc_unix_path=$(cygpath -u -p "$value" 2>/dev/null)
+            export PATH="${msvc_unix_path}:${msys2_path}"
+            ;;
+        INCLUDE|LIB|LIBPATH)
+            # MSVC tools consume these as semicolon-separated Windows paths.
+            export "$key=$value"
+            ;;
+        # Don't let vcvarsall clobber MSYS2 shell identity.
+        HOME|USER|LOGNAME|SHELL|TERM|MSYSTEM|MSYS2_PATH_TYPE)
+            ;;
+        *)
+            export "$key=$value"
+            ;;
+    esac
+done <<< "$raw"
+
+if ! command -v cl.exe &>/dev/null; then
+    print -u2 "msvc-env: environment exported but cl.exe not found in PATH"
+    return 1
+fi
