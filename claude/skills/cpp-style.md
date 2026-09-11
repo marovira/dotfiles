@@ -189,6 +189,26 @@ parentheses when braces would change the semantics.
 
 ---
 
+## Control Flow Braces
+
+Always use curly braces for the bodies of `if`, `else`, `for`, `while`, and
+`do` statements, even when the body is a single statement. This applies without
+exception regardless of body length.
+
+```cpp
+// Correct
+if (condition)
+{
+    do_something();
+}
+
+// Never — even for a single statement
+if (condition)
+    do_something();
+```
+
+---
+
 ## `auto`
 
 Use `auto` in the following situations:
@@ -284,6 +304,7 @@ Before finalising any C++ file, verify:
 - [ ] Private class members have `m_` prefix; struct members do not
 - [ ] East const used everywhere (`T const&`, `int const`, `char const* const`)
 - [ ] Braced initialisation used where unambiguous
+- [ ] Curly braces used on all control flow bodies, regardless of length
 - [ ] No raw `new`/`delete`; smart pointers constructed with `make_unique`/`make_shared`
 - [ ] `auto` used only in the permitted cases
 - [ ] Includes are in three groups: local → third-party → STL
