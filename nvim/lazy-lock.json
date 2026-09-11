@@ -3,7 +3,7 @@
   "ale": { "branch": "master", "commit": "e1789bc54483d76ac9ddb40b633d1645c8281914" },
   "blink.cmp": { "branch": "main", "commit": "78336bc89ee5365633bcf754d93df01678b5c08f" },
   "clangd_extensions.nvim": { "branch": "main", "commit": "78c2ecd659d54972be17aa6ba2deac3c53223b80" },
-  "codediff.nvim": { "branch": "main", "commit": "79cdee751b3335b8aa6fb6e2e9b62ba511890cc5" },
+  "codediff.nvim": { "branch": "main", "commit": "4b3ad7eb99dd0f02e64bbaf562ca1e87e8c07cc9" },
   "flash.nvim": { "branch": "main", "commit": "5f0f270fdc7c5b0c21d903ee85b9cb06f2ac636a" },
   "hardtime.nvim": { "branch": "main", "commit": "b9a989191b3a97c9316a0efea02341c4cdab845a" },
   "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },
