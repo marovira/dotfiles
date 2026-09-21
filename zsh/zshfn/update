@@ -96,6 +96,22 @@ _update_patina() {
     unset _name
 }
 
+_update_tmux() {
+    if [ -f "$HOME/.local/bin/tmux" ]; then
+        rm "$HOME/.local/bin/tmux"
+    fi
+
+    curl -s "https://api.github.com/repos/tmux/tmux-builds/releases/latest" \
+        | grep "linux-x86_64" \
+        | cut -d : -f 2,3 \
+        | tr -d \" \
+        | tail -n 1 \
+        | wget -qi - -O tmux.tar.gz
+    tar -xzf "tmux.tar.gz"
+    mv tmux "$HOME/.local/bin"
+    rm "tmux.tar.gz"
+}
+
 local cur_os=$(uname)
 if [[ "$cur_os" == "Linux" ]]; then
     local -r app=${1:?"error: no app to update has been specified"}
@@ -107,6 +123,7 @@ if [[ "$cur_os" == "Linux" ]]; then
         fzf) _update_fzf;;
         treesitter) _update_treesitter;;
         patina) _update_patina;;
+        tmux) _update_tmux;;
         *) echo "Unknown app name";;
     esac
 else
