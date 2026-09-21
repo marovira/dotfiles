@@ -82,6 +82,7 @@
     ],
     "defaultMode": "default"
   },
+  "model": "opusplan",
   "statusLine": {
     "type": "command",
     "command": "~/.claude/statusline.sh"
@@ -91,8 +92,16 @@
     "lua-lsp@claude-plugins-official": true,
     "clangd-lsp@claude-plugins-official": true
   },
-  "effortLevel": "medium",
+  "modelSettings": {
+    "claude-opus-5": {
+      "effortLevel": "high"
+    },
+    "claude-sonnet-5": {
+      "effortLevel": "medium"
+    }
+  },
   "awaySummaryEnabled": false,
   "autoUpdatesChannel": "latest",
+  "tui": "fullscreen",
   "theme": "dark-ansi"
 }
