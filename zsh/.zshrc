@@ -112,6 +112,11 @@ if $_has_brew; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+# Ensure colours are set before we alias commands
+if command -v dircolors > /dev/null 2>&1; then
+    eval "$(dircolors -b)"
+fi
+
 # Grep aliases
 alias grep='grep --color'
 alias egrep='egrep --color=auto'
