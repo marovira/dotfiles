@@ -1,0 +1,3 @@
+#!/bin/zsh
+
+tree -C -F "$@" | less -R
