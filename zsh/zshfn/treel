@@ -1,3 +1,7 @@
 #!/bin/zsh
 
-tree -C -F "$@" | less -R
+if (( $+commands[bat] )); then
+    tree -F "$@" | bat --language=tree --theme=tokyonight_moon_tree --color=always --paging=always --style=plain
+else
+    tree -C -F "$@" | less -R
+fi

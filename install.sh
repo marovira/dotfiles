@@ -21,6 +21,9 @@ mklink "$SCRIPT_DIR/zsh/zsh-patina" "$HOME/.config/zsh-patina"
 
 # bat
 mklink "$SCRIPT_DIR/bat" "$HOME/.config/bat"
+if command -v bat &> /dev/null; then
+    bat cache --build
+fi
 
 # wezterm
 mklink "$SCRIPT_DIR/wezterm" "$HOME/.config/wezterm"

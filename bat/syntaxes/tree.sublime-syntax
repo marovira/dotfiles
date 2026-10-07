@@ -1,0 +1,116 @@
+%YAML 1.2
+---
+name: Tree
+scope: source.tree
+hidden: true
+file_extensions: []
+
+contexts:
+  main:
+    - match: '^(\d+ director(?:y|ies)(?:, \d+ files?)?)\s*$'
+      scope: tree.summary
+
+    - match: '^((?:(?:│|┃)[  ]{3}|[  ]{4})*(?:├── |└── |┣━━ |┗━━ )?)'
+      captures:
+        1: punctuation.tree-guide
+      push: name
+
+  name:
+    - match: '\G(?=\s*$)'
+      pop: true
+
+    - match: '\G\.{1,2}(?=\s*$)'
+      scope: tree.entry.dot
+      pop: true
+
+    - match: '\G\..*/\s*$'
+      scope: tree.entry.directory.hidden
+      pop: true
+
+    - match: '\G.*/\s*$'
+      scope: tree.entry.directory
+      pop: true
+
+    - match: '\G\..+$'
+      scope: tree.entry.file.hidden
+      pop: true
+
+    - match: '\G.*\.(?:py|pyw|pyi|ipynb)(?:\*|@)?\s*$'
+      scope: tree.entry.file.python
+      pop: true
+
+    - match: '\G.*\.(?:js|jsx|mjs|cjs|ts|tsx)(?:\*|@)?\s*$'
+      scope: tree.entry.file.javascript
+      pop: true
+
+    - match: '\G.*\.(?:c|h|cpp|cc|cxx|hpp|hh|hxx)(?:\*|@)?\s*$'
+      scope: tree.entry.file.c
+      pop: true
+
+    - match: '\G.*\.go(?:\*|@)?\s*$'
+      scope: tree.entry.file.go
+      pop: true
+
+    - match: '\G.*\.rs(?:\*|@)?\s*$'
+      scope: tree.entry.file.rust
+      pop: true
+
+    - match: '\G.*\.(?:java|kt|kts|scala)(?:\*|@)?\s*$'
+      scope: tree.entry.file.jvm
+      pop: true
+
+    - match: '\G.*\.rb(?:\*|@)?\s*$'
+      scope: tree.entry.file.ruby
+      pop: true
+
+    - match: '\G.*\.php(?:\*|@)?\s*$'
+      scope: tree.entry.file.php
+      pop: true
+
+    - match: '\G.*\.lua(?:\*|@)?\s*$'
+      scope: tree.entry.file.lua
+      pop: true
+
+    - match: '\G.*\.(?:sh|bash|zsh|fish|ps1|psm1)(?:\*|@)?\s*$'
+      scope: tree.entry.file.shell
+      pop: true
+
+    - match: '\G.*\.(?:html?|xml|vue|svelte)(?:\*|@)?\s*$'
+      scope: tree.entry.file.markup
+      pop: true
+
+    - match: '\G.*\.(?:css|scss|sass|less)(?:\*|@)?\s*$'
+      scope: tree.entry.file.style
+      pop: true
+
+    - match: '\G.*\.(?:json|jsonc|ya?ml|toml|ini|cfg|conf|env)(?:\*|@)?\s*$'
+      scope: tree.entry.file.data
+      pop: true
+
+    - match: '\G.*\.(?:md|markdown|rst|txt|adoc)(?:\*|@)?\s*$'
+      scope: tree.entry.file.doc
+      pop: true
+
+    - match: '\G.*\.(?:png|jpe?g|gif|bmp|svg|webp|ico)(?:\*|@)?\s*$'
+      scope: tree.entry.file.image
+      pop: true
+
+    - match: '\G.*\.(?:zip|tar|gz|tgz|bz2|xz|7z|rar)(?:\*|@)?\s*$'
+      scope: tree.entry.file.archive
+      pop: true
+
+    - match: '\G.*\.(?:exe|dll|so|dylib|bin|out)(?:\*|@)?\s*$'
+      scope: tree.entry.file.binary
+      pop: true
+
+    - match: '\G.+\*\s*$'
+      scope: tree.entry.file.executable
+      pop: true
+
+    - match: '\G.+@(?:\s*->.*)?\s*$'
+      scope: tree.entry.file.symlink
+      pop: true
+
+    - match: '\G.*\s*$'
+      scope: tree.entry.file
+      pop: true

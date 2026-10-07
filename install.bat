@@ -39,6 +39,9 @@ mklink /D %USERPROFILE%\.config\zsh-patina %CURDIR%zsh\zsh-patina
 :: bat
 mklink %USERPROFILE%\scoop\apps\bat\current\config %CURDIR%bat\config
 mklink %USERPROFILE%\scoop\apps\bat\current\themes\tokyonight_moon.tmTheme %CURDIR%bat\themes\tokyonight_moon.tmTheme
+mklink %USERPROFILE%\scoop\apps\bat\current\themes\tokyonight_moon_tree.tmTheme %CURDIR%bat\themes\tokyonight_moon_tree.tmTheme
+mklink %USERPROFILE%\scoop\apps\bat\current\syntaxes\tree.sublime-syntax %CURDIR%bat\syntaxes\tree.sublime-syntax
+where bat >nul 2>&1 && bat cache --build
 
 :: wezterm
 mklink /D %LOCALAPPDATA%\wezterm %CURDIR%wezterm

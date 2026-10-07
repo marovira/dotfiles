@@ -35,7 +35,9 @@ rmdir %USERPROFILE%\.config\zsh-patina
 
 :: Bat
 del %USERPROFILE%\scoop\apps\bat\current\config
-del %USERPROFILE%\scoop\apps\bat\themes\tokyonight_moon.tmTheme
+del %USERPROFILE%\scoop\apps\bat\current\themes\tokyonight_moon.tmTheme
+del %USERPROFILE%\scoop\apps\bat\current\themes\tokyonight_moon_tree.tmTheme
+del %USERPROFILE%\scoop\apps\bat\current\syntaxes\tree.sublime-syntax
 
 :: Wezterm
 rmdir %LOCALAPPDATA%\wezterm
