@@ -155,6 +155,12 @@ bindkey '^[[Z' autosuggest-accept
 fpath+=(${ZDOTDIR}/zshfn)
 autoload -U $fpath[-1]/*(.:t)
 
+# Automatically load machine-specific zshfn files, if any.
+if [[ -d ${ZDOTDIR}/zshfn/local ]]; then
+    fpath+=(${ZDOTDIR}/zshfn/local)
+    autoload -U $fpath[-1]/*(.N:t)
+fi
+
 # Add forgit to path for completions
 fpath+=($FORGIT_INSTALL_DIR/completions/_git-forgit)
 autoload -U $FORGIT_INSTALL_DIR/completions/_git-forgit

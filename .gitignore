@@ -19,5 +19,8 @@ zsh/completions/*
 # Machine-specific completion specs
 zsh/completion-specs-local/
 
+# Machine-specific zsh functions
+zsh/zshfn/local/
+
 # Machine-specific skills
 claude/skills/local/
