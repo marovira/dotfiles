@@ -18,7 +18,7 @@ end
 local cfg = {}
 
 -- Colour scheme
-cfg.color_scheme = "tokyonight_moon"
+cfg.color_scheme = "Tokyo Night Moon"
 
 -- Font settings
 cfg.font = wezterm.font("FiraCode Nerd Font")
