@@ -1,16 +1,7 @@
----
-name: cpp-style
-description: >
-  C++ coding style and workflow guide. Use this skill whenever writing, editing,
-  or reviewing C++ code. Triggers include: creating new .cpp or .hpp files,
-  adding classes or functions, refactoring existing C++ code, reviewing code for
-  style, or any task involving C++ in this project. Always consult this skill
-  before producing any C++ code — do not rely on general C++ conventions alone.
----
 
 # C++ Style Guide
 
-This skill defines the coding standards, style rules, and tooling workflow for
+This guide defines the coding standards, style rules, and tooling workflow for
 all C++ code in this project. Follow every rule here unless the user explicitly
 overrides it for a specific task.
 
