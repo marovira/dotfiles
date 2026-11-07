@@ -46,6 +46,7 @@ del %USERPROFILE%\.claude\CLAUDE.md
 del %USERPROFILE%\.claude\settings.json
 del %USERPROFILE%\.claude\keybindings.json
 del %USERPROFILE%\.claude\statusline.sh
+del %USERPROFILE%\.claude\precompact.sh
 rmdir %USERPROFILE%\.claude\skills
 
 echo Clean finished successfully

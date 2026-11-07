@@ -8,59 +8,53 @@
       "Read",
       "Write",
       "Edit",
-      "Bash(git status)",
-      "Bash(git log *)",
-      "Bash(git diff *)",
-      "Bash(git fetch *)",
-      "Bash(git switch *)",
-      "Bash(git checkout -- *)",
-      "Bash(git branch)",
-      "Bash(git branch -c *)",
-      "Bash(git stash push *)",
-      "Bash(git stash pop *)",
-      "Bash(git stash list)",
-      "Bash(git stash show *)",
-      "Bash(git remote *)",
-      "Bash(git show *)",
-      "Bash(git tag *)",
-      "Bash(uv run *)",
-      "Bash(python *)",
-      "Bash(python3 *)",
-      "Bash(cargo build *)",
-      "Bash(cargo test *)",
-      "Bash(cargo clippy *)",
-      "Bash(cargo fmt *)",
-      "Bash(cargo run *)",
-      "Bash(ls *)",
-      "Bash(find *)",
-      "Bash(grep *)",
+      "Bash(cargo *)",
       "Bash(cat *)",
-      "Bash(pwd)",
-      "Bash(tree *)",
-      "Bash(head *)",
-      "Bash(tail *)",
-      "Bash(wc *)",
-      "Bash(echo *)",
-      "Bash(which *)",
-      "Bash(env *)",
-      "Bash(printenv *)",
-      "Bash(sort *)",
-      "Bash(uniq *)",
-      "Bash(cut *)",
-      "Bash(mkdir *)",
       "Bash(clang-format *)",
       "Bash(clang-tidy *)",
-      "Bash(cmake -S * -B *)",
       "Bash(cmake --build *)",
       "Bash(cmake --preset *)",
       "Bash(cmake -E *)",
-      "Bash(ctest *)",
+      "Bash(cmake -S * -B *)",
       "Bash(cpack *)",
+      "Bash(ctest *)",
+      "Bash(cut *)",
+      "Bash(echo *)",
+      "Bash(find *)",
+      "Bash(git branch -c *)",
+      "Bash(git branch)",
+      "Bash(git checkout -- *)",
+      "Bash(git diff *)",
+      "Bash(git fetch *)",
+      "Bash(git log *)",
+      "Bash(git remote *)",
+      "Bash(git rm *)",
+      "Bash(git show *)",
+      "Bash(git stash list)",
+      "Bash(git stash pop *)",
+      "Bash(git stash push *)",
+      "Bash(git stash show *)",
+      "Bash(git status)",
+      "Bash(git switch *)",
+      "Bash(git tag *)",
+      "Bash(grep *)",
+      "Bash(head *)",
+      "Bash(ls *)",
+      "Bash(make *)",
+      "Bash(mkdir *)",
       "Bash(ninja *)",
-      "Bash(make *)"
+      "Bash(printenv *)",
+      "Bash(pwd)",
+      "Bash(rmdir *)",
+      "Bash(sort *)",
+      "Bash(tail *)",
+      "Bash(tree *)",
+      "Bash(uniq *)",
+      "Bash(uv *)",
+      "Bash(wc *)",
+      "Bash(which *)"
     ],
     "deny": [
-      "Bash(git add *)",
       "Bash(git commit *)",
       "Bash(git merge *)",
       "Bash(git reset *)",
@@ -73,14 +67,26 @@
       "Bash(git stash drop *)",
       "Bash(git stash clear)",
       "Bash(rm *)",
-      "Bash(rmdir *)",
       "Bash(chmod *)",
       "Bash(chown *)",
       "Bash(uvx *)",
-      "Bash(cargo add *)",
-      "Bash(cargo remove *)"
+      "Bash(cargo publish *)",
+      "Bash(cargo install *)",
+      "Bash(cargo uninstall *)"
     ],
-    "defaultMode": "default"
+    "defaultMode": "auto"
+  },
+  "hooks": {
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/precompact.sh"
+          }
+        ]
+      }
+    ]
   },
   "model": "opusplan",
   "statusLine": {
@@ -91,14 +97,6 @@
     "rust-analyzer-lsp@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true,
     "clangd-lsp@claude-plugins-official": true
-  },
-  "modelSettings": {
-    "claude-opus-5": {
-      "effortLevel": "high"
-    },
-    "claude-sonnet-5": {
-      "effortLevel": "medium"
-    }
   },
   "awaySummaryEnabled": false,
   "autoUpdatesChannel": "latest",

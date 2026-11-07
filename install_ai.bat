@@ -25,4 +25,5 @@ mklink %USERPROFILE%\.claude\CLAUDE.md %CURDIR%claude\CLAUDE.md
 mklink %USERPROFILE%\.claude\settings.json %CURDIR%claude\settings.json
 mklink %USERPROFILE%\.claude\keybindings.json %CURDIR%claude\keybindings.json
 mklink %USERPROFILE%\.claude\statusline.sh %CURDIR%claude\statusline.sh
+mklink %USERPROFILE%\.claude\precompact.sh %CURDIR%claude\precompact.sh
 mklink /D %USERPROFILE%\.claude\skills %CURDIR%claude\skills

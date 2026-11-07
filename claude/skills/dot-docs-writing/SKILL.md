@@ -1,5 +1,5 @@
 ---
-name: docs-writing
+name: dot-docs-writing
 description: >
   Rules and guidelines for writing, editing, and reviewing documentation. Use this skill
   whenever the user asks Claude to write, update, review, or improve any documentation,
