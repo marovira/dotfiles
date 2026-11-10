@@ -22,5 +22,5 @@ zsh/completion-specs-local/
 # Machine-specific zsh functions
 zsh/zshfn/local/
 
-# Machine-specific skills
-claude/skills/local/
+# Globally-accessible skills that we shouldn't track
+claude/skills/mimir
