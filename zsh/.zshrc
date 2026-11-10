@@ -192,6 +192,12 @@ if [[ "$_current_platform" == "Windows" ]]; then
     precmd_functions+=(keep_current_path)
 fi
 
+# Ensure that world-writeable files don't have the weird green background that makes them
+# completely illegible.
+if [[ "$_current_platform" == "Linux" ]]; then
+    export LS_COLORS="${LS_COLORS}:ow=01;34:tw=01;34:"
+fi
+
 unset -v _uname
 unset -v _has_brew
 unset -v _current_platform
