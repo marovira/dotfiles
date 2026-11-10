@@ -37,4 +37,13 @@ function M.get_default_cwd()
     end
 end
 
+---@return boolean
+---@param date string
+function M.is_version_newer_than(date)
+    local current_date = wezterm.version:match("^(%d+)")
+    if not current_date then return false end
+
+    return current_date >= date
+end
+
 return M

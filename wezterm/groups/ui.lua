@@ -15,6 +15,17 @@ local function font_size()
     end
 end
 
+---@return number
+local function opacity()
+    if utils.is_windows() then
+        return 0.5
+    elseif utils.is_mac() then
+        return 0.8
+    else
+        return 0.7
+    end
+end
+
 local cfg = {}
 
 -- Colour scheme
@@ -30,17 +41,18 @@ cfg.cursor_blink_ease_in = "Constant"
 cfg.cursor_blink_ease_out = "Constant"
 
 -- Blur + Opacity settings
-local default_opacity = utils.is_windows() and 0.5 or 0.8
-cfg.window_background_opacity = default_opacity
+cfg.window_background_opacity = opacity()
 cfg.win32_system_backdrop = "Acrylic"
 cfg.macos_window_background_blur = 20
+
+if utils.is_version_newer_than("2026") then cfg.wayland_window_background_blur = true end
 
 -- Tab settings
 cfg.use_fancy_tab_bar = true
 cfg.hide_tab_bar_if_only_one_tab = true
 cfg.tab_bar_at_bottom = true
 
-cfg.window_decorations = utils.is_linux() and "NONE" or "TITLE | RESIZE"
+cfg.window_decorations = "TITLE | RESIZE"
 
 -- Scrollbar/scrollback
 cfg.scrollback_lines = 10000
