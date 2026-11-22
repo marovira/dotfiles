@@ -1,16 +1,17 @@
 # Commit policy
 
-`git commit` is denied in settings, so never run it and never offer to. Use this
-workflow instead:
+Commit your work as you go, without waiting for approval. `git push` is denied in
+settings, so commits stay local until the user reviews and pushes them.
 
-1. Finish the change, including the project's definition of done if it defines one.
-2. Present the work for review and apply any requested changes.
-3. Once the user approves, stage the files with `git add` (naming files explicitly, not
-   `git add -A`) and stop.
-4. Tell the user the files are staged. The user writes the commit message and commits.
-
-Do not stage anything before approval. If the user asks for a suggested commit message,
-provide one, but do not run the commit.
+- Make small, focused commits: one logical change each. If the project defines a
+  definition of done, meet it before committing.
+- Stage files by name. Do not use `git add -A` or `git add .`, so that scratch files and
+  unrelated changes stay out.
+- Leave changes that were already in the working tree when you started out of your
+  commits, unless the user asks you to include them.
+- Follow the repository's commit message convention (check `git log`). If it has none,
+  use a short imperative subject line and a body that explains why.
+- Only amend commits you created in the current task. Never rewrite the user's commits.
 
 # Scratch files
 
