@@ -6,10 +6,6 @@ require("options")
 -- =======================
 require("autocmd")
 
--- Custom Commands
--- =======================
-require("commands")
-
 -- Key remaps
 -- =======================
 require("maps")

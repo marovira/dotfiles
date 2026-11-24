@@ -178,3 +178,31 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHo
         if vim.fn.mode() ~= "c" then vim.api.nvim_command("checktime") end
     end,
 })
+
+-- Lint Autocmd
+-- =======================
+local lint_group = vim.api.nvim_create_augroup("nvimrc_lint", { clear = true })
+
+-- Format on save, with a toggle to ensure that we don't format files that we don't want to
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+    pattern = "*",
+    group = lint_group,
+    callback = function(args)
+        if vim.g.autoformat == false or vim.b[args.buf].autoformat == false then
+            return
+        end
+        local conform = require("conform")
+        conform.format({ bufnr = args.buf, timeout_ms = 500, lsp_format = "fallback" })
+    end,
+})
+
+-- C++ linting with clang-tidy
+vim.api.nvim_create_autocmd({ "FileType", "BufWritePost" }, {
+    pattern = { "cpp" },
+    group = lint_group,
+    callback = function(args)
+        if vim.g.autolint == false or vim.b[args.buf].autolint == false then return end
+        local lint = require("lint")
+        lint.try_lint()
+    end,
+})

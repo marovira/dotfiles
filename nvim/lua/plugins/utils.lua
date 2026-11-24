@@ -434,6 +434,42 @@ return {
                             end,
                         })
                         :map("<leader>tm")
+
+                    Snacks.toggle
+                        .new({
+                            id = "autoformat",
+                            name = "Format on Save (buffer)",
+                            get = function() return vim.b.autoformat ~= false end,
+                            set = function(state) vim.b.autoformat = state end,
+                        })
+                        :map("<leader>tf")
+
+                    Snacks.toggle
+                        .new({
+                            id = "autoformat",
+                            name = "Format on Save",
+                            get = function() return vim.g.autoformat ~= false end,
+                            set = function(state) vim.g.autoformat = state end,
+                        })
+                        :map("<leader>tF")
+
+                    Snacks.toggle
+                        .new({
+                            id = "autolint",
+                            name = "Lint code",
+                            get = function() return vim.b.autolint ~= false end,
+                            set = function(state) vim.b.autolint = state end,
+                        })
+                        :map("<leader>tl")
+
+                    Snacks.toggle
+                        .new({
+                            id = "autolint",
+                            name = "Lint code",
+                            get = function() return vim.g.autolint ~= false end,
+                            set = function(state) vim.g.autolint = state end,
+                        })
+                        :map("<leader>tL")
                 end,
             })
 

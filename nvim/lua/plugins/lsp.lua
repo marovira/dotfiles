@@ -1,4 +1,5 @@
 local common = require("common")
+local extra_lint = require("extra.lint")
 local spell = require("extra.cmp-spell")
 
 ---@param kind string
@@ -59,24 +60,42 @@ end
 
 return {
     {
-        "dense-analysis/ale",
-        event = "VeryLazy",
-        init = function()
-            vim.cmd([[
-                let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
-            ]])
-            vim.g.ale_set_loclist = false
-            vim.g.ale_set_quickfix = false
-            vim.g.ale_use_neovim_diagnostics_api = true
-            vim.g.ale_virtualtext_cursor = false
-            vim.g.ale_open_list = true
-            vim.g.ale_fix_on_save = true
-            vim.g.ale_disable_lsp = true
-            vim.g.ale_lint_on_enter = true
+        "stevearc/conform.nvim",
+        opts = {
+            formatters_by_ft = {
+                ["*"] = { "trim_whitespace", "trim_newlines" },
+                c = { "clang_format" },
+                cpp = { "clang_format" },
+                lua = { "stylua" },
+                objc = { "clang_format" },
+                objcpp = { "clang_format" },
+                python = { "ruff_fix", "ruff_format" },
+                rust = { "rustfmt" },
+            },
+            formatters = {
+                rustfmt = {
+                    prepend_args = { "+nightly" },
+                    nightly = true,
+                },
+                clang_format = {
+                    command = extra_lint.get_clangformat_cmd(),
+                },
+                stylua = {
+                    append_args = { "--search-parent-directories" },
+                },
+            },
+        },
+    },
+    {
+        "mfussenegger/nvim-lint",
+        config = function()
+            local lint = require("lint")
+            lint.linters_by_ft = {
+                cpp = { "clangtidy" },
+            }
 
-            -- Disable cursor messages.
-            vim.g.ale_echo_cursor = false
-            vim.g.ale_cursor_detail = false
+            lint.linters.clangtidy.cmd = extra_lint.get_clangtidy_cmd()
+            lint.linters.clangtidy.parser = extra_lint.clangtidy_parser
         end,
     },
     {
@@ -104,6 +123,7 @@ return {
                 -- behaviour but is significantly faster and imports now work properly.
                 -- I'm leaving pylsp as a backup just in case.
                 "zuban",
+                "ruff",
                 -- "pylsp",
             },
         },

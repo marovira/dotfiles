@@ -5,7 +5,7 @@ vim.opt_local.softtabstop = 2
 vim.opt_local.expandtab = true
 
 -- Disable diagnostic messages.
-vim.diagnostic.enable(false)
+vim.diagnostic.enable(false, { bufnr = 0 })
 
 -- Plugins
 -- =======================
@@ -16,10 +16,6 @@ vim.b.vimtex_view_method = "general"
 vim.b.vimtex_view_general_viewer = "SumatraPDF"
 vim.b.vimtex_view_general_options = "-reuse-instance -forward-search @tex @line @pdf"
 --vim.g.vimtex_include_search_enabled = 0
-
--- ALE
-vim.b.ale_linters = nil
-vim.b.ale_linters_explicit = true
 
 -- Remaps
 -- =======================
