@@ -97,6 +97,7 @@ return {
                 "clangd",
                 "cmake",
                 "marksman",
+                "rust_analyzer",
                 -- Python LSP:
                 -- Switching back to zuban as it appears to have advanced enough for me to
                 -- use it reliably. The type-checker is now pretty much on par with mypy's
